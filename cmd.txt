@@ -1,0 +1,10 @@
+//Upload
+git add .
+git commit -m "Your message about the commit"
+git push
+
+
+//Download
+git add .
+git commit -m "Your message about the commit"
+git pull
