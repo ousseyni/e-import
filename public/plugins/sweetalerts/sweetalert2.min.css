@@ -377,7 +377,7 @@ body.swal2-no-backdrop > .swal2-shown.swal2-bottom-right {
   overflow-y: hidden;
 }
 .swal2-popup .swal2-title {
-  color: #595959;
+  color: #fafafa;
   font-size: 30px;
   text-align: center;
   font-weight: 600;

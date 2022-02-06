@@ -9,16 +9,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ setTitle($page_name) }}</title>
+    <title>{{ setPageTitle($page_name) }}</title>
     <link rel="icon" type="image/x-icon" href="{{asset('storage/img/favicon.ico')}}"/>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
-    @include('inc.styles')  
+    @include('inc.styles')
 </head>
-<body {{ ($has_scrollspy) ? scrollspy($scrollspy_offset) : '' }} class=" {{ ($page_name === 'alt_menu') ? 'alt-menu' : '' }} {{ ($page_name === 'error404') ? 'error404 text-center' : '' }} {{ ($page_name === 'error500') ? 'error500 text-center' : '' }} {{ ($page_name === 'error503') ? 'error503 text-center' : '' }} {{ ($page_name === 'maintenence') ? 'maintanence text-center' : '' }}">
-    
+<body {{ ($page_name === 'error404') ? 'error404 text-center' : '' }} ">
+
     <!-- BEGIN LOADER -->
     <div id="load_screen"> <div class="loader"> <div class="loader-content">
         <div class="spinner-grow align-self-center"></div>
@@ -26,7 +26,7 @@
     <!--  END LOADER -->
 
     @include('inc.navbar')
-    
+
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container" id="container">
 
@@ -40,7 +40,7 @@
 
             @yield('content')
 
-            @if ($page_name != 'account_settings')
+            @if ($page_name === 'accueil')
                 @include('inc.footer')
             @endif
         </div>
