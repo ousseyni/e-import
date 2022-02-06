@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'] , function() {
         // $pageName = 'analytics';
         return view('dashboard2')->with($data);
     });
-    
+
     Route::get('/sales', function() {
         // $category_name = '';
         $data = [
@@ -1108,7 +1108,7 @@ Route::group(['middleware' => 'auth'] , function() {
             ];
             // $pageName = 'breadcrumb';
             return view('pages.starter-kit.starter_kit_breadcrumbs')->with($data);
-        });        
+        });
     });
 
 
@@ -1312,12 +1312,13 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 
 Route::get('/register', function() {
-    return redirect('/login');    
+    return redirect('/login');
 });
 Route::get('/password/reset', function() {
-    return redirect('/login');    
+    return redirect('/login');
 });
 
 Route::get('/', function() {
-    return redirect('/sales');    
+    return redirect('/sales');
 });
+Route::resource('categorie-produits', 'CategorieProduitsController');
