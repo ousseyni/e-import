@@ -213,7 +213,7 @@ code {
   margin-left: 80px;
 }
 
-/* 
+/*
 =====================
     Navigation Bar
 =====================
@@ -228,7 +228,7 @@ code {
 
 .navbar {
   padding: 0;
-  background: #0e1726;
+  background: #c5c6cb;
 }
 .navbar .theme-brand {
   padding: 0.9px 0 0.9px 27px !important;
@@ -631,7 +631,7 @@ code {
   fill: rgba(0, 23, 55, 0.08);
 }
 
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -771,7 +771,7 @@ code {
     display: block;
   }
 }
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -1072,7 +1072,7 @@ code {
   right: -4px !important;
 }
 
-/*  
+/*
     ======================
         Footer-wrapper
     ======================
@@ -1087,6 +1087,7 @@ code {
   border-top-left-radius: 6px;
   display: flex;
   justify-content: space-between;
+  position: fixed;
 }
 
 .main-container.sidebar-closed .footer-wrapper {
@@ -1110,7 +1111,7 @@ code {
   vertical-align: text-top;
 }
 
-/*  
+/*
     ======================
         MEDIA QUERIES
     ======================

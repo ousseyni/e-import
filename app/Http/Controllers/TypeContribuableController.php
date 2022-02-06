@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\CategorieProduit;
+use App\TypeContribuable;
 use Illuminate\Http\Request;
 
-class CategorieProduitsController extends Controller
+class TypeContribuableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class CategorieProduitsController extends Controller
      */
     public function create()
     {
-        return view('pages.categorie-produits.create');
+        return view('pages.type-contribuable.create');
     }
 
     /**
@@ -36,13 +36,11 @@ class CategorieProduitsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'libelle' => 'required|max:100',
-            'montant' => 'required|numeric'
+            'libelle' => 'required|max:100'
         ]);
-        $show = CategorieProduit::create($validatedData);
+        $show = TypeContribuable::create($validatedData);
 
-        return redirect('/categorie-produit')->with('success', 'Categorie Produit is successfully saved');
-
+        return redirect('/type-contribuable')->with('success', 'Type Contribuable is successfully saved');
     }
 
     /**

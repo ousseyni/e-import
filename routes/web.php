@@ -1321,4 +1321,7 @@ Route::get('/password/reset', function() {
 Route::get('/', function() {
     return redirect('/sales');
 });
+
+Route::resource('type-contribuable', 'TypeContribuableController');
 Route::resource('categorie-produits', 'CategorieProduitsController');
+
