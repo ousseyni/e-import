@@ -9,3 +9,14 @@ git add .
 git commit -m "Your message about the commit"
 git pull
 
+//Compiler le tout
+php artisan migrate
+
+//Executer le code
+php artisan serve
+
+
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Cork', 'admin@cork.com', NULL, '$2y$10$wUeG8t8qqUaqKQMoBU5bledy6.48bv6bAoJ1TkjJ6bgXchP.BQfcK', NULL, '2020-05-27 06:07:35', '2020-05-27 06:07:35');
+
