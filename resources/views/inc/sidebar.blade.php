@@ -2,12 +2,12 @@
 
     <!--  BEGIN SIDEBAR  -->
     <div class="sidebar-wrapper sidebar-theme">
-            
+
         <nav id="sidebar">
             <div class="shadow-bottom"></div>
 
             <ul class="list-unstyled menu-categories" id="accordionExample">
-                
+
                 @if ($page_name != 'alt_menu' && $page_name != 'blank_page' && $page_name != 'boxed' && $page_name != 'breadcrumb' )
 
                     <li class="menu {{ ($category_name === 'dashboard') ? 'active' : '' }}">
@@ -49,7 +49,7 @@
                             </li>
                             <li class="{{ ($page_name === 'todo-list') ? 'active' : '' }}">
                                 <a href="/apps/todoList"> Todo List </a>
-                            </li>                            
+                            </li>
                             <li class="{{ ($page_name === 'notes') ? 'active' : '' }}">
                                 <a href="/apps/notes"> Notes </a>
                             </li>
@@ -87,7 +87,7 @@
                             </li>
                             <li class="{{ ($page_name === 'modals') ? 'active' : '' }}">
                                 <a href="/components/modals"> Modals </a>
-                            </li>                            
+                            </li>
                             <li class="{{ ($page_name === 'cards') ? 'active' : '' }}">
                                 <a href="/components/cards"> Cards </a>
                             </li>
@@ -152,7 +152,7 @@
                             </li>
                             <li class="{{ ($page_name === 'breadcrumbs') ? 'active' : '' }}">
                                 <a href="/elements/breadcrumbs"> Breadcrumbs </a>
-                            </li>                            
+                            </li>
                             <li class="{{ ($page_name === 'buttons') ? 'active' : '' }}">
                                 <a href="/elements/buttons"> Buttons </a>
                             </li>
@@ -309,10 +309,10 @@
                             </li>
                             <li class="{{ ($page_name === 'maxlength') ? 'active' : '' }}">
                                 <a href="/forms/maxlength"> Maxlength </a>
-                            </li>                          
+                            </li>
                             <li class="{{ ($page_name === 'checkbox_radio') ? 'active' : '' }}">
                                 <a href="/forms/checkbox_radio"> Checkbox &amp; Radio </a>
-                            </li>                            
+                            </li>
                             <li class="{{ ($page_name === 'switches') ? 'active' : '' }}">
                                 <a href="/forms/switches"> Switches </a>
                             </li>
@@ -339,7 +339,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li class="menu {{ ($category_name === 'users') ? 'active' : '' }}">
                         <a href="#users" data-active="{{ ($category_name === 'users') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'users') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
@@ -391,7 +391,7 @@
                             </li>
                             <li class="{{ ($page_name === 'dashboard') ? 'active' : '' }}">
                                 <a href="#pages-error" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Error <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
-                                <ul class="collapse list-unstyled sub-submenu" id="pages-error" data-parent="#pages"> 
+                                <ul class="collapse list-unstyled sub-submenu" id="pages-error" data-parent="#pages">
                                     <li class="{{ ($page_name === 'error404') ? 'active' : '' }}">
                                         <a href="/pages/error_404"> 404 </a>
                                     </li>
@@ -562,7 +562,7 @@
                             </li>
                             <li>
                                 <a href="javascript:void(0);"> Submenu 2 </a>
-                            </li>                           
+                            </li>
                         </ul>
                     </li>
 
@@ -582,7 +582,7 @@
                             </li>
                             <li>
                                 <a href="#sm2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Submenu 2 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
-                                <ul class="collapse list-unstyled sub-submenu" id="sm2" data-parent="#submenu2"> 
+                                <ul class="collapse list-unstyled sub-submenu" id="sm2" data-parent="#submenu2">
                                     <li>
                                         <a href="javascript:void(0);"> Sub-Submenu 1 </a>
                                     </li>
@@ -596,11 +596,11 @@
                             </li>
                         </ul>
                     </li>
-                
+
                 @endif
-                
+
             </ul>
-            
+
         </nav>
 
     </div>

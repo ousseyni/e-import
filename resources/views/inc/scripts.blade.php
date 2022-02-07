@@ -41,6 +41,10 @@
     });
 </script>
 
+<script src="{{asset('plugins/font-icons/feather/feather.min.js')}}"></script>
+<script type="text/javascript">
+    feather.replace();
+</script>
 
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
@@ -288,13 +292,6 @@
       {{-- Elements Treeview --}}
       <script src="{{asset('plugins/treeview/custom-jstree.js')}}"></script>
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
-      @break
-
-    @case('font_icons')
-      <script src="{{asset('plugins/font-icons/feather/feather.min.js')}}"></script>
-      <script type="text/javascript">
-          feather.replace();
-      </script>
       @break
 
     @case('maps')

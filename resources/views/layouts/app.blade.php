@@ -33,7 +33,7 @@
         <div class="overlay"></div>
         <div class="search-overlay"></div>
 
-        @include('inc.sidebar')
+        @include('inc.adminsidebar')
 
         <!--  BEGIN CONTENT PART  -->
         <div id="content" class="main-content">
