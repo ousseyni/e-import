@@ -62,12 +62,12 @@ class CategorieProduitsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($slug)
     {
         $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
-        return view('pages.categorie-produits.edit', compact('categorieproduit'));
+        return view('pages.categorie-produits.edit', compact('categorieproduits'));
 
     }
 
@@ -76,7 +76,7 @@ class CategorieProduitsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $slug)
     {
@@ -95,9 +95,9 @@ class CategorieProduitsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
         $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
         $categorieproduits->delete();

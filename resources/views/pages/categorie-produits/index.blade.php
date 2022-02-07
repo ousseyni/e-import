@@ -34,12 +34,12 @@
                                     <td>{{$categorieproduit->libelle}}</td>
                                     <td>{{$categorieproduit->montant}}</td>
                                     <td>
-                                        <a href="{{ route('categorie-produits.edit', $categorieproduit->slug)}}">
+                                        <a href="{{ route('categorie-produits.edit', $categorieproduit->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette ligne ?')" action="{{ route('categorie-produits.destroy', $categorieproduit->slug)}}" method="post">
+                                        <form onclick="return confirm('Voulez vous suppriemr cette ligne ?')" action="{{ route('categorie-produits.destroy', $categorieproduit->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>

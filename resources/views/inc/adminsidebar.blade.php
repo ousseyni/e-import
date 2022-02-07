@@ -64,10 +64,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des contribuables') ? 'show' : '' }}" id="contribuables" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Nouveau contribuable') ? 'active' : '' }}">
-                                <a href="#"> Nouveau contribuable </a>
+                                <a href="{{ route('contribuables.create')  }}"> Nouveau contribuable </a>
                             </li>
                             <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
-                                <a href="#"> Liste contribuables</a>
+                                <a href="{{ route('contribuables.index')  }}"> Liste contribuables</a>
                             </li>
                             <li class="{{ ($page_name === 'En attente de validation') ? 'active' : '' }}">
                                 <a href="#"> En attente de validation</a>

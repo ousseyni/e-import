@@ -16,4 +16,8 @@ class TypeContribuables extends Model
             $type->slug = Str::slug('typectb-'.Str::random(50), '-');
         });
     }
+    public function getContribuables()
+    {
+        return $this->hasMany(Contribuables::class);
+    }
 }

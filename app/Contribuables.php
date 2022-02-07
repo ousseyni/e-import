@@ -16,4 +16,8 @@ class Contribuables extends Model
             $type->slug = Str::slug('contri-'.Str::random(50), '-');
         });
     }
+    public function getTypeContribuables()
+    {
+        return $this->belongsTo(TypeContribuables::class, 'typecontribuableid');
+    }
 }

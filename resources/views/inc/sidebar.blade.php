@@ -64,10 +64,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des contribuables') ? 'show' : '' }}" id="contribuables" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Nouveau contribuable') ? 'active' : '' }}">
-                                <a href="#"> Nouveau contribuable </a>
+                                <a href="{{ route('contribuables.create')  }}"> Nouveau contribuable </a>
                             </li>
                             <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
-                                <a href="#"> Liste contribuables</a>
+                                <a href="{{ route('contribuables.index')  }}"> Liste contribuables</a>
                             </li>
                             <li class="{{ ($page_name === 'En attente de validation') ? 'active' : '' }}">
                                 <a href="#"> En attente de validation</a>
@@ -89,10 +89,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des Produits') ? 'show' : '' }}" id="produits" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Catégorie des Produits') ? 'active' : '' }}">
-                                <a href="{{ route('categorie-produits.index')  }}"> Catégorie Produits </a>
+                                <a href="{{ route('categorie-produits.index')  }}"> Catégorie de produits </a>
                             </li>
                             <li class="{{ ($page_name === 'Liste des Produits') ? 'active' : '' }}">
-                                <a href="#"> Liste Produits</a>
+                                <a href="#"> Liste de produits</a>
                             </li>
                         </ul>
                     </li>
