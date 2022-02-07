@@ -4,7 +4,7 @@
 |           Scroll To Top               |
 |                                       |
 =========================================
-*/ 
+*/
 $('.scrollTop').click(function() {
     $("html, body").animate({scrollTop: 0});
 });
@@ -30,7 +30,7 @@ function checkall(clickchk, relChkbox) {
 
     checker.click(function () {
         multichk.prop('checked', $(this).prop('checked'));
-    });    
+    });
 }
 
 
@@ -74,7 +74,7 @@ function checkall(clickchk, relChkbox) {
 
     checker.click(function () {
         multichk.prop('checked', $(this).prop('checked'));
-    });    
+    });
 }
 
 /*
@@ -117,16 +117,45 @@ $('.t-dot').tooltip({
 ================================================
 */
 
+function getContribuableValues() {
+
+    var nif = $("#nif").val();
+
+    $.get('ajax-crud/' + nif , function (data) {
+        $('#userShowModal').html("User Details");
+        $('#ajax-modal').modal('show');
+        $('#user_id').val(data.id);
+        $('#name').val(data.name);
+        $('#email').val(data.email);
+
+    })
+}
+
+function getContribuableValues(nif){
+    $.ajax({
+        url: '' + nif,
+        type: 'get',
+        dataType: 'json',
+        success: function(response){
+            $('#userShowModal').html("User Details");
+            $('#ajax-modal').modal('show');
+            $('#user_id').val(data.id);
+            $('#name').val(data.name);
+            $('#email').val(data.email);
+        }
+    });
+}
+
 function GetIEVersion() {
   var sAgent = window.navigator.userAgent;
   var Idx = sAgent.indexOf("MSIE");
 
   // If IE, return version number.
-  if (Idx > 0) 
+  if (Idx > 0)
     return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
 
   // If IE 11 then look for Updated user agent string.
-  else if (!!navigator.userAgent.match(/Trident\/7\./)) 
+  else if (!!navigator.userAgent.match(/Trident\/7\./))
     return 11;
 
   else

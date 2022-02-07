@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page_name' => 'Contribuables',
+@extends('layouts.app', ['page_name' => 'Liste des contribuables',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
                          'category_name' => 'Gestion des contribuables'])

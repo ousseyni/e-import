@@ -4,6 +4,7 @@
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 
 @if ($page_name != 'coming_soon' && $page_name != 'contact_us' && $page_name != 'error404' && $page_name != 'error500' && $page_name != 'error503' && $page_name != 'faq' && $page_name != 'helpdesk' && $page_name != 'maintenence' && $page_name != 'privacy' && $page_name != 'auth_boxed' && $page_name != 'auth_default')
+
 <script src="{{asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 <script src="{{asset('assets/js/app.js')}}"></script>
 <script>
@@ -45,6 +46,12 @@
 <script type="text/javascript">
     feather.replace();
 </script>
+
+
+{{-- Forms Input Mask --}}
+<script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
+<script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
 
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
@@ -1020,13 +1027,6 @@
           //Second upload
           var secondUpload = new FileUploadWithPreview('mySecondImage')
       </script>
-      @break
-
-    @case('input_mask')
-      {{-- Forms Input Mask --}}
-      <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
-      <script src="{{asset('plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
-      <script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
       @break
 
     @case('maxlength')

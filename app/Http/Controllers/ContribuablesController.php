@@ -35,7 +35,7 @@ class ContribuablesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
@@ -71,7 +71,7 @@ class ContribuablesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($slug)
     {
@@ -85,7 +85,7 @@ class ContribuablesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
@@ -111,7 +111,7 @@ class ContribuablesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy($slug)
     {
@@ -120,5 +120,23 @@ class ContribuablesController extends Controller
 
         return redirect('/contribuables')->with('success', 'Contribuable supprimée avec succès');
 
+    }
+
+    public function getContribuableByNif($nif) {
+        // get records from database
+        $nb =Contribuables::where('nif', '=', $nif)->count();
+        if ($nb == 1) {
+            $arr['data'] = Contribuables::where('nif', $nif)->first();
+            $arr['msg'] = "Contribuable disponible dans la base de données";
+            $arr['nb'] = $nb;
+        }
+        else {
+            $arr['data'] = nullOrEmptyString();
+            $arr['msg'] = "Contribuable non disponible dans la base de données";
+            $arr['nb'] = $nb;
+        }
+
+        echo json_encode($arr);
+        exit;
     }
 }
