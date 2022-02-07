@@ -10,11 +10,12 @@ class TypeContribuableController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $typecontribuables = TypeContribuable::all();
+        return view('pages.type-contribuable.index', compact('typecontribuables'));
     }
 
     /**
@@ -81,10 +82,13 @@ class TypeContribuableController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
-        //
+        $typecontribuable = TypeContribuable::findOrFail($id);
+        $typecontribuable->delete();
+
+        return redirect('/type-contribuable')->with('success', 'Type contribuable supprimé avec succès');
     }
 }

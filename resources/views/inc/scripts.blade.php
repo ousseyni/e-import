@@ -14,6 +14,34 @@
 <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
 <script src="{{asset('plugins/highlight/highlight.pack.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>
+
+{{-- Tables Datatable Basic --}}
+<script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
+<script>
+    $('#zero-config').DataTable({
+        "oLanguage": {
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "sSearchPlaceholder": "Chercher...",
+            "sProcessing": "Traitement en cours ...",
+            "sLengthMenu": "Afficher _MENU_ lignes",
+            "sZeroRecords": "Aucun résultat trouvé",
+            "sEmptyTable": "Aucune donnée disponible",
+            "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+            "sInfoEmpty": "Aucune ligne affichée",
+            "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+            "sInfoPostFix": "",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Chargement...",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [10, 20, 50],
+        "pageLength": 10
+    });
+</script>
+
+
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
@@ -42,7 +70,7 @@
     @case('chat')
       {{-- App Chat --}}
       <script src="{{asset('assets/js/apps/mailbox-chat.js')}}"></script>
-      @break    
+      @break
 
     @case('contacts')
       {{-- App Contact --}}
@@ -54,7 +82,7 @@
       {{-- App Invoice --}}
       <script src="{{asset('assets/js/apps/invoice.js')}}"></script>
       @break
-    
+
     @case('mailbox')
       {{-- App Mailbox --}}
       <script src="{{asset('assets/js/ie11fix/fn.fix-padStart.js')}}"></script>
@@ -69,7 +97,7 @@
       <script src="{{asset('assets/js/ie11fix/fn.fix-padStart.js')}}"></script>
       <script src="{{asset('assets/js/apps/notes.js')}}"></script>
       @break
-    
+
     @case('scrumboard')
       {{-- App Scrumboard --}}
       <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -81,14 +109,14 @@
       {{-- App Todo List --}}
       <script src="{{asset('assets/js/ie11fix/fn.fix-padStart.js')}}"></script>
       <script src="{{asset('plugins/editors/quill/quill.js')}}"></script>
-      <script src="{{asset('assets/js/apps/todoList.js')}}"></script>  
+      <script src="{{asset('assets/js/apps/todoList.js')}}"></script>
       @break
 
     @case('auth_boxed')
       {{-- Auth Lockscreen Boxed --}}
       <script src="{{asset('assets/js/authentication/form-2.js')}}"></script>
       @break
-    
+
     @case('auth_default')
       {{-- Auth Lockscreen --}}
       <script src="{{asset('assets/js/authentication/form-1.js')}}"></script>
@@ -126,7 +154,7 @@
       <script src="{{asset('assets/js/components/custom-countdown.js')}}"></script>
       @break
 
-    @case('counter')  
+    @case('counter')
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
       <script src="{{asset('plugins/counter/jquery.countTo.js')}}"></script>
       <script src="{{asset('assets/js/components/custom-counter.js')}}"></script>
@@ -171,7 +199,7 @@
 
     @case('pricing_table')
       {{-- Components Pricing Tables --}}
-      <script>        
+      <script>
         var getInputStatus = document.getElementById('radio-6');
         var getPricingContainer = document.getElementsByClassName('pricing-plans-container')[0];
         var getYearlySwitch = document.getElementsByClassName('billed-yearly-radio')[0];
@@ -238,14 +266,14 @@
               selector: 'skill-input'
           });
           instance.addData(['PHP', 'Wordpress', 'Javascript', 'jQuery'])
-      </script>      
+      </script>
       @break
 
     @case('popovers')
       {{-- Element popovers --}}
       <script src="{{asset('assets/js/elements/popovers.js')}}"></script>
       @break
-    
+
     @case('search')
       {{-- Elements Serach --}}
       <script src="{{asset('assets/js/elements/custom-search.js')}}"></script>
@@ -283,7 +311,7 @@
       <script src="{{asset('plugins/jvector/worldmap_script/jquery-jvectormap-world-mill-en.js')}}"></script>
       <script src="{{asset('plugins/jvector/jvector_script.js')}}"></script>
       @break
-    
+
     @case('coming_soon')
       {{-- Pages Coming Soon --}}
       <script src="{{asset('assets/js/pages/coming-soon/coming-soon.js')}}"></script>
@@ -597,7 +625,7 @@
       {{-- Pages Helpdesk --}}
       <script src="{{asset('assets/js/pages/helpdesk.js')}}"></script>
       @break
-    
+
     @case('privacy')
       {{-- Pages Privacy --}}
       <script>
@@ -627,7 +655,7 @@
               $('#alter_pagination').DataTable( {
                   "pagingType": "full_numbers",
                   "oLanguage": {
-                      "oPaginate": { 
+                      "oPaginate": {
                           "sFirst": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>',
                           "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
                           "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
@@ -640,7 +668,7 @@
                   },
                   "stripeClasses": [],
                   "lengthMenu": [7, 10, 20, 50],
-                  "pageLength": 7 
+                  "pageLength": 7
               });
           } );
       </script>
@@ -660,26 +688,7 @@
               },
               "stripeClasses": [],
               "lengthMenu": [7, 10, 20, 50],
-              "pageLength": 7 
-          });
-      </script>
-      @break
-
-    @case('basic')
-      {{-- Tables Datatable Basic --}}
-      <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
-      <script>
-          $('#zero-config').DataTable({
-              "oLanguage": {
-                  "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                  "sInfo": "Showing page _PAGE_ of _PAGES_",
-                  "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                  "sSearchPlaceholder": "Search...",
-                  "sLengthMenu": "Results :  _MENU_",
-              },
-              "stripeClasses": [],
-              "lengthMenu": [7, 10, 20, 50],
-              "pageLength": 7 
+              "pageLength": 7
           });
       </script>
       @break
@@ -728,7 +737,7 @@
                   "sLengthMenu": "Results :  _MENU_",
               },
               "lengthMenu": [5, 10, 20, 50],
-              "pageLength": 5 
+              "pageLength": 5
           });
 
           multiCheck(c2);
@@ -754,7 +763,7 @@
       {{-- Table Datatable HTML5 --}}
       <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
       <script src="{{asset('plugins/table/datatable/button-ext/dataTables.buttons.min.js')}}"></script>
-      <script src="{{asset('plugins/table/datatable/button-ext/jszip.min.js')}}"></script>    
+      <script src="{{asset('plugins/table/datatable/button-ext/jszip.min.js')}}"></script>
       <script src="{{asset('plugins/table/datatable/button-ext/buttons.html5.min.js')}}"></script>
       <script src="{{asset('plugins/table/datatable/button-ext/buttons.print.min.js')}}"></script>
       <script>
@@ -777,7 +786,7 @@
               },
               "stripeClasses": [],
               "lengthMenu": [7, 10, 20, 50],
-              "pageLength": 7 
+              "pageLength": 7
           } );
       </script>
       @break
@@ -785,35 +794,35 @@
     @case('live_dom_ordering')
       {{-- Table Datatable Live Dom Ordering --}}
       <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
-      <script>        
+      <script>
           /* Create an array with the values of all the input boxes in a column */
           $.fn.dataTable.ext.order['dom-text'] = function  ( settings, col )
           {
               return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
                   return $('input', td).val();
               } );
-          }         
+          }
           /* Create an array with the values of all the input boxes in a column, parsed as numbers */
           $.fn.dataTable.ext.order['dom-text-numeric'] = function  ( settings, col )
           {
               return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
                   return $('input', td).val() * 1;
               } );
-          }         
+          }
           /* Create an array with the values of all the select options in a column */
           $.fn.dataTable.ext.order['dom-select'] = function  ( settings, col )
           {
               return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
                   return $('select', td).val();
               } );
-          }         
+          }
           /* Create an array with the values of all the checkboxes in a column */
           $.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col )
           {
               return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
                   return $('input', td).prop('checked') ? '1' : '0';
               } );
-          }         
+          }
           /* Initialise the table with the required column ordering data types */
           $(document).ready(function() {
               $('#example').DataTable( {
@@ -832,7 +841,7 @@
                   },
                   "stripeClasses": [],
                   "lengthMenu": [7, 10, 20, 50],
-                  "pageLength": 7 
+                  "pageLength": 7
               } );
           } );
       </script>
@@ -872,7 +881,7 @@
           });
       </script>
       @break
-    
+
 
     @case('multiple_tables')
       {{-- Table Datatable Multiple Tables --}}
@@ -902,7 +911,7 @@
     @case('ordering_sorting')
       {{-- Table Datatable Order Sorting --}}
       <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
-      <script>        
+      <script>
           $('#default-ordering').DataTable( {
               "oLanguage": {
                   "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
@@ -930,7 +939,7 @@
                   var min = parseInt( $('#min').val(), 10 );
                   var max = parseInt( $('#max').val(), 10 );
                   var age = parseFloat( data[3] ) || 0; // use data for the age column
-              
+
                   if ( ( isNaN( min ) && isNaN( max ) ) ||
                           ( isNaN( min ) && age <= max ) ||
                           ( min <= age   && isNaN( max ) ) ||
@@ -940,7 +949,7 @@
                   }
                   return false;
               }
-          );         
+          );
           $(document).ready(function() {
               var table = $('#range-search').DataTable({
                   "oLanguage": {
@@ -952,12 +961,12 @@
                   },
                   "stripeClasses": [],
                   "lengthMenu": [7, 10, 20, 50],
-                  "pageLength": 7 
-              });             
+                  "pageLength": 7
+              });
               // Event listener to the two range filtering inputs to redraw on input
               $('#min, #max').keyup( function() { table.draw(); } );
           } );
-      </script>      
+      </script>
       @break
 
     @case('account_settings')
@@ -993,7 +1002,7 @@
       <script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>
       <script src="{{asset('assets/js/forms/custom-clipboard.js')}}"></script>
       @break
-      
+
     @case('date_range_picker')
       {{-- Forms Date Range Picker --}}
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
@@ -1001,9 +1010,9 @@
       <script src="{{asset('plugins/noUiSlider/nouislider.min.js')}}"></script>
       <script src="{{asset('plugins/flatpickr/custom-flatpickr.js')}}"></script>
       <script src="{{asset('plugins/noUiSlider/custom-nouiSlider.js')}}"></script>
-      <script src="{{asset('plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js')}}"></script>      
+      <script src="{{asset('plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js')}}"></script>
       @break
-    
+
     @case('file_upload')
       {{-- Forms File Upload --}}
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
@@ -1064,7 +1073,7 @@
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
       <script src="{{asset('assets/js/forms/bootstrap_validation/bs_validation_script.js')}}"></script>
       @break
-    
+
     @case('wizards')
       {{-- Forms Wizards --}}
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>

@@ -5,9 +5,101 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 
-@if ($page_name != 'coming_soon' && $page_name != 'contact_us' && $page_name != 'error404' && $page_name != 'error500' && $page_name != 'error503' && $page_name != 'faq' && $page_name != 'helpdesk' && $page_name != 'maintenence' && $page_name != 'privacy' && $page_name != 'auth_boxed' && $page_name != 'auth_default')
+@if ($page_name != 'error404')
 <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
+
+{{-- Table Datatable Basic --}}
+<link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/datatables.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/dt-global_style.css')}}">
+
+{{-- Font Icons --}}
+<link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/regular.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/fontawesome.css')}}">
+<style>
+    .feather-icon .icon-section {
+        padding: 30px;
+    }
+    .feather-icon .icon-section h4 {
+        color: #3b3f5c;
+        font-size: 17px;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 16px;
+    }
+    .feather-icon .icon-content-container {
+        padding: 0 16px;
+        width: 86%;
+        margin: 0 auto;
+        border: 1px solid #bfc9d4;
+        border-radius: 6px;
+    }
+    .feather-icon .icon-section p.fs-text {
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+    .feather-icon .icon-container { cursor: pointer; }
+    .feather-icon .icon-container svg {
+        color: #3b3f5c;
+        margin-right: 6px;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        fill: rgba(0, 23, 55, 0.08);
+    }
+    .feather-icon .icon-container:hover svg {
+        color: #1b55e2;
+        fill: rgba(27, 85, 226, 0.23921568627450981);
+    }
+    .feather-icon .icon-container span { display: none; }
+    .feather-icon .icon-container:hover span { color: #1b55e2; }
+    .feather-icon .icon-link {
+        color: #1b55e2;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+
+    /*FAB*/
+    .fontawesome .icon-section {
+        padding: 30px;
+    }
+    .fontawesome .icon-section h4 {
+        color: #3b3f5c;
+        font-size: 17px;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 16px;
+    }
+    .fontawesome .icon-content-container {
+        padding: 0 16px;
+        width: 86%;
+        margin: 0 auto;
+        border: 1px solid #bfc9d4;
+        border-radius: 6px;
+    }
+    .fontawesome .icon-section p.fs-text {
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+    .fontawesome .icon-container { cursor: pointer; }
+    .fontawesome .icon-container i {
+        font-size: 20px;
+        color: #3b3f5c;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .fontawesome .icon-container:hover i { color: #1b55e2; }
+    .fontawesome .icon-container span { color: #888ea8; display: none; }
+    .fontawesome .icon-container:hover span { color: #1b55e2; }
+    .fontawesome .icon-link {
+        color: #1b55e2;
+        font-weight: 600;
+        font-size: 14px;
+    }
+</style>
+
 @endif
 <!-- END GLOBAL MANDATORY STYLES -->
 
@@ -33,12 +125,12 @@
       <link href="{{asset('plugins/flatpickr/custom-flatpickr.css')}}" rel="stylesheet" type="text/css">
       <link href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}" rel="stylesheet" type="text/css" />
       <style>
-          
+
           .widget-content-area { border-radius: 6px; margin-bottom: 10px; }
           .daterangepicker.dropdown-menu {
               z-index: 1059;
           }
-          
+
       </style>
       @break
 
@@ -58,7 +150,7 @@
       {{-- App invoice --}}
       <link href="{{asset('assets/css/apps/invoice.css')}}" rel="stylesheet" type="text/css" />
       @break
-    
+
     @case('mailbox')
       {{-- App Mailbox --}}
       <link rel="stylesheet" type="text/css" href="{{asset('plugins/editors/quill/quill.snow.css')}}">
@@ -74,7 +166,7 @@
       <link href="{{asset('assets/css/apps/notes.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}" rel="stylesheet" type="text/css" />
       @break
-    
+
     @case('scrumboard')
       {{-- App Scrumboard --}}
       <link href="{{asset('assets/css/apps/scrumboard.css')}}" rel="stylesheet" type="text/css" />
@@ -94,7 +186,7 @@
       <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}">
       <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/switches.css')}}">
       @break
-    
+
     @case('auth_default')
       {{-- Auth Lockscreen  --}}
       <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" type="text/css" />
@@ -125,7 +217,7 @@
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css">
       <link rel="stylesheet" type="text/css" href="{{asset('plugins/animate/animate.css')}}">
-      <style>   
+      <style>
         .blockui-growl-message {
             display: none;
             text-align: left;
@@ -164,7 +256,7 @@
       <link href="{{asset('assets/css/components/custom-countdown.css')}}" rel="stylesheet" type="text/css">
       @break
 
-    @case('counter')  
+    @case('counter')
       {{-- Component Counter --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('assets/css/components/custom-counter.css')}}" rel="stylesheet" type="text/css">
@@ -195,7 +287,7 @@
       {{-- Components Modal --}}
       <link href="{{asset('plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link href="{{asset('assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css" />  
+      <link href="{{asset('assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css" />
       @break
 
     @case('pricing_table')
@@ -348,7 +440,7 @@
       {{-- Elements Popovers --}}
       <link href="{{asset('assets/css/elements/popover.css')}}" rel="stylesheet" type="text/css" />
       @break
-    
+
     @case('search')
       {{-- Elements Search --}}
       <link href="{{asset('assets/css/elements/search.css')}}" rel="stylesheet" type="text/css" />
@@ -367,95 +459,6 @@
     @case('typography')
       {{-- Elements Typography --}}
       <link href="{{asset('assets/css/elements/custom-typography.css')}}" rel="stylesheet" type="text/css" />
-      @break
-
-    @case('font_icons')
-      {{-- Font Icons --}}
-      <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/regular.css')}}">
-      <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/fontawesome.css')}}">
-      <style>
-          .feather-icon .icon-section {
-            padding: 30px;
-        }
-        .feather-icon .icon-section h4 {
-            color: #3b3f5c;
-            font-size: 17px;
-            font-weight: 600;
-            margin: 0;
-            margin-bottom: 16px;
-        }
-        .feather-icon .icon-content-container {
-            padding: 0 16px;
-            width: 86%;
-            margin: 0 auto;
-            border: 1px solid #bfc9d4;
-            border-radius: 6px;
-        }
-        .feather-icon .icon-section p.fs-text {
-            padding-bottom: 30px;
-            margin-bottom: 30px;
-        }
-        .feather-icon .icon-container { cursor: pointer; }
-        .feather-icon .icon-container svg {
-            color: #3b3f5c;
-            margin-right: 6px;
-            vertical-align: middle;
-            width: 20px;
-            height: 20px;
-            fill: rgba(0, 23, 55, 0.08);
-        }
-        .feather-icon .icon-container:hover svg {
-            color: #1b55e2;
-            fill: rgba(27, 85, 226, 0.23921568627450981);
-        }
-        .feather-icon .icon-container span { display: none; }
-        .feather-icon .icon-container:hover span { color: #1b55e2; }
-        .feather-icon .icon-link {
-            color: #1b55e2;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-
-        /*FAB*/
-        .fontawesome .icon-section {
-            padding: 30px;
-        }
-        .fontawesome .icon-section h4 {
-            color: #3b3f5c;
-            font-size: 17px;
-            font-weight: 600;
-            margin: 0;
-            margin-bottom: 16px;
-        }
-        .fontawesome .icon-content-container {
-            padding: 0 16px;
-            width: 86%;
-            margin: 0 auto;
-            border: 1px solid #bfc9d4;
-            border-radius: 6px;
-        }
-        .fontawesome .icon-section p.fs-text {
-            padding-bottom: 30px;
-            margin-bottom: 30px;
-        }
-        .fontawesome .icon-container { cursor: pointer; }
-        .fontawesome .icon-container i {
-            font-size: 20px;
-            color: #3b3f5c;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        .fontawesome .icon-container:hover i { color: #1b55e2; }
-        .fontawesome .icon-container span { color: #888ea8; display: none; }
-        .fontawesome .icon-container:hover span { color: #1b55e2; }
-        .fontawesome .icon-link {
-            color: #1b55e2;
-            font-weight: 600;
-            font-size: 14px;
-        }
-      </style>
       @break
 
     @case('maps')
@@ -484,7 +487,7 @@
           }
       </style>
       @break
-    
+
     @case('coming_soon')
       {{-- Pages Coming Soon --}}
       <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" type="text/css" />
@@ -578,7 +581,7 @@
         }
       </style>
       @break
-    
+
     @case('privacy')
       {{-- Pages Privacy --}}
       <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" type="text/css" />
@@ -591,7 +594,7 @@
 
         /*
             Just for demo purpose ---- Remove it.
-        */        
+        */
         /*<starter kit design>*/
 
         .widget-one {
@@ -607,12 +610,12 @@
             font-size: 15px;
             margin-bottom: 0;
         }
-        
+
         /*/<starter kit design>*/
 
       </style>
       @break
-    
+
     @case('boxed')
       {{-- Starter Kit Boxed menu --}}
       <style>
@@ -666,7 +669,7 @@
 
       </style>
       @break
-    
+
     @case('breadcrumb')
       {{-- Starter Kit Breadcrumb --}}
       <style>
@@ -789,12 +792,6 @@
       <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/dt-global_style-light.css')}}">
       @break
 
-    @case('basic')
-      {{-- Table Datatable Basic --}}
-      <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/datatables.css')}}">
-      <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/dt-global_style.css')}}">
-      @break
-
     @case('custom')
       {{-- Table Datatable Custom --}}
       <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/datatables.css')}}">
@@ -905,7 +902,7 @@
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/custom-clipboard.css')}}">
       @break
-      
+
     @case('date_range_picker')
       {{-- Forms Date Range Picker --}}
       <link href="{{asset('plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
@@ -915,7 +912,7 @@
       <link href="{{asset('plugins/noUiSlider/custom-nouiSlider.css')}}" rel="stylesheet" type="text/css">
       <link href="{{asset('plugins/bootstrap-range-Slider/bootstrap-slider.css')}}" rel="stylesheet" type="text/css">
       @break
-    
+
     @case('file_upload')
       {{-- Forms File Upload --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
@@ -983,7 +980,7 @@
       {{-- Forms Validation --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       @break
-    
+
     @case('wizards')
       {{-- Forms Wizards --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />

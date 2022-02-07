@@ -50,6 +50,5 @@
     <!-- END MAIN CONTAINER -->
 
     @include('inc.scripts')
-
 </body>
 </html>
