@@ -43,7 +43,7 @@ class CategorieProduitsController extends Controller
         ]);
         $show = CategorieProduit::create($validatedData);
 
-        return redirect('/categorie-produit')->with('success', 'Categorie Produit is successfully saved');
+        return redirect('/categorie-produits')->with('success', 'Categorie Produit is successfully saved');
 
     }
 
@@ -89,6 +89,10 @@ class CategorieProduitsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categorieproduits = CategorieProduit::findOrFail($id);
+        $categorieproduits->delete();
+
+        return redirect('/categorie-produits')->with('success', 'Catégorie produit supprimée avec succès');
+
     }
 }
