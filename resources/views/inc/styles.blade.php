@@ -13,6 +13,9 @@
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/datatables.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/table/datatable/dt-global_style.css')}}">
 
+{{-- Forms Input Mask --}}
+<link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
+
 {{-- Font Icons --}}
 <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/regular.css')}}">
@@ -924,11 +927,6 @@
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}">
       <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/switches.css')}}">
-      @break
-
-    @case('input_mask')
-      {{-- Forms Input Mask --}}
-      <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       @break
 
     @case('layouts')

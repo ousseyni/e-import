@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page_name' => 'Contribuables',
+@extends('layouts.app', ['page_name' => 'Nouveau contribuable',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
                          'category_name' => 'Gestion des contribuables',])
@@ -35,13 +35,17 @@
                             <form method="post" action="{{ route('contribuables.store') }}">
                                 @csrf
                                 <div class="form-group row input-group-sm mb-4">
+                                    <label for="nif" class="col-sm-2 col-form-label col-form-label-sm">N.I.F.</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" onblur="getContribuableValues()" id="nif" name="nif" class="form-control form-control-sm" id="nif" placeholder="NIF">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row input-group-sm mb-2">
                                     <label for="nif" class="col-sm-2 col-form-label col-form-label-sm">NIF</label>
                                     <div class="col-sm-10">
                                         <input type="text" name="nif" class="form-control form-control-sm" id="nif" placeholder="NIF">
-                                    </div>
-                                    <label for="raisonsocial" class="col-sm-2 col-form-label col-form-label-sm">Raison Sociale</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="raisonsocial" class="form-control form-control-sm" id="raisonsocial" placeholder="Raison sociale">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -54,4 +58,5 @@
             </div>
         </div>
     </div>
+
 @endsection
