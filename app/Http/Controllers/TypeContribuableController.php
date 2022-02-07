@@ -43,7 +43,7 @@ class TypeContribuableController extends Controller
 
         $show = TypeContribuables::create($validatedData);
 
-        return redirect('/type-contribuables')->with('success', 'Type Contribuable is successfully saved');
+        return redirect('/type-contribuables')->with('success', 'Type Contribuable enregistré avec succès');
     }
 
     /**

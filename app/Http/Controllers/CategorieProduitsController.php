@@ -43,7 +43,7 @@ class CategorieProduitsController extends Controller
         ]);
         $show = CategorieProduit::create($validatedData);
 
-        return redirect('/categorie-produits')->with('success', 'Categorie Produit is successfully saved');
+        return redirect('/categorie-produits')->with('success', 'Categorie Produit enregistrée avec succès');
 
     }
 
@@ -64,9 +64,11 @@ class CategorieProduitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
+        return view('pages.categorie-produits.edit', compact('categorieproduit'));
+
     }
 
     /**
@@ -76,9 +78,17 @@ class CategorieProduitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $validatedData = $request->validate([
+            'libelle' => 'required|max:100',
+            'montant' => 'required|max:30'
+        ]);
+        //TypeContribuables::whereId($id)->update($validatedData);
+        CategorieProduit::where('slug', '=', $slug)->update($validatedData);
+
+        return redirect('/categorie-produits')->with('success', 'Catégorie produit modifiée avec succès');
+
     }
 
     /**
@@ -89,7 +99,7 @@ class CategorieProduitsController extends Controller
      */
     public function destroy($id)
     {
-        $categorieproduits = CategorieProduit::findOrFail($id);
+        $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
         $categorieproduits->delete();
 
         return redirect('/categorie-produits')->with('success', 'Catégorie produit supprimée avec succès');

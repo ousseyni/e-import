@@ -17,6 +17,7 @@ class CreateCategorieProduitsTable extends Migration
             $table->id();
             $table->string('libelle',200);
             $table->integer('montant');
+            $table->string('slug', 100);
             $table->timestamps();
         });
     }

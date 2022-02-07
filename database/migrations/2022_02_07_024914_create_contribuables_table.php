@@ -24,6 +24,7 @@ class CreateContribuablesTable extends Migration
             $table->string('numagrement');
             $table->string('numcartecomm');
             $table->integer('typecontribuableid')->unsigned();
+            $table->string('slug', 100);
             $table->timestamps();
             $table->foreign('typecontribuableid')->references('id')->on('type_contribuables')->nullOnDelete();
         });
