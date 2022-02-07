@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\TypeContribuable;
+use App\TypeContribuables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TypeContribuableController extends Controller
 {
@@ -14,8 +15,8 @@ class TypeContribuableController extends Controller
      */
     public function index()
     {
-        $typecontribuables = TypeContribuable::all();
-        return view('pages.type-contribuable.index', compact('typecontribuables'));
+        $typecontribuables = TypeContribuables::all();
+        return view('pages.type-contribuables.index', compact('typecontribuables'));
     }
 
     /**
@@ -25,7 +26,7 @@ class TypeContribuableController extends Controller
      */
     public function create()
     {
-        return view('pages.type-contribuable.create');
+        return view('pages.type-contribuables.create');
     }
 
     /**
@@ -37,11 +38,12 @@ class TypeContribuableController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'libelle' => 'required|max:100'
+            'libelle' => 'required|max:100',
         ]);
-        $show = TypeContribuable::create($validatedData);
 
-        return redirect('/type-contribuable')->with('success', 'Type Contribuable is successfully saved');
+        $show = TypeContribuables::create($validatedData);
+
+        return redirect('/type-contribuables')->with('success', 'Type Contribuable is successfully saved');
     }
 
     /**
@@ -59,11 +61,12 @@ class TypeContribuableController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $typecontribuable = TypeContribuables::where('slug', '=', $slug)->firstOrFail();
+        return view('pages.type-contribuables.edit', compact('typecontribuable'));
     }
 
     /**
@@ -71,11 +74,17 @@ class TypeContribuableController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $validatedData = $request->validate([
+            'libelle' => 'required|max:100',
+        ]);
+        //TypeContribuables::whereId($id)->update($validatedData);
+        TypeContribuables::where('slug', '=', $slug)->update($validatedData);
+
+        return redirect('/type-contribuables')->with('success', 'Type contribuable modifié avec succès');
     }
 
     /**
@@ -84,11 +93,12 @@ class TypeContribuableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $typecontribuable = TypeContribuable::findOrFail($id);
+        //$typecontribuable = TypeContribuables::findOrFail($id);
+        $typecontribuable = TypeContribuables::where('slug', '=', $slug)->firstOrFail();
         $typecontribuable->delete();
 
-        return redirect('/type-contribuable')->with('success', 'Type contribuable supprimé avec succès');
+        return redirect('/type-contribuables')->with('success', 'Type contribuable supprimé avec succès');
     }
 }

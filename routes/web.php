@@ -1322,6 +1322,6 @@ Route::get('/', function() {
     return redirect('/sales');
 });
 
-Route::resource('type-contribuable', 'TypeContribuableController');
+Route::resource('type-contribuables', 'TypeContribuableController');
 Route::resource('categorie-produits', 'CategorieProduitsController');
 

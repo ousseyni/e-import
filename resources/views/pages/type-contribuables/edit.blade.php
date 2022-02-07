@@ -1,7 +1,7 @@
-@extends('layouts.app', ['page_name' => 'Type de Contribuable',
+@extends('layouts.app', ['page_name' => 'Type de contribuables',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Parametrage',])
+                         'category_name' => 'Gestion des contribuables'])
 
 @section('content')
 
@@ -16,7 +16,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Nouveau type de contribuable</h4>
+                                    <h4>Modification type de contribuable</h4>
                                 </div>
                             </div>
                         </div>
@@ -32,15 +32,16 @@
                                 </div><br />
                             @endif
 
-                            <form method="post" action="{{ route('type-contribuable.store') }}">
+                            <form method="post" action="{{ route('type-contribuables.update', $typecontribuable->slug) }}">
                                 @csrf
+                                @method('PATCH')
                                 <div class="form-group row input-group-sm mb-4">
                                     <label for="libelle" class="col-sm-2 col-form-label col-form-label-sm">Libellé</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
+                                        <input value="{{ $typecontribuable->libelle }}" type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                <button type="submit" class="btn btn-primary">Mettre à jour</button>
                             </form>
 
                         </div>

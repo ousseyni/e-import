@@ -16,6 +16,7 @@ class CreateTypeContribuablesTable extends Migration
         Schema::create('type_contribuables', function (Blueprint $table) {
             $table->id();
             $table->string('libelle', 100);
+            $table->string('slug', 100);
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
-@extends('layouts.app', ['page_name' => 'Catégorie de produits',
+@extends('layouts.app', ['page_name' => 'Catégorie des Produits',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Parametrage',])
+                         'category_name' => 'Gestion des Produits'])
 
 @section('content')
     <div class="layout-px-spacing">
@@ -18,6 +18,7 @@
                     @endif
 
                     <div class="table-responsive mb-4 mt-4">
+                        <a href="{{ route('categorie-produits.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouvelle catégorie</a>
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>

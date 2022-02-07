@@ -1,7 +1,7 @@
-@extends('layouts.app', ['page_name' => 'Catégorie des Produits',
+@extends('layouts.app', ['page_name' => 'Contribuables',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Gestion des Produits'])
+                         'category_name' => 'Parametrage',])
 
 @section('content')
 
@@ -16,7 +16,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Nouvelle catégorie de produit</h4>
+                                    <h4>Nouveau contribuable</h4>
                                 </div>
                             </div>
                         </div>
@@ -32,18 +32,12 @@
                                 </div><br />
                             @endif
 
-                            <form method="post" action="{{ route('categorie-produits.store') }}">
+                            <form method="post" action="{{ route('contribuables.store') }}">
                                 @csrf
                                 <div class="form-group row input-group-sm mb-4">
                                     <label for="libelle" class="col-sm-2 col-form-label col-form-label-sm">Libellé</label>
                                     <div class="col-sm-10">
                                         <input type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
-                                    </div>
-                                </div>
-                                <div class="form-group row input-group-sm mb-4">
-                                    <label for="montant" class="col-sm-2 col-form-label col-form-label-sm">Montant</label>
-                                    <div class="col-sm-10">
-                                        <input type="number" name="montant" class="form-control form-control-sm" id="montant" placeholder="montant">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Enregistrer</button>

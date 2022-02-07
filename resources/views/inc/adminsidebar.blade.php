@@ -19,6 +19,47 @@
                         </a>
                     </li>
 
+                    <li class="menu {{ ($category_name === 'Gestion des contribuables') ? 'active' : '' }}">
+                        <a href="#contribuables" data-active="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" class="dropdown-toggle">
+                            <div class="icon-container">
+                                <i data-feather="shopping-bag"></i><span>Base Contribuables</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des contribuables') ? 'show' : '' }}" id="contribuables" data-parent="#accordionExample">
+                            <li class="{{ ($page_name === 'Nouveau contribuable') ? 'active' : '' }}">
+                                <a href="#"> Nouveau contribuable </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
+                                <a href="#"> Liste contribuables</a>
+                            </li>
+                            <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
+                                <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu {{ ($category_name === 'Gestion des Produits') ? 'active' : '' }}">
+                        <a href="#produits" data-active="{{ ($category_name === 'Gestion des Produits') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des Produits') ? 'true' : 'false' }}" class="dropdown-toggle">
+                            <div class="icon-container">
+                                <i data-feather="grid"></i><span>Base Produits</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des Produits') ? 'show' : '' }}" id="produits" data-parent="#accordionExample">
+                            <li class="{{ ($page_name === 'Catégorie des Produits') ? 'active' : '' }}">
+                                <a href="{{ route('categorie-produits.index')  }}"> Catégorie de produits </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Liste des Produits') ? 'active' : '' }}">
+                                <a href="#"> Liste de produits</a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="menu {{ ($category_name === 'Gestion des A.M.M.') ? 'active' : '' }}">
                         <a href="#amc" data-active="{{ ($category_name === 'Gestion des A.M.M.') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des A.M.M.') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
@@ -108,18 +149,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'users') ? 'show' : '' }}" id="param" data-parent="#accordionExample">
-                            <li class="{{ ($page_name === 'profile') ? 'active' : '' }}">
-                                <a href="#"> Catégorie de Produits </a>
-                            </li>
-                            <li class="{{ ($page_name === 'profile') ? 'active' : '' }}">
-                                <a href="/users/profile"> Profils </a>
-                            </li>
-                            <li class="{{ ($page_name === 'account_setting') ? 'active' : '' }}">
-                                <a href="#"> Habilitations </a>
-                            </li>
-                            <li class="{{ ($page_name === 'account_setting') ? 'active' : '' }}">
-                                <a href="#"> Habilitations </a>
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Parametrage') ? 'show' : '' }}" id="param" data-parent="#accordionExample">
+                            <li class="{{ ($page_name === 'Grille des Prescription') ? 'active' : '' }}">
+                                <a href="#"> Grille des Prescriptions </a>
                             </li>
                         </ul>
                     </li>
