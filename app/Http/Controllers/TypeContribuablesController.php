@@ -6,7 +6,7 @@ use App\TypeContribuables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class TypeContribuableController extends Controller
+class TypeContribuablesController extends Controller
 {
     /**
      * Display a listing of the resource.

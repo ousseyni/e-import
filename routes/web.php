@@ -1322,7 +1322,7 @@ Route::get('/', function() {
     return redirect('/sales');
 });
 
-Route::resource('type-contribuables', 'TypeContribuableController');
+Route::resource('type-contribuables', 'TypeContribuablesController');
 Route::resource('categorie-produits', 'CategorieProduitsController');
 Route::resource('contribuables', 'ContribuablesController');
 
