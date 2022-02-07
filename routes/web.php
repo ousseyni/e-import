@@ -1325,4 +1325,5 @@ Route::get('/', function() {
 Route::resource('type-contribuables', 'TypeContribuablesController');
 Route::resource('categorie-produits', 'CategorieProduitsController');
 Route::resource('contribuables', 'ContribuablesController');
+Route::resource('demande-comptes', 'DemandeComptesController');
 
