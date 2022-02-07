@@ -8,6 +8,40 @@
 
             <ul class="list-unstyled menu-categories" id="accordionExample">
 
+                @if ($has_scrollspy === 'usagers')
+
+                    <li class="menu {{ ($category_name === 'bootstrap_basic_table') ? 'active' : '' }}">
+                        <a href="/tables/bootstrap_basic" data-active="{{ ($category_name === 'bootstrap_basic_table') ? 'true' : 'false' }}" aria-expanded="{{ ($category_name === 'bootstrap_basic_table') ? 'true' : 'false' }}" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <span>Accueil</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="menu {{ ($category_name === 'users') ? 'active' : '' }}">
+                        <a href="#users" data-active="{{ ($category_name === 'users') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'users') ? 'true' : 'false' }}" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                <span>Mise en Consommation</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'users') ? 'show' : '' }}" id="users" data-parent="#accordionExample">
+                            <li class="{{ ($page_name === 'profile') ? 'active' : '' }}">
+                                <a href="/users/profile"> Nouvelle demande </a>
+                            </li>
+                            <li class="{{ ($page_name === 'account_setting') ? 'active' : '' }}">
+                                <a href="/users/account_settings"> Mes demandes </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+
+
+
                 @if ($page_name != 'alt_menu' && $page_name != 'blank_page' && $page_name != 'boxed' && $page_name != 'breadcrumb' )
 
                     <li class="menu {{ ($category_name === 'Tableau de bord') ? 'active' : '' }}">
@@ -34,6 +68,9 @@
                             </li>
                             <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
                                 <a href="#"> Liste contribuables</a>
+                            </li>
+                            <li class="{{ ($page_name === 'En attente de validation') ? 'active' : '' }}">
+                                <a href="#"> En attente de validation</a>
                             </li>
                             <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
                                 <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
