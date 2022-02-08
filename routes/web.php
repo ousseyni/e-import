@@ -1326,5 +1326,7 @@ Route::resource('type-contribuables', 'TypeContribuablesController');
 Route::resource('categorie-produits', 'CategorieProduitsController');
 Route::resource('contribuables', 'ContribuablesController');
 Route::resource('demande-comptes', 'DemandeComptesController');
+Route::resource('demande-comptes', 'AmmsController');
+Route::resource('demande-comptes', 'AmcsController');
 
 Route::any('contribuables/info', 'ContribuablesController@getcontribuable');
