@@ -34,11 +34,21 @@ class DemandeComptesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nif' => 'required|max:15',
+            'nom' => 'max:50',
+            'num' => 'max:9',
+            'email' => 'required|max:50',
+            'piecesjointes' => 'required',
+        ]);
+        $show = DemandeComptes::create($validatedData);
+
+        return redirect('/demande-comptes')->with('success', 'Demande de compte enregistrée avec succès');
+
     }
 
     /**

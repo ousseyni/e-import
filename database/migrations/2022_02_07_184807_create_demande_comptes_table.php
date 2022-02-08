@@ -19,7 +19,7 @@ class CreateDemandeComptesTable extends Migration
             $table->string('nom');
             $table->string('num');
             $table->string('email');
-            $table->string('piecesjointes');
+            $table->binary('piecesjointes');
             $table->string('slug', 100);
             $table->timestamps();
         });

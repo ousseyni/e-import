@@ -6,6 +6,7 @@ $(document).ready(function(){
     $('#static-mask2').inputmask({mask: "aa-9999"});  //static mask
 
     $('#nif').inputmask({mask: "999999-A"});
+    $('#tel').inputmask({mask: "099-99-99-99"});
 
 
     // Dynamic Syntax
