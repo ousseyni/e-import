@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contribuables;
+use App\TypeContribuables;
 use Illuminate\Http\Request;
 
 class ContribuablesController extends Controller
@@ -14,8 +15,8 @@ class ContribuablesController extends Controller
      */
     public function index()
     {
-        $contribuables = Contribuables::all();
-
+        //$contribuables = Contribuables::all();
+        $contribuables = Contribuables::paginate(10);
         return view('pages.contribuables.index', compact('contribuables'));
 
     }
@@ -27,8 +28,8 @@ class ContribuablesController extends Controller
      */
     public function create()
     {
-
-        return view('pages.contribuables.create');
+        $typeContribuables = TypeContribuables::all(['id', 'libelle']);
+        return view('pages.contribuables.create', compact('typeContribuables'));
     }
 
     /**
@@ -40,17 +41,35 @@ class ContribuablesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nif' => 'required|max:100',
-            'raisonsocial' => 'max:100',
-            'rccm' => 'max:100',
+            'nif' => 'required|max:10',
+            'typecontribuableid' =>'numeric',
+            'raisonsociale' => 'required|max:100',
+            'siegesocial' => 'max:100',
             'bp' => 'max:100',
-            'tel' => 'max:100',
-            'email' => 'max:100',
-            'numagrement' => 'max:100',
-            'numcartecomm' => 'max:100',
-            'typecontribuableid' =>'required|numeric',
+            'tel' => 'required|max:100',
+            'rccm' => 'required|max:100',
+            'numagrement' => 'max:50',
+            'numcartecomm' => 'max:50',
+            'nomprenom' => 'required|max:200',
+            'email' => 'required|max:100'
         ]);
-        $show = Contribuables::create($validatedData);
+
+        //dd($validatedData);
+        Contribuables::updateOrCreate(
+            ['nif' => $validatedData['nif']],
+            [
+                'typecontribuableid' => $validatedData['typecontribuableid'],
+                'raisonsociale' => $validatedData['raisonsociale'],
+                'siegesocial' => $validatedData['siegesocial'],
+                'bp' => $validatedData['bp'],
+                'tel' => $validatedData['tel'],
+                'rccm' => $validatedData['rccm'],
+                'numagrement' => $validatedData['numagrement'],
+                'numcartecomm' => $validatedData['numcartecomm'],
+                'nomprenom' => $validatedData['nomprenom'],
+                'email' => $validatedData['email'],
+            ]
+        );
 
         return redirect('/contribuables')->with('success', 'Contribuable enregistrée avec succès');
 
@@ -70,13 +89,15 @@ class ContribuablesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($slug)
     {
-        $contribuables = Contribuables::where('slug', '=', $slug)->firstOrFail();
-        return view('pages.contribuables.edit', compact('contribuables'));
+        $contribuable = Contribuables::where('slug', '=', $slug)->firstOrFail();
+        $typeContribuables = TypeContribuables::all(['id', 'libelle']);
+
+        return view('pages.contribuables.edit', compact('contribuable', 'typeContribuables'));
 
     }
 
@@ -84,23 +105,26 @@ class ContribuablesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $slug)
     {
         $validatedData = $request->validate([
-            'nif' => 'required|max:100',
-            'raisonsocial' => 'max:100',
-            'rccm' => 'max:100',
+            'nif' => 'required|max:10',
+            'typecontribuableid' =>'numeric',
+            'raisonsociale' => 'required|max:100',
+            'siegesocial' => 'max:100',
             'bp' => 'max:100',
-            'tel' => 'max:100',
-            'email' => 'max:100',
-            'numagrement' => 'max:100',
-            'numcartecomm' => 'max:100',
-            'typecontribuableid' => 'max:100',
+            'tel' => 'required|max:100',
+            'rccm' => 'required|max:100',
+            'numagrement' => 'max:50',
+            'numcartecomm' => 'max:50',
+            'nomprenom' => 'required|max:200',
+            'email' => 'required|max:100'
         ]);
-        //Contribuables::whereId($id)->update($validatedData);
+
+        //dd($validatedData);
         Contribuables::where('slug', '=', $slug)->update($validatedData);
 
         return redirect('/contribuables')->with('success', 'Contribuable modifié avec succès');
@@ -122,21 +146,21 @@ class ContribuablesController extends Controller
 
     }
 
-    public function getContribuableByNif($nif) {
-        // get records from database
-        $nb =Contribuables::where('nif', '=', $nif)->count();
-        if ($nb == 1) {
-            $arr['data'] = Contribuables::where('nif', $nif)->first();
-            $arr['msg'] = "Contribuable disponible dans la base de données";
-            $arr['nb'] = $nb;
-        }
-        else {
-            $arr['data'] = nullOrEmptyString();
-            $arr['msg'] = "Contribuable non disponible dans la base de données";
-            $arr['nb'] = $nb;
-        }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getcontribuable(Request $request)
+    {
 
-        echo json_encode($arr);
-        exit;
+        $where = array('nif' => $request->nif);
+        $contribuable  = Contribuables::where($where)->first();
+        $nb  = Contribuables::where($where)->count();
+
+        return response()->json(
+            ['nb'=>$nb, 'data'=>$contribuable]
+        );
     }
 }

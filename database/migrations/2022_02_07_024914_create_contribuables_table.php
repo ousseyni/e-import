@@ -16,15 +16,18 @@ class CreateContribuablesTable extends Migration
         Schema::create('contribuables', function (Blueprint $table) {
             $table->id();
             $table->string('nif');
-            $table->string('raisonsocial');
-            $table->string('rccm');
-            $table->string('bp');
-            $table->string('tel');
-            $table->string('email');
-            $table->string('numagrement');
-            $table->string('numcartecomm');
-            $table->integer('typecontribuableid')->unsigned();
-            $table->string('slug', 100);
+            $table->integer('typecontribuableid')->unsigned()->nullable();
+            $table->string('raisonsociale');
+            $table->string('siegesocial')->nullable();
+            $table->string('bp')->nullable();
+            $table->string('tel')->nullable();
+            $table->string('rccm')->nullable();
+            $table->string('numagrement')->nullable();
+            $table->string('numcartecomm')->nullable();
+            $table->string('nomprenom')->nullable();
+            $table->string('email')->nullable();
+            $table->binary('pj')->nullable();
+            $table->string('slug', 100)->nullable();
             $table->timestamps();
             $table->foreign('typecontribuableid')->references('id')->on('type_contribuables')->nullOnDelete();
         });

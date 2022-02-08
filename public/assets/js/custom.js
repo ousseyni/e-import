@@ -117,35 +117,6 @@ $('.t-dot').tooltip({
 ================================================
 */
 
-function getContribuableValues() {
-
-    var nif = $("#nif").val();
-
-    $.get('ajax-crud/' + nif , function (data) {
-        $('#userShowModal').html("User Details");
-        $('#ajax-modal').modal('show');
-        $('#user_id').val(data.id);
-        $('#name').val(data.name);
-        $('#email').val(data.email);
-
-    })
-}
-
-function getContribuableValues(nif){
-    $.ajax({
-        url: '' + nif,
-        type: 'get',
-        dataType: 'json',
-        success: function(response){
-            $('#userShowModal').html("User Details");
-            $('#ajax-modal').modal('show');
-            $('#user_id').val(data.id);
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-        }
-    });
-}
-
 function GetIEVersion() {
   var sAgent = window.navigator.userAgent;
   var Idx = sAgent.indexOf("MSIE");
