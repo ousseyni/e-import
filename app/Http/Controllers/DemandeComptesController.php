@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Contribuables;
 use App\DemandeComptes;
+use App\Mail\MailTemplates;
+use App\TypeContribuables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DemandeComptesController extends Controller
 {
@@ -14,9 +18,9 @@ class DemandeComptesController extends Controller
      */
     public function index()
     {
-        $demandecomptes = DemandeComptes::all();
-
-        return view('pages.demande-comptes.index', compact('demandecomptes'));
+        //$demandecomptes = DemandeComptes::all();
+        $typeContribuables = TypeContribuables::all(['id', 'libelle']);
+        return view('pages.demande-comptes.index', compact('typeContribuables'));
 
     }
 
@@ -39,16 +43,40 @@ class DemandeComptesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nif' => 'required|max:15',
-            'nom' => 'max:50',
-            'num' => 'max:9',
-            'email' => 'required|max:50',
-            'piecesjointes' => 'required',
+            'nif' => 'required|max:10',
+            'typecontribuableid' =>'numeric',
+            'raisonsociale' => 'required|max:100',
+            'tel' => 'required|max:100',
+            'email' => 'required|max:100',
+            'pj' => 'required|mimes:pdf,jpg,jpeg,png|max:10240',
         ]);
-        $show = DemandeComptes::create($validatedData);
 
-        return redirect('/demande-comptes')->with('success', 'Demande de compte enregistrée avec succès');
 
+        $fileName = time().'.'.$request->pj->extension();
+        $request->pj->move(public_path('uploads'), $fileName);
+
+        //dd($validatedData);
+
+        DemandeComptes::updateOrCreate(
+            ['nif' => $validatedData['nif']],
+            [
+                'typecontribuableid' => $validatedData['typecontribuableid'],
+                'raisonsociale' => $validatedData['raisonsociale'],
+                'tel' => $validatedData['tel'],
+                'email' => $validatedData['email'],
+                'pj' => $fileName
+            ]
+        );
+
+        $details = [
+            'title' => 'Création de compte e-services DGCC',
+            'body' => "Votre demande de création de compte a été enregistré avec succès.
+            Vous recevrez par mail, très prochainement, le lien d'activation de compte."
+        ];
+
+        Mail::to($validatedData['email'])->send(new MailTemplates($details));
+
+        return redirect('/demande-comptes')->with('success', 'Votre demande de compte a été envoyée avec succès');
     }
 
     /**

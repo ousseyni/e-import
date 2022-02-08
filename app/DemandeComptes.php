@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class DemandeComptes extends Model
 {
-    protected $fillable = ['nif', 'nom', 'num', 'email', 'piecesjointes', 'slug'];
+    protected $fillable = ['nif', 'raisonsociale', 'typecontribuableid',
+        'tel', 'email', 'pj', 'slug'];
 
     protected static function boot() {
         parent::boot();

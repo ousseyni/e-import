@@ -15,13 +15,15 @@ class CreateDemandeComptesTable extends Migration
     {
         Schema::create('demande_comptes', function (Blueprint $table) {
             $table->id();
-            $table->string('nif');
-            $table->string('nom');
-            $table->string('num');
-            $table->string('email');
-            $table->binary('piecesjointes');
+            $table->string('nif', 10);
+            $table->string('raisonsociale', 150);
+            $table->integer('typecontribuableid')->unsigned()->nullable();
+            $table->string('tel', 100)->nullable();
+            $table->string('email')->nullable();
+            $table->string('pj')->nullable();
             $table->string('slug', 100);
             $table->timestamps();
+            $table->foreign('typecontribuableid')->references('id')->on('type_contribuables')->nullOnDelete();
         });
     }
 
