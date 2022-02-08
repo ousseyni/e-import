@@ -87,7 +87,7 @@ class ContribuablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         $validatedData = $request->validate([
             'nif' => 'required|max:100',
