@@ -3,14 +3,12 @@ $(document).ready(function(){
     // Static Mask
     $('#nif').inputmask({mask: "999999-A"});
     $('#tel').inputmask({mask: "099 99 99 99"});
-    /*
 
+
+    /*
 
     $('#static-mask1').inputmask("99-9999999");  //static mask
     $('#static-mask2').inputmask({mask: "aa-9999"});  //static mask
-
-
-
 
     // Dynamic Syntax
 

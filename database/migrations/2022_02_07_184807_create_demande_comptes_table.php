@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateDemandeComptesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('demande_comptes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nif');
+            $table->string('nom');
+            $table->string('num');
+            $table->string('email');
+            $table->binary('piecesjointes');
+            $table->string('slug', 100);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('demande_comptes');
+    }
+}
