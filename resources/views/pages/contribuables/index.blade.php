@@ -19,7 +19,7 @@
 
                     <div class="table-responsive mb-4 mt-4">
                         <a href="{{ route('contribuables.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouveau compte contribuable</a>
-                        <table id="zero-config" class="table table-hover" style="width:100%">
+                        <table id="contribuable" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
                                 <th>NIF</th>
@@ -37,8 +37,8 @@
                             @foreach($contribuables as $contribuable)
                                 <tr>
                                     <td>{{$contribuable->nif}}</td>
-                                    <td>{{$contribuable->raisonsocial}}</td>
-                                    <td>{{$contribuable->getTypeContribuables->libelle}}</td>
+                                    <td>{{$contribuable->raisonsociale}}</td>
+                                    <td>{{$contribuable->getTypeContribuables == null ? '' : $contribuable->getTypeContribuables->libelle}}</td>
                                     <td>{{$contribuable->rccm}}</td>
                                     <td>{{$contribuable->bp}}</td>
                                     <td>{{$contribuable->tel}}</td>
@@ -59,6 +59,8 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        {{ $contribuables->links() }}
                     </div>
                 </div>
             </div>

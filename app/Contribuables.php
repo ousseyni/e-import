@@ -7,7 +7,8 @@ use Illuminate\Support\Str;
 
 class Contribuables extends Model
 {
-    protected $fillable = ['nif', 'raisonsocial', 'rccm', 'bp', 'tel', 'email', 'numagrement', 'numcartecomm', 'typecontribuableid', 'slug'];
+    protected $fillable = ['nif', 'typecontribuableid', 'raisonsociale', 'siegesocial', 'bp', 'tel',
+                           'rccm', 'numagrement', 'numcartecomm', 'nomprenom', 'email', 'pj', 'slug'];
 
     protected static function boot() {
         parent::boot();

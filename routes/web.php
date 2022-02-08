@@ -1326,3 +1326,4 @@ Route::resource('type-contribuables', 'TypeContribuablesController');
 Route::resource('categorie-produits', 'CategorieProduitsController');
 Route::resource('contribuables', 'ContribuablesController');
 
+Route::any('contribuables/info', 'ContribuablesController@getcontribuable');

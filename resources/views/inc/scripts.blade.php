@@ -19,6 +19,28 @@
 {{-- Tables Datatable Basic --}}
 <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
 <script>
+
+    $('#contribuable').DataTable({
+        "oLanguage": {
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "sSearchPlaceholder": "Chercher...",
+            "sProcessing": "Traitement en cours ...",
+            "sLengthMenu": "Afficher _MENU_ lignes",
+            "sZeroRecords": "Aucun résultat trouvé",
+            "sEmptyTable": "Aucune donnée disponible",
+            "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+            "sInfoEmpty": "Aucune ligne affichée",
+            "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+            "sInfoPostFix": "",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Chargement...",
+        },
+        "stripeClasses": [],
+        "bPaginate": false,
+    });
+
     $('#zero-config').DataTable({
         "oLanguage": {
             "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
@@ -49,7 +71,6 @@
 
 
 {{-- Forms Input Mask --}}
-<script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
 <script src="{{asset('plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
 <script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
 
