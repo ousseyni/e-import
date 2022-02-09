@@ -47,7 +47,7 @@
                                         <form onclick="return confirm('Voulez vous suppriemr cette ligne ?')" action="{{ route('demande-comptes.destroy', $contribuable->slug)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <input class="btn btn-danger" type="submit" /><i class="far fa-trash-alt"></i>
+                                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -63,4 +63,5 @@
         </div>
 
     </div>
+
 @endsection

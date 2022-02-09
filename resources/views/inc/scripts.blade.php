@@ -74,6 +74,11 @@
 <script src="{{asset('plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
 <script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
 
+{{-- Dashboard --}}
+<script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
+<script src="{{asset('assets/js/dashboard/dash_2.js')}}"></script>
+
+
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 

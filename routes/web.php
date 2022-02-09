@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DemandeComptesController;
+use App\TypeContribuables;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +34,17 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::resource('amc', 'AmcsController');
 
     Route::get('demande-comptes/list', 'DemandeComptesController@list');
-    Route::resource('demande-comptes', 'DemandeComptesController');
+
+    Route::get('/dashboard', function() {
+        // $category_name = '';
+        $data = [
+            'category_name' => 'Accueil',
+            'page_name' => 'Tableau de bord',
+            'has_scrollspy' => 0,
+            'scrollspy_offset' => '',
+        ];
+        return view('pages.dashboard.index')->with($data);
+    });
 
 });
 
@@ -41,19 +52,20 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/register', function() {
-    return redirect('/login');
-});
 Route::get('/password/reset', function() {
     return redirect('/login');
 });
 
 Route::get('/', function() {
-    return redirect('/sales');
+    return redirect('/dashboard');
 });
 
+Route::resource('demande-comptes', 'DemandeComptesController');
 
-
+Route::get('/demande-comptes', function() {
+    $typeContribuables = TypeContribuables::all(['id', 'libelle']);
+    return view('pages.demande-comptes.index', compact('typeContribuables'));
+});
 
 
 

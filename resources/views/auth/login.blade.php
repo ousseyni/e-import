@@ -31,7 +31,7 @@
                 <div class="form-content">
 
                     <h1 class=""> <a href="#"><span class="brand-name">e-Services</span></a></h1>
-                    <p class="signup-link">Vous n'avez pas de compte? <a href="/authentication/register">Créer un compte</a></p>
+                    <p class="signup-link">Vous n'avez pas de compte? <a href="/demande-comptes">Créer un compte</a></p>
 
                     <form method="POST" action="{{ route('login') }}" class="text-left">
                        @csrf

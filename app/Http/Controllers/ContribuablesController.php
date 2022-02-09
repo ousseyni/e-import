@@ -98,7 +98,6 @@ class ContribuablesController extends Controller
         $typeContribuables = TypeContribuables::all(['id', 'libelle']);
 
         return view('pages.contribuables.edit', compact('contribuable', 'typeContribuables'));
-
     }
 
     /**

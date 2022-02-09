@@ -83,12 +83,14 @@
                                 Joindre la fiche circuit
                             </div>
                             <div class="col-6 input-group-sm">
-                                <input type="file" class="custom-file-container__custom-file__custom-file-input" name="pj" />
+                                <input type="file" required="" class="custom-file-container__custom-file__custom-file-input" name="pj" />
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Envoyez la demande</button>
+                        <button type="submit" class="btn btn-primary mb-3">Envoyez la demande</button>
                     </form>
+
+                    <p class="signup-link text-right">Vous avez un compte? <a href="/login">Connexion</a></p>
 
                     <p class="terms-conditions">© 2022 Tous droits reservé. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
 
