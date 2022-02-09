@@ -18,4 +18,9 @@ class DemandeComptes extends Model
         });
     }
 
+    public function getTypeContribuables()
+    {
+        return $this->belongsTo(TypeContribuables::class, 'typecontribuableid');
+    }
+
 }

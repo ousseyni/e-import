@@ -25,6 +25,17 @@ class DemandeComptesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function list()
+    {
+        $demandecomptes = DemandeComptes::paginate(10);
+        return view('pages.demande-comptes.list', compact('demandecomptes'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -52,7 +63,7 @@ class DemandeComptesController extends Controller
         ]);
 
 
-        $fileName = time().'.'.$request->pj->extension();
+        $fileName = $validatedData['nif'].'.'.$request->pj->extension();
         $request->pj->move(public_path('uploads'), $fileName);
 
         //dd($validatedData);
@@ -76,16 +87,15 @@ class DemandeComptesController extends Controller
 
         Mail::to($validatedData['email'])->send(new MailTemplates($details));
 
-        return redirect('/demande-comptes')->with('success', 'Votre demande de compte a été envoyée avec succès');
+        return redirect('/demande-comptes')->with('success', 'Votre demande de création de compte a été envoyée avec succès');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -116,11 +126,14 @@ class DemandeComptesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $demandes = DemandeComptes::where('slug', '=', $slug)->firstOrFail();
+        $demandes->delete();
+
+        return redirect('/demande-comptes/list')->with('success', 'Demande de création de compte rejeté avec succès');
     }
 }

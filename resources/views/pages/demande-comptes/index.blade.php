@@ -37,8 +37,7 @@
                     <p class="signup-link">Faites la demande de création de votre compte directement en ligne</p>
 
                     @if(session()->get('success'))
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+                        <div class="alert alert-success">
                             {{ session()->get('success') }}
                         </div>
                     @endif

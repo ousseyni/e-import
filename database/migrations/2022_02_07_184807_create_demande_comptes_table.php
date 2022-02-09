@@ -21,6 +21,7 @@ class CreateDemandeComptesTable extends Migration
             $table->string('tel', 100)->nullable();
             $table->string('email')->nullable();
             $table->string('pj')->nullable();
+            $table->boolean('etat')->nullable();
             $table->string('slug', 100);
             $table->timestamps();
             $table->foreign('typecontribuableid')->references('id')->on('type_contribuables')->nullOnDelete();

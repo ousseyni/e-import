@@ -20,4 +20,9 @@ class TypeContribuables extends Model
     {
         return $this->hasMany(Contribuables::class);
     }
+
+    public function getDemandes()
+    {
+        return $this->hasMany(DemandeComptes::class);
+    }
 }

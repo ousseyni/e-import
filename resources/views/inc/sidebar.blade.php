@@ -69,8 +69,8 @@
                             <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
                                 <a href="{{ route('contribuables.index')  }}"> Liste contribuables</a>
                             </li>
-                            <li class="{{ ($page_name === 'En attente de validation') ? 'active' : '' }}">
-                                <a href="#"> En attente de validation</a>
+                            <li class="{{ ($page_name === "Comptes en attente d'activation") ? 'active' : '' }}">
+                                <a href="{{ url('demande-comptes/list')  }}"> En attente de validation</a>
                             </li>
                             <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
                                 <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
