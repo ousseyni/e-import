@@ -17,4 +17,9 @@ class CategorieProduit extends Model
             $type->slug = Str::slug('catepro-' . Str::random(50), '-');
         });
     }
+
+    public function getProduits()
+    {
+        return $this->hasMany(Produits::class);
+    }
 }

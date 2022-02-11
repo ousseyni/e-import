@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page_name' => 'Catégorie des Produits',
+@extends('layouts.app', ['page_name' => 'Liste des Produits',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
                          'category_name' => 'Gestion des Produits'])
@@ -18,28 +18,30 @@
                     @endif
 
                     <div class="table-responsive mb-4 mt-4">
-                        <a href="{{ route('categorie-produits.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouvelle catégorie</a>
+                        <a href="{{ route('produits.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouveau produit</a>
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
                                 <th>Libelle</th>
                                 <th>Montant</th>
+                                <th>Categorie</th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($categorieproduits as $categorieproduit)
+                            @foreach($produits as $produits)
                                 <tr>
-                                    <td>{{ $categorieproduit->libelle }}</td>
-                                    <td>{{ number_format($categorieproduit->montant, 0, '.', ' ') }}</td>
+                                    <td>{{ $produits->libelle }}</td>
+                                    <td>{{ number_format($produits->montant, 0, '.', ' ') }}</td>
+                                    <td>{{ $produits->getCategorie == null ? '' : $produits->getCategorie->libelle}}</td>
                                     <td>
-                                        <a href="{{ route('categorie-produits.edit', $categorieproduit->slug) }}">
+                                        <a href="{{ route('produits.edit', $produits->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette ligne ?')" action="{{ route('categorie-produits.destroy', $categorieproduit->slug) }}" method="post">
+                                        <form onclick="return confirm('Voulez vous supprimer cette ligne ?')" action="{{ route('produits.destroy', $produits->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>

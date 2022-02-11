@@ -40,6 +40,8 @@
                                     <div class="col-sm-10">
                                         <input value="{{ $categorieproduits->libelle }}" type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
                                     </div>
+                                </div>
+                                <div class="form-group row input-group-sm mb-4">
                                     <label for="montant" class="col-sm-2 col-form-label col-form-label-sm">Montant</label>
                                     <div class="col-sm-10">
                                         <input value="{{ $categorieproduits->montant }}" type="text" name="montant" class="form-control form-control-sm" id="montant" placeholder="montant">

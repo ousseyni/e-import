@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Amms;
 use App\CategorieProduit;
+use App\Produits;
 use Illuminate\Http\Request;
 
-class CategorieProduitsController extends Controller
+class ProduitsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class CategorieProduitsController extends Controller
      */
     public function index()
     {
-        $categorieproduits = CategorieProduit::all();
-        return view('pages.categorie-produits.index', compact('categorieproduits'));
+        $produits = Produits::paginate(10);
+        return view('pages.produits.index', compact('produits'));
     }
 
     /**
@@ -25,7 +27,8 @@ class CategorieProduitsController extends Controller
      */
     public function create()
     {
-        return view('pages.categorie-produits.create');
+        $categories = CategorieProduit::all(['id', 'libelle']);
+        return view('pages.produits.create', compact('categories'));
     }
 
     /**
@@ -38,12 +41,14 @@ class CategorieProduitsController extends Controller
     {
         $validatedData = $request->validate([
             'libelle' => 'required|max:100',
-            'montant' => 'required|numeric'
+            'montant' => 'required|max:30',
+            'categorieid' =>'numeric',
         ]);
-        $show = CategorieProduit::create($validatedData);
 
-        return redirect('/categorie-produits')->with('success', 'Categorie Produit enregistrée avec succès');
+        //dd($validatedData);
+        $show = Produits::create($validatedData);
 
+        return redirect('/produits')->with('success', 'Produit enregistré avec succès');
     }
 
     /**
@@ -60,46 +65,65 @@ class CategorieProduitsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($slug)
     {
-        $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
-        return view('pages.categorie-produits.edit', compact('categorieproduits'));
+        $produit = Produits::where('slug', '=', $slug)->firstOrFail();
+        $categories = CategorieProduit::all(['id', 'libelle']);
 
+        return view('pages.produits.edit', compact('produit', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $slug)
     {
         $validatedData = $request->validate([
             'libelle' => 'required|max:100',
-            'montant' => 'required|max:30'
+            'montant' => 'required|max:30',
+            'categorieid' =>'numeric',
         ]);
-        //TypeContribuables::whereId($id)->update($validatedData);
-        CategorieProduit::where('slug', '=', $slug)->update($validatedData);
+        Produits::where('slug', '=', $slug)->update($validatedData);
 
-        return redirect('/categorie-produits')->with('success', 'Catégorie produit modifiée avec succès');
+        return redirect('/produits')->with('success', 'Produit modifié avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy($slug)
     {
-        $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
-        $categorieproduits->delete();
+        $produit = Produits::where('slug', '=', $slug)->firstOrFail();
+        $produit->delete();
 
-        return redirect('/categorie-produits')->with('success', 'Catégorie produit supprimée avec succès');
+        return redirect('/produits')->with('success', 'Produit supprimée avec succès');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getcategorie(Request $request)
+    {
+        $categorie  = CategorieProduit::find($request->categorieid);
+        $montant = '';
+        if ($categorie != null) {
+            $montant = $categorie->montant;
+        }
+        return response()->json(
+            ['montant' => $montant]
+        );
     }
 }

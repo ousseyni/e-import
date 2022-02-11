@@ -112,7 +112,7 @@
                                 <a href="{{ route('categorie-produits.index')  }}"> Catégorie de produits </a>
                             </li>
                             <li class="{{ ($page_name === 'Liste des Produits') ? 'active' : '' }}">
-                                <a href="#"> Liste de produits</a>
+                                <a href="{{ route('produits.index')  }}"> Liste de produits</a>
                             </li>
                         </ul>
                     </li>

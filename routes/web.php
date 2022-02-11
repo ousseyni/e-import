@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::resource('contribuables', 'ContribuablesController');
     Route::any('contribuables/info', 'ContribuablesController@getcontribuable');
 
+    Route::resource('produits', 'ProduitsController');
+    Route::any('produits/info', 'ProduitsController@getcategorie');
 
     Route::resource('amm', 'AmmsController');
     Route::resource('amc', 'AmcsController');
