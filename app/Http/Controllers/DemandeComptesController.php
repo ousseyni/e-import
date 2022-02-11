@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Contribuables;
 use App\DemandeComptes;
 use App\Mail\MailTemplates;
+use App\Mail\VerificationEmail;
 use App\TypeContribuables;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class DemandeComptesController extends Controller
 {
@@ -31,7 +34,8 @@ class DemandeComptesController extends Controller
      */
     public function list()
     {
-        $demandecomptes = DemandeComptes::paginate(10);
+        $etat = false;
+        $demandecomptes = DemandeComptes::where('etat', '=', $etat)->paginate(10);
         return view('pages.demande-comptes.list', compact('demandecomptes'));
     }
 
@@ -62,10 +66,9 @@ class DemandeComptesController extends Controller
             'pj' => 'required|mimes:pdf,jpg,jpeg,png|max:10240',
         ]);
 
-
         $fileName = $validatedData['nif'].'.'.$request->pj->extension();
         $request->pj->move(public_path('uploads'), $fileName);
-        $etat = 0;
+        $etat = false;
 
         //dd($validatedData);
 
@@ -82,9 +85,10 @@ class DemandeComptesController extends Controller
         );
 
         $details = [
-            'title' => 'Création de compte e-services DGCC',
-            'body' => "Votre demande de création de compte a été enregistré avec succès.
-            Vous recevrez par mail, très prochainement, le lien d'activation de compte."
+            'title' => "Cher " .$validatedData['raisonsociale'],
+            'body' => "Votre demande de création de compte avec le N.I.F. {$validatedData['nif']} a
+                        été enregistrée avec succès. Vous recevrez par mail, très prochainement, le lien
+                        d'activation de votre compte."
         ];
 
         Mail::to($validatedData['email'])->send(new MailTemplates($details));
@@ -105,7 +109,7 @@ class DemandeComptesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit($slug)
@@ -140,7 +144,7 @@ class DemandeComptesController extends Controller
         ]);
 
         //dd($validatedData);
-        $etat = 1;
+        $etat = true;
         $demandes = DemandeComptes::where('slug', '=', $slug)->firstOrFail();
         $fileName = $demandes->pj;
 
@@ -155,6 +159,8 @@ class DemandeComptesController extends Controller
                 'etat' => $etat
             ]
         );
+
+        //dd($validatedData);
 
         Contribuables::updateOrCreate(
             ['nif' => $validatedData['nif']],
@@ -173,8 +179,27 @@ class DemandeComptesController extends Controller
             ]
         );
 
-        return redirect('/demande-comptes/list')->with('success', 'Demande de création de compte validée avec succès');
+        //Création du user et Email de verification
+        $user = User::create([
+            'name' => $demandes->raisonsociale,
+            'email' => strtolower($demandes->email),
+            'login' => $demandes->nif,
+            'profilid ' => 2,
+            'password' => bcrypt($demandes->nif),
+            'email_verification_token' => Str::slug('vfct-'.Str::random(50), '-')
+        ]);
 
+        $details = [
+            'title' => "Cher " .$validatedData['raisonsociale'],
+            'body' => "Votre demande de création de compte avec le N.I.F. {$validatedData['nif']} a
+                        été enregistrée avec succès. Vous recevrez par mail, très prochainement, le lien
+                        d'activation de votre compte."
+        ];
+
+        Mail::to($validatedData['email'])->send(new VerificationEmail($user));
+        //session()->flash('message', 'Please check your email to activate your account');
+
+        return redirect('/demande-comptes/list')->with('success', 'Demande de création de compte validée avec succès');
     }
 
     /**

@@ -8,11 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Connexion | e-services DGCC</title>
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 
+    <link rel="icon" type="image/x-icon" href="{{asset('storage/img/favicon.ico')}}"/>
     <link href="{{asset('assets/css/main.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/authentication/form-1.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}">
@@ -31,7 +32,17 @@
                 <div class="form-content">
 
                     <h1 class=""> <a href="#"><span class="brand-name">e-Services</span></a></h1>
-                    <p class="signup-link">Vous n'avez pas de compte? <a href="/demande-comptes">Créer un compte</a></p>
+                    <p class="signup-link">Vous n'avez pas de compte ? <a href="/demande-comptes">Créer un compte</a></p>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <form method="POST" action="{{ route('login') }}" class="text-left">
                        @csrf
@@ -39,7 +50,7 @@
 
                             <div id="username-field" class="field-wrapper input">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="admin@cork.com" required autocomplete="email" autofocus>
+                                <input id="login" type="text" placeholder="Login" class="form-control @error('login') is-invalid @enderror" name="login" required="" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -50,7 +61,7 @@
                             <div id="password-field" class="field-wrapper input mb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input id="password" name="password" type="password" placeholder="Password" value="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" name="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password" required="">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">

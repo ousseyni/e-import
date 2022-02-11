@@ -16,7 +16,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Valdiation de la demande de création de compte</h4>
+                                    <h4>Validation de la demande de création de compte</h4>
                                 </div>
                             </div>
                         </div>

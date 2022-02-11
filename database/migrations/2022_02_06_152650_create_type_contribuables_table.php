@@ -18,6 +18,7 @@ class CreateTypeContribuablesTable extends Migration
             $table->string('libelle', 100);
             $table->string('slug', 100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

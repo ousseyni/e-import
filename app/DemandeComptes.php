@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class DemandeComptes extends Model
 {
     protected $fillable = ['nif', 'raisonsociale', 'typecontribuableid',
-        'tel', 'email', 'pj', 'slug'];
+        'tel', 'email', 'pj', 'etat', 'slug'];
 
     protected static function boot() {
         parent::boot();

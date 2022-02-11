@@ -3,6 +3,7 @@
 use App\Http\Controllers\DemandeComptesController;
 use App\TypeContribuables;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,7 +44,17 @@ Route::group(['middleware' => 'auth'] , function() {
             'has_scrollspy' => 0,
             'scrollspy_offset' => '',
         ];
-        return view('pages.dashboard.index')->with($data);
+        return view('dashboard')->with($data);
+    });
+
+    Route::get('/accueil', function() {
+        $data = [
+            'category_name' => 'Accueil',
+            'page_name' => 'Bienvenue sur e-Services DGCC',
+            'has_scrollspy' => 0,
+            'scrollspy_offset' => '',
+        ];
+        return view('accueil')->with($data);
     });
 
 });
@@ -54,6 +65,14 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/password/reset', function() {
     return redirect('/login');
+});
+
+Route::get('/register', function() {
+    return redirect('/demande-comptes');
+});
+
+Route::get('/demande-comptes/index', function() {
+    return redirect('/demande-comptes');
 });
 
 Route::get('/', function() {
@@ -67,5 +86,4 @@ Route::get('/demande-comptes', function() {
     return view('pages.demande-comptes.index', compact('typeContribuables'));
 });
 
-
-
+Route::get('/verify/{token}', 'VerifyController@VerifyEmail');

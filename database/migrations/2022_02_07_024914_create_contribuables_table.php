@@ -29,6 +29,7 @@ class CreateContribuablesTable extends Migration
             $table->binary('pj')->nullable();
             $table->string('slug', 100)->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('typecontribuableid')->references('id')->on('type_contribuables')->nullOnDelete();
         });
     }

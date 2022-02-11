@@ -83,7 +83,7 @@
                                 Joindre la fiche circuit
                             </div>
                             <div class="col-6 input-group-sm">
-                                <input type="file" required="" class="custom-file-container__custom-file__custom-file-input" name="pj" />
+                                <input type="file" required="" accept=".pdf, .jpg, .png, .jpeg" name="pj" />
                             </div>
                         </div>
 

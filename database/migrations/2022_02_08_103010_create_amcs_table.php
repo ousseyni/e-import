@@ -39,6 +39,7 @@ class CreateAmcsTable extends Migration
             $table->integer('idcontribuable')->unsigned();
             $table->string('slug', 100);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('idcontribuable')->references('id')->on('contribuables')->nullOnDelete();
 
         });

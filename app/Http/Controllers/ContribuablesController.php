@@ -72,8 +72,9 @@ class ContribuablesController extends Controller
         );
 
         return redirect('/contribuables')->with('success', 'Contribuable enregistrée avec succès');
-
     }
+
+
 
     /**
      * Display the specified resource.
@@ -127,7 +128,6 @@ class ContribuablesController extends Controller
         Contribuables::where('slug', '=', $slug)->update($validatedData);
 
         return redirect('/contribuables')->with('success', 'Contribuable modifié avec succès');
-
     }
 
     /**

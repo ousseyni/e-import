@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,36 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Write code on Method
+     *
+     * @return \Illuminate\Http\RedirectResponse()
+     */
+    public function login(Request $request)
+    {
+        $request->validate([
+            'login' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('login', 'password');
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->email_verified == 1) {
+                if ($user->profilid == 2) {
+                    return redirect('/accueil')->with('success', 'Bienvenue sur e-Services DGCC');
+                }
+                else {
+                    return redirect('/dashboard')->with('success', 'Bienvenue sur e-Services DGCC');
+                }
+            }
+            else {
+                return redirect('/verify/'.$user->email_verification_token)->with('success', 'Compte activé avec succès');
+            }
+        }
+
+        return redirect("login")->withSuccess("Oups... Login et/ou Mot de passe incorects");
     }
 }
