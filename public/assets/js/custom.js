@@ -132,3 +132,37 @@ function GetIEVersion() {
   else
     return 0; //It is not IE
 }
+
+function getProduit() {
+    valA = $("#prodA :selected").val();
+    valB = $("#prodB :selected").val();
+    valC = $("#prodC :selected").val();
+    valD = $("#prodD :selected").val();
+
+    $.ajax({
+        type:"POST",
+        url: "/produits/prix",
+        data: {
+            idA: valA,
+            idB: valB,
+            idC: valC,
+            idD: valD,
+        },
+        dataType: 'json',
+        success: function(res){
+            console.log(res);
+            const totalA = $("#poidsA").val() * res.montantA;
+            const totalB = $("#poidsB").val() * res.montantB;
+            const totalC = $("#poidsC").val() * res.montantC;
+            const totalD = $("#poidsD").val() * res.montantD;
+
+            $('#totalA').val(totalA);
+            $('#totalB').val(totalB);
+            $('#totalC').val(totalC);
+            $('#totalD').val(totalD);
+
+            total = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD);
+            $('#total').val(total);
+        }
+    });
+}

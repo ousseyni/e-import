@@ -8,6 +8,7 @@ use App\Mail\MailTemplates;
 use App\Mail\VerificationEmail;
 use App\TypeContribuables;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -67,7 +68,13 @@ class DemandeComptesController extends Controller
         ]);
 
         $fileName = $validatedData['nif'].'.'.$request->pj->extension();
-        $request->pj->move(public_path('uploads'), $fileName);
+        $usager_folder = public_path('uploads/'.$validatedData['nif']);
+
+        if (!is_dir($usager_folder)) {
+            mkdir($usager_folder, 0777, true);
+        }
+
+        $request->pj->move($usager_folder, $fileName);
         $etat = false;
 
         //dd($validatedData);
@@ -189,15 +196,7 @@ class DemandeComptesController extends Controller
             'email_verification_token' => Str::slug('vfct-'.Str::random(50), '-')
         ]);
 
-        $details = [
-            'title' => "Cher " .$validatedData['raisonsociale'],
-            'body' => "Votre demande de création de compte avec le N.I.F. {$validatedData['nif']} a
-                        été enregistrée avec succès. Vous recevrez par mail, très prochainement, le lien
-                        d'activation de votre compte."
-        ];
-
         Mail::to($validatedData['email'])->send(new VerificationEmail($user));
-        //session()->flash('message', 'Please check your email to activate your account');
 
         return redirect('/demande-comptes/list')->with('success', 'Demande de création de compte validée avec succès');
     }
@@ -224,5 +223,44 @@ class DemandeComptesController extends Controller
         $demandes->delete();
 
         return redirect('/demande-comptes/list')->with('success', 'Demande de création de compte rejeté avec succès');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string $token
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function activate(Request $request, $token)
+    {
+
+        //dd($request->password1);
+
+        if ($token == null) {
+            return redirect('/login')->with('error', 'Tentative de connexion invalide');
+        }
+
+        if ($request->password1 != $request->password2) {
+            return redirect('/login')->with('error', 'Les deux mot de passe ne sont pas identiques');
+        }
+
+        $user = User::where('email_verification_token',$token)->first();
+
+        if($user == null ){
+            return redirect('/login')->with('error', 'Tentative de connexion invalide');
+        }
+
+        $user->update([
+            'password' => bcrypt($request->password1),
+            'email_verified' => 1,
+            'profilid' => 2,
+            'email_verified_at' => Carbon::now(),
+            'email_verification_token' => ''
+        ]);
+
+        return redirect('/login')->with('success', 'Votre compte est activé, vous pouvez vous connecter maintenant');;
+
     }
 }

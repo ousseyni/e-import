@@ -20,10 +20,10 @@ class CreateAmcsTable extends Migration
             $table->string('paysorig', 50);
             $table->string('paysprov', 50);
             $table->string('fournisseur', 200);
-            $table->string('nomnavire', 200);
-            $table->string('cieaerien', 200);
-            $table->string('numvehicul', 200);
-            $table->string('numvoyage', 200);
+            $table->string('nomnavire', 200)->nullable();
+            $table->string('cieaerien', 200)->nullable();
+            $table->string('numvehicul', 200)->nullable();
+            $table->string('numvoyage', 200)->nullable();
             $table->string('numconteneur', 200);
             $table->string('numconnaissement', 200);
             $table->date('dateembarque');
@@ -34,10 +34,11 @@ class CreateAmcsTable extends Migration
             $table->integer('totalpen');
             $table->string('observation',250);
             $table->integer('totalpoids');
-            $table->integer('valeurcaf');
-            $table->integer('consoservice');
+            $table->integer('valeurcaf')->nullable();
+            $table->integer('consoservice')->nullable();
             $table->integer('idcontribuable')->unsigned();
             $table->string('slug', 100);
+            $table->integer('etat')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('idcontribuable')->references('id')->on('contribuables')->nullOnDelete();

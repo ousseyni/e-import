@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Amms;
+use App\Pays;
+use App\Produits;
 use Illuminate\Http\Request;
 
 class AmmsController extends Controller
@@ -15,7 +17,6 @@ class AmmsController extends Controller
     public function index()
     {
         $amms = Amms::all();
-
         return view('pages.amms.index', compact('amms'));
 
     }
@@ -27,8 +28,15 @@ class AmmsController extends Controller
      */
     public function create()
     {
+        $pays_or = Pays::all();
+        $pays_pr = Pays::all();
 
-        return view('pages.amms.create');
+        $produits_a = Produits::all();
+        $produits_b = Produits::all();
+        $produits_c = Produits::all();
+        $produits_d = Produits::all();
+        return view('pages.amms.create', compact('pays_or', 'pays_pr',
+                                            'produits_a', 'produits_b', 'produits_c', 'produits_d'));
     }
 
     /**
@@ -63,6 +71,9 @@ class AmmsController extends Controller
             'consoservice' =>'numeric',
             'idcontribuable' =>'required|numeric',
         ]);
+
+        dd($request);
+
         $show = Amms::create($validatedData);
 
         return redirect('/amms')->with('success', "Demande d'autorisation de mise en consommation enregistrée avec succès");

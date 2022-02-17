@@ -31,10 +31,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Demandes A.M.M.') ? 'show' : '' }}" id="amm" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Nouvelle demande') ? 'active' : '' }}">
-                                <a href="#"> Nouvelle demande </a>
+                                <a href="{{ route('amm.create')  }}"> Nouvelle demande </a>
                             </li>
                             <li class="{{ ($page_name === 'Mes demandes') ? 'active' : '' }}">
-                                <a href="#"> Mes demandes </a>
+                                <a href="{{ route('amm.index')  }}"> Mes demandes </a>
                             </li>
                         </ul>
                     </li>
@@ -51,10 +51,10 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Demandes A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Nouvelle demande') ? 'active' : '' }}">
-                                <a href="#"> Nouvelle demande </a>
+                                <a href="{{ route('amc.create')  }}"> Nouvelle demande </a>
                             </li>
                             <li class="{{ ($page_name === 'Mes demandes') ? 'active' : '' }}">
-                                <a href="#"> Mes demandes </a>
+                                <a href="{{ route('amc.index')  }}"> Mes demandes </a>
                             </li>
                         </ul>
                     </li>

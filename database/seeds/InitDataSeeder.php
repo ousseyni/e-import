@@ -1,6 +1,7 @@
 <?php
 
 use App\Contribuables;
+use App\Pays;
 use App\Profils;
 use App\TypeContribuables;
 use App\User;
@@ -43,9 +44,9 @@ class InitDataSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'email_verified' => 1,
             'email_verification_token' => '',
-            'login' => 'usager',
+            'login' => '070199-F',
             'profilid' => 2,
-            'password' => bcrypt('usager'),
+            'password' => bcrypt('070199-F'),
         ]);
 
         TypeContribuables::create([
@@ -61,7 +62,7 @@ class InitDataSeeder extends Seeder
         ]);
 
         $file = public_path('init_files/contribuables.csv');
-        $row = 1;
+        $row = 0;
         $handle = fopen($file, "r");
         if ($handle !== FALSE) {
 
@@ -77,6 +78,25 @@ class InitDataSeeder extends Seeder
                         'nomprenom' => addslashes($data[2]),
                     ]
                 );
+            }
+        }
+        fclose($handle);
+
+
+        $file = public_path('init_files/pays.csv');
+        $row = 0;
+        $handle = fopen($file, "r");
+        if ($handle !== FALSE) {
+
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+
+                $row++;
+                if($row == 1) continue;
+                $data = array_map("utf8_encode", $data); //added
+
+                Pays::create([
+                    'libelle'     => addslashes($data[1]),
+                ]);
             }
         }
         fclose($handle);

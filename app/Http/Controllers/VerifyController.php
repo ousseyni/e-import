@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\TypeContribuables;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,18 +19,11 @@ class VerifyController extends Controller
         $user = User::where('email_verification_token',$token)->first();
 
         if($user == null ){
-            session()->flash('message', 'Tentative de connexion invalide');
-            return redirect()->route('login');
+            return redirect('/login')->with('error', "Lien d'activation de compte expiré");
         }
+        else {
 
-        $user->update([
-            'email_verified' => 1,
-            'profilid' => 2,
-            'email_verified_at' => Carbon::now(),
-            'email_verification_token' => ''
-        ]);
-
-        session()->flash('message', 'Votre compte est activé, vous pouvez vous connecter maintenant');
-        return redirect('/login');
+            return view('pages.demande-comptes.create', compact('user'));
+        }
     }
 }

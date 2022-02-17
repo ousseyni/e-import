@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateProduitAmcsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('produit_amcs', function (Blueprint $table) {
+            $table->id();
+            $table->integer('idamc')->unsigned()->nullable();
+            $table->integer('idproduit')->unsigned()->nullable();
+            $table->integer('poids')->nullable();
+            $table->integer('total')->nullable();
+            $table->timestamps();
+            $table->foreign('idamc')->references('id')->on('amcs')->nullOnDelete();
+            $table->foreign('idproduit')->references('id')->on('produits')->nullOnDelete();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('produit_amcs');
+    }
+}

@@ -107,6 +107,18 @@
 <link href="{{asset('plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('assets/css/dashboard/dash_2.css')}}" rel="stylesheet" type="text/css" />
 
+
+{{-- Forms Wizards --}}
+<link rel="stylesheet" type="text/css" href="{{asset('plugins/jquery-step/jquery.steps.css')}}">
+<style>
+    #formValidate .wizard > .content {min-height: 25em;}
+    #example-vertical.wizard > .content {min-height: 24.5em;}
+</style>
+
+{{-- Forms Select 2 --}}
+<link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
+
+
 @endif
 <!-- END GLOBAL MANDATORY STYLES -->
 
@@ -952,12 +964,6 @@
       @break
 
 
-    @case('select2')
-      {{-- Forms Select 2 --}}
-      <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
-      @break
-
     @case('switches')
       {{-- Forms Switch --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
@@ -979,15 +985,7 @@
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
       @break
 
-    @case('wizards')
-      {{-- Forms Wizards --}}
-      <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link rel="stylesheet" type="text/css" href="{{asset('plugins/jquery-step/jquery.steps.css')}}">
-      <style>
-          #formValidate .wizard > .content {min-height: 25em;}
-          #example-vertical.wizard > .content {min-height: 24.5em;}
-      </style>
-      @break
+
 
     @default
         <script>console.log('No custom Styles available.')</script>

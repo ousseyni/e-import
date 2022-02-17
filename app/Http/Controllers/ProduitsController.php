@@ -126,4 +126,43 @@ class ProduitsController extends Controller
             ['montant' => $montant]
         );
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getprix(Request $request)
+    {
+        $produitA  = Produits::find($request->idA);
+        $montantA = 0;
+        if ($produitA != null) {
+            $montantA = $produitA->montant;
+        }
+
+        $produitB  = Produits::find($request->idA);
+        $montantB = 0;
+        if ($produitB != null) {
+            $montantB = $produitB->montant;
+        }
+
+        $produitC  = Produits::find($request->idA);
+        $montantC = 0;
+        if ($produitC != null) {
+            $montantC = $produitC->montant;
+        }
+
+        $produitD  = Produits::find($request->idA);
+        $montantD = 0;
+        if ($produitD != null) {
+            $montantD = $produitD->montant;
+        }
+        return response()->json([
+            'montantA' => $montantA,
+            'montantB' => $montantB,
+            'montantC' => $montantC,
+            'montantD' => $montantD,
+        ]);
+    }
 }

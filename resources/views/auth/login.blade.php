@@ -34,14 +34,16 @@
                     <h1 class=""> <a href="#"><span class="brand-name">e-Services</span></a></h1>
                     <p class="signup-link">Vous n'avez pas de compte ? <a href="/demande-comptes">Créer un compte</a></p>
 
-                    @if ($errors->any())
+                    @if(session()->get('error'))
                         <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                            {{ session()->get('error') }}
+                        </div><br />
+                    @endif
+
+                    @if(session()->get('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div><br />
                     @endif
 
                     <form method="POST" action="{{ route('login') }}" class="text-left">

@@ -21,4 +21,14 @@ class Amms extends Model
     {
         return $this->belongsTo(Contribuables::class, 'contribuableid');
     }
+
+    public function getSuivis()
+    {
+        return $this->hasMany(SuiviAmms::class);
+    }
+
+    public function getProduits()
+    {
+        return $this->hasMany(Produits::class);
+    }
 }

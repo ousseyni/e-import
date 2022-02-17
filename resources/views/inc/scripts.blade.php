@@ -18,6 +18,16 @@
 
 {{-- Tables Datatable Basic --}}
 <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
+
+{{-- Forms Wizards --}}
+<script src="{{asset('plugins/jquery-step/jquery.steps.min.js')}}"></script>
+<script src="{{asset('plugins/jquery-step/custom-jquery.steps.js')}}"></script>
+<script src="{{asset('plugins/jquery-step/steps.js')}}"></script>
+
+{{-- Forms Select2 --}}
+<script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+
+
 <script>
 
     $('#contribuable').DataTable({
@@ -1075,12 +1085,7 @@
       <script src="{{asset('plugins/editors/quill/custom-quill.js')}}"></script>
       @break
 
-    @case('select2')
-      {{-- Forms Select2 --}}
-      <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
-      <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
-      <script src="{{asset('plugins/select2/custom-select2.js')}}"></script>
-      @break
+
 
     @case('typeahead')
       {{-- Forms Typeahead --}}
@@ -1097,12 +1102,7 @@
       <script src="{{asset('assets/js/forms/bootstrap_validation/bs_validation_script.js')}}"></script>
       @break
 
-    @case('wizards')
-      {{-- Forms Wizards --}}
-      <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
-      <script src="{{asset('plugins/jquery-step/jquery.steps.min.js')}}"></script>
-      <script src="{{asset('plugins/jquery-step/custom-jquery.steps.js')}}"></script>
-      @break
+
 
     @default
     <script>console.log('No custom script available.')</script>

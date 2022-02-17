@@ -3,7 +3,26 @@ $("#example-basic").steps({
     bodyTag: "section",
     transitionEffect: "slideLeft",
     autoFocus: true,
-    cssClass: 'pill wizard'
+    cssClass: 'pill wizard',
+    labels: {
+        current: "En cours:",
+        pagination: "Pagination",
+        finish: "Terminer",
+        next: "Suivant",
+        previous: "Précédent",
+        loading: "Chargement ..."
+    },
+    onStepChanging: function (event, currentIndex, newIndex) {
+        return $("#form-amm-amc").valid();
+    },
+    onFinishing: function (event, currentIndex) {
+        return $("#form-amm-amc").valid();
+    },
+    onFinished: function (event, currentIndex, newIndex) {
+        if (confirm("Voule vous envoyer votre demande d'autorisation ?")) {
+            $("#form-amm-amc").submit();
+        }
+    }
 });
 $("#circle-basic").steps({
     headerTag: "h3",

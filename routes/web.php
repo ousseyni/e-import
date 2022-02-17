@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'] , function() {
 
     Route::resource('produits', 'ProduitsController');
     Route::any('produits/info', 'ProduitsController@getcategorie');
+    Route::any('produits/prix', 'ProduitsController@getprix');
 
     Route::resource('amm', 'AmmsController');
     Route::resource('amc', 'AmcsController');
@@ -78,7 +79,17 @@ Route::get('/demande-comptes/index', function() {
 });
 
 Route::get('/', function() {
-    return redirect('/dashboard');
+    if (Auth::user()) {
+        if (Auth::user()->profilid == 2) {
+            return redirect('/accueil');
+        }
+        else {
+            return redirect('/dashboard');
+        }
+    }
+    else {
+        return redirect('/login');
+    }
 });
 
 Route::resource('demande-comptes', 'DemandeComptesController');
@@ -87,5 +98,8 @@ Route::get('/demande-comptes', function() {
     $typeContribuables = TypeContribuables::all(['id', 'libelle']);
     return view('pages.demande-comptes.index', compact('typeContribuables'));
 });
+Route::match(['put', 'patch'],'demande-comptes/activate/{token}',
+                           'DemandeComptesController@activate');
 
 Route::get('/verify/{token}', 'VerifyController@VerifyEmail');
+
