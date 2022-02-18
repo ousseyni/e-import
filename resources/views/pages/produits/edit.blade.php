@@ -35,6 +35,12 @@
                             <form method="post" action="{{ route('produits.update', $produit->slug) }}">
                                 @csrf
                                 @method('PATCH')
+                                <div class="form-group row input-group-sm mb-4">
+                                    <label for="code" class="col-sm-2 col-form-label col-form-label-sm">Code</label>
+                                    <div class="col-sm-10">
+                                        <input value="{{ $produit->code }}" type="text" name="code" class="form-control form-control-sm" id="code" placeholder="Code">
+                                    </div>
+                                </div>
                                 <div class="form-group row input-group-sm mb-2">
                                     <label for="libelle" class="col-sm-2 col-form-label col-form-label-sm">Libellé</label>
                                     <div class="col-sm-10">

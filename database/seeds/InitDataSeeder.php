@@ -1,7 +1,9 @@
 <?php
 
+use App\CategorieProduit;
 use App\Contribuables;
 use App\Pays;
+use App\Produits;
 use App\Profils;
 use App\TypeContribuables;
 use App\User;
@@ -100,5 +102,51 @@ class InitDataSeeder extends Seeder
             }
         }
         fclose($handle);
+
+
+
+        $file = public_path('init_files/all_categories.csv');
+        $row = 0;
+        $handle = fopen($file, "r");
+        if ($handle !== FALSE) {
+
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+
+                $row++;
+                if($row == 1) continue;
+                $data = array_map("utf8_encode", $data); //added
+
+                CategorieProduit::create([
+                    'code'     => addslashes($data[0]),
+                    'libelle'     => addslashes($data[1]),
+                    'montant'     => addslashes($data[2]),
+                ]);
+            }
+        }
+        fclose($handle);
+
+
+        $file = public_path('init_files/all_produits.csv');
+        $row = 0;
+        $handle = fopen($file, "r");
+        if ($handle !== FALSE) {
+
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+
+                $row++;
+                if($row == 1) continue;
+                $data = array_map("utf8_encode", $data); //added
+
+                Produits::create([
+                    'code'     => addslashes($data[0]),
+                    'libelle'     => addslashes($data[1]),
+                    'montant'     => addslashes($data[2]),
+                    'categorieid'     => addslashes($data[3]),
+                ]);
+            }
+        }
+        fclose($handle);
+
+
     }
 }

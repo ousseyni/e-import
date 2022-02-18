@@ -37,6 +37,7 @@ class CategorieProduitsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'code' => 'required|max:10',
             'libelle' => 'required|max:100',
             'montant' => 'required|numeric'
         ]);
@@ -80,6 +81,7 @@ class CategorieProduitsController extends Controller
     public function update(Request $request, $slug)
     {
         $validatedData = $request->validate([
+            'code' => 'required|max:10',
             'libelle' => 'required|max:100',
             'montant' => 'required|max:30'
         ]);

@@ -64,7 +64,7 @@ class DemandeComptesController extends Controller
             'raisonsociale' => 'required|max:100',
             'tel' => 'required|max:100',
             'email' => 'required|max:100',
-            'pj' => 'required|mimes:pdf,jpg,jpeg,png|max:10240',
+            'pj' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
         ]);
 
         $fileName = $validatedData['nif'].'.'.$request->pj->extension();

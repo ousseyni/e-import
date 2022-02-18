@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Produits extends Model
 {
-    protected $fillable = ['libelle', 'montant', 'slug', 'categorieid'];
+    protected $fillable = ['code', 'libelle', 'montant', 'slug', 'categorieid'];
 
     protected static function boot()
     {
@@ -20,5 +20,10 @@ class Produits extends Model
 
     public function getCategorie() {
         return $this->belongsTo(CategorieProduit::class, 'categorieid');
+    }
+
+    public function getProduitAmms()
+    {
+        return $this->hasMany(ProduitAmms::class);
     }
 }

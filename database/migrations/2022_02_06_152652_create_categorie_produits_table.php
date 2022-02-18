@@ -15,6 +15,7 @@ class CreateCategorieProduitsTable extends Migration
     {
         Schema::create('categorie_produits', function (Blueprint $table) {
             $table->id();
+            $table->string('code',10);
             $table->string('libelle',200);
             $table->integer('montant');
             $table->string('slug', 100);

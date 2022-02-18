@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Amms extends Model
 {
@@ -17,9 +18,9 @@ class Amms extends Model
             $type->slug = Str::slug('amm-'.Str::random(50), '-');
         });
     }
-    public function getContribuables()
+    public function getContribuable()
     {
-        return $this->belongsTo(Contribuables::class, 'contribuableid');
+        return $this->belongsTo(Contribuables::class, 'idcontribuable');
     }
 
     public function getSuivis()
@@ -27,8 +28,8 @@ class Amms extends Model
         return $this->hasMany(SuiviAmms::class);
     }
 
-    public function getProduits()
+    public function getProduitAmms()
     {
-        return $this->hasMany(Produits::class);
+        return $this->hasMany(ProduitAmms::class, 'idamm', 'id');
     }
 }

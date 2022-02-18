@@ -12,12 +12,9 @@ git pull
 //Compiler le tout
 php artisan migrate
 
+//Compiler le tout et inserer les valeurs par defaut
+
+ php artisan migrate:refresh --seed
+
 //Executer le code
 php artisan serve
-
-
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Cork', 'admin@cork.com', NULL, '$2y$10$wUeG8t8qqUaqKQMoBU5bledy6.48bv6bAoJ1TkjJ6bgXchP.BQfcK', NULL, '2020-05-27 06:07:35', '2020-05-27 06:07:35');
-
-

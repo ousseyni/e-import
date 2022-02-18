@@ -22,6 +22,7 @@
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
+                                <th>Code</th>
                                 <th>Libelle</th>
                                 <th>Montant</th>
                                 <th width="3%"></th>
@@ -31,6 +32,7 @@
                             <tbody>
                             @foreach($categorieproduits as $categorieproduit)
                                 <tr>
+                                    <td>{{ $categorieproduit->code }}</td>
                                     <td>{{ $categorieproduit->libelle }}</td>
                                     <td>{{ number_format($categorieproduit->montant, 0, '.', ' ') }}</td>
                                     <td>

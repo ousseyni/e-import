@@ -38,7 +38,7 @@ class CreateAmcsTable extends Migration
             $table->integer('consoservice')->nullable();
             $table->integer('idcontribuable')->unsigned();
             $table->string('slug', 100);
-            $table->integer('etat')->nullable();
+            $table->tinyInteger('etat')->default('1');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('idcontribuable')->references('id')->on('contribuables')->nullOnDelete();

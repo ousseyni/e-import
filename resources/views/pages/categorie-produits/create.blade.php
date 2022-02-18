@@ -35,6 +35,12 @@
                             <form method="post" action="{{ route('categorie-produits.store') }}">
                                 @csrf
                                 <div class="form-group row input-group-sm mb-4">
+                                    <label for="code" class="col-sm-2 col-form-label col-form-label-sm">Code</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="code" class="form-control form-control-sm" id="code" placeholder="Code">
+                                    </div>
+                                </div>
+                                <div class="form-group row input-group-sm mb-4">
                                     <label for="libelle" class="col-sm-2 col-form-label col-form-label-sm">Libellé</label>
                                     <div class="col-sm-10">
                                         <input type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">

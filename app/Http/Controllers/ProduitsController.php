@@ -27,7 +27,7 @@ class ProduitsController extends Controller
      */
     public function create()
     {
-        $categories = CategorieProduit::all(['id', 'libelle']);
+        $categories = CategorieProduit::all(['id', 'code', 'libelle']);
         return view('pages.produits.create', compact('categories'));
     }
 
@@ -40,6 +40,7 @@ class ProduitsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'code' => 'required|max:10',
             'libelle' => 'required|max:100',
             'montant' => 'required|max:30',
             'categorieid' =>'numeric',
@@ -71,7 +72,7 @@ class ProduitsController extends Controller
     public function edit($slug)
     {
         $produit = Produits::where('slug', '=', $slug)->firstOrFail();
-        $categories = CategorieProduit::all(['id', 'libelle']);
+        $categories = CategorieProduit::all(['id', 'code', 'libelle']);
 
         return view('pages.produits.edit', compact('produit', 'categories'));
     }
@@ -86,6 +87,7 @@ class ProduitsController extends Controller
     public function update(Request $request, $slug)
     {
         $validatedData = $request->validate([
+            'code' => 'required|max:10',
             'libelle' => 'required|max:100',
             'montant' => 'required|max:30',
             'categorieid' =>'numeric',
@@ -141,19 +143,19 @@ class ProduitsController extends Controller
             $montantA = $produitA->montant;
         }
 
-        $produitB  = Produits::find($request->idA);
+        $produitB  = Produits::find($request->idB);
         $montantB = 0;
         if ($produitB != null) {
             $montantB = $produitB->montant;
         }
 
-        $produitC  = Produits::find($request->idA);
+        $produitC  = Produits::find($request->idC);
         $montantC = 0;
         if ($produitC != null) {
             $montantC = $produitC->montant;
         }
 
-        $produitD  = Produits::find($request->idA);
+        $produitD  = Produits::find($request->idD);
         $montantD = 0;
         if ($produitD != null) {
             $montantD = $produitD->montant;

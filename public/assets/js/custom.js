@@ -161,8 +161,14 @@ function getProduit() {
             $('#totalC').val(totalC);
             $('#totalD').val(totalD);
 
-            total = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD);
-            $('#total').val(total);
+            const caf = $("#valeurcaf").val();
+            const cs = $("#consoservice").val();
+
+            const totalpoids = Number($("#poidsA").val()) + Number($("#poidsB").val()) + Number($("#poidsC").val()) + Number($("#poidsD").val());
+            const totalamm = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD) + Number(caf) + Number(cs);
+
+            $('#totalamm').val(totalamm);
+            $('#totalpoids').val(totalpoids);
         }
     });
 }

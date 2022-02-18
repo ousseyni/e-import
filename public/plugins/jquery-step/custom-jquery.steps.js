@@ -24,26 +24,25 @@ $("#example-basic").steps({
         }
     }
 });
-$("#circle-basic").steps({
+
+$("#example-show").steps({
     headerTag: "h3",
     bodyTag: "section",
     transitionEffect: "slideLeft",
     autoFocus: true,
-    cssClass: 'circle wizard'
-});
-$("#example-vertical").steps({
-    headerTag: "h3",
-    bodyTag: "section",
-    transitionEffect: "slideLeft",
-    cssClass: 'circle wizard',
-    titleTemplate: '<span class="number">#index#</span>',
-    stepsOrientation: "vertical"
-});
-$("#pill-vertical").steps({
-    headerTag: "h3",
-    bodyTag: "section",
-    transitionEffect: "slideLeft",
-    cssClass: 'pills wizard',
-    titleTemplate: '#title#',
-    stepsOrientation: "vertical"
+    cssClass: 'pill wizard',
+    labels: {
+        current: "En cours:",
+        pagination: "Pagination",
+        finish: "Terminer",
+        next: "Suivant",
+        previous: "Précédent",
+        loading: "Chargement ..."
+    },
+    onFinished: function (event, currentIndex, newIndex) {
+        if (confirm("Revenir à la liste des demandes ?")) {
+            event.preventDefault();
+            history.back(1);
+        }
+    }
 });
