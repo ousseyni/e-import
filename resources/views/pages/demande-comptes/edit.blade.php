@@ -36,11 +36,11 @@
                             @method('PATCH')
                             <div class="form-row mb-4">
                                 <div class="col-6 input-group-sm">
-                                    <label for="nif">NIF</label>
-                                    <input readonly="" type="text" name="nif" id="nif" class="form-control" value="{{ $demande->nif }}" />
+                                    <label for="nif">NIF *</label>
+                                    <input type="text" name="nif" id="nif" class="form-control" value="{{ $demande->nif }}" />
                                 </div>
                                 <div class="col-6 input-group-sm">
-                                    <label for="typecontribuableid">Type de contribution</label>
+                                    <label for="typecontribuableid">Type d'usagers</label>
                                     <select class="form-control" id="typecontribuableid " name="typecontribuableid">
                                         @foreach($typeContribuables as $type)
                                             <option value="{{$type->id}}" {{ ($type->id === $demande->typecontribuableid ? 'selected' : '') }}>{{$type->libelle}}</option>
@@ -52,14 +52,14 @@
 
                             <div class="form-row mb-2">
                                 <div class="col-12 input-group-sm">
-                                    <label for="raisonsociale">Dénomination sociale</label>
+                                    <label for="raisonsociale">Dénomination sociale *</label>
                                     <input required="" type="text" id="raisonsociale" value="{{ $demande->raisonsociale }}" name="raisonsociale" class="form-control" />
                                 </div>
                             </div>
 
                             <div class="form-row mb-2">
                                 <div class="col-7 input-group-sm">
-                                    <label for="siegesocial">Siège sociale</label>
+                                    <label for="siegesocial">Siège sociale *</label>
                                     <input required="" type="text" class="form-control" id="siegesocial" value="{{ $demande->siegesocial }}" name="siegesocial" />
                                 </div>
                                 <div class="col-2 input-group-sm">
@@ -67,38 +67,38 @@
                                     <input type="text" class="form-control" id="bp" name="bp" value="{{ $demande->bp }}" />
                                 </div>
                                 <div class="col-3 input-group-sm">
-                                    <label for="tel">Tél.</label>
+                                    <label for="tel">Tél. *</label>
                                     <input required="" type="text" class="form-control" id="tel" name="tel" value="{{ $demande->tel }}" />
                                 </div>
                             </div>
 
                             <div class="form-row mb-2">
                                 <div class="col-4 input-group-sm">
-                                    <label for="rccm">N° RCCM</label>
+                                    <label for="rccm">N° RCCM *</label>
                                     <input required="" type="text" class="form-control" id="rccm" name="rccm" value="{{ $demande->rccm }}" />
                                 </div>
                                 <div class="col-4 input-group-sm">
-                                    <label for="numagrement">N° Agrément</label>
+                                    <label for="numagrement">N° agrément</label>
                                     <input type="text" class="form-control" id="numagrement" name="numagrement" value="{{ $demande->numagrement }}" />
                                 </div>
                                 <div class="col-4 input-group-sm">
-                                    <label for="numcartecomm">N° Carte Com.</label>
+                                    <label for="numcartecomm">N° carte com.</label>
                                     <input type="text" class="form-control" id="numcartecomm" name="numcartecomm" value="{{ $demande->numcartecomm }}" />
                                 </div>
                             </div>
 
                             <div class="form-row mb-2">
                                 <div class="col-8 input-group-sm">
-                                    <label for="nomprenom">Nom et Prénom Représentant Légal</label>
+                                    <label for="nomprenom">Nom et prénom représentant légal *</label>
                                     <input required="" type="text" class="form-control" id="nomprenom" name="nomprenom" value="{{ $demande->nomprenom }}"  />
                                 </div>
                                 <div class="col-4 input-group-sm">
-                                    <label for="email">Email</label>
-                                    <input required="" type="email" class="form-control" id="email" name="email" value="{{ $demande->email }}" />
+                                    <label for="email">Email *</label>
+                                    <input readonly="" required="" type="email" class="form-control" id="email" name="email" value="{{ $demande->email }}" />
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Valider et Créetr le compte</button>
+                            <button type="submit" class="btn btn-primary">Valider et créer le compte</button>
                         </form>
 
                     </div>

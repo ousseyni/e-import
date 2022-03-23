@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Amms;
+use App\CategorieProduit;
 use App\Contribuables;
 use App\DemandeComptes;
 use App\DocumentAmms;
+use App\ModeTransport;
 use App\Pays;
 use App\ProduitAmms;
 use App\Produits;
@@ -35,18 +37,19 @@ class AmmsController extends Controller
      */
     public function create()
     {
-        $pays_or = Pays::all();
-        $pays_pr = Pays::all();
+        $pays_pr = Pays::orderBy('libelle', 'ASC')->get();
 
-        $produits_a = Produits::all();
-        $produits_b = Produits::all();
-        $produits_c = Produits::all();
-        $produits_d = Produits::all();
+        $categorie_produits = CategorieProduit::where('type', '=', 'AMM')->get();
+        $produits = Produits::where('type', '=', 'AMM')->get();
+        $pays_or = Pays::orderBy('libelle', 'ASC')->get();
+
+        $mode_t = ModeTransport::all();
 
         $nif = Auth::user()->login;
         $contribuable = Contribuables::where('nif', '=', $nif)->firstOrFail();
 
-        return view('pages.amms.create', compact('pays_or', 'pays_pr', 'contribuable',  'produits_a', 'produits_b', 'produits_c', 'produits_d'));
+        return view('pages.amms.create',
+            compact('pays_pr', 'contribuable', 'produits', 'mode_t', 'pays_or', 'categorie_produits'));
     }
 
     /**
@@ -60,13 +63,17 @@ class AmmsController extends Controller
         $validatedData = $request->validate([
             'numfact' => 'required|max:20',
             'datefact' => 'date',
-            'fournisseur' => 'max:200',
-            'paysorig' => 'max:50',
-            'paysprov' => 'max:50',
-            'nomnavire' => 'max:200',
+            'paysprov' => 'max:200',
+            'modetransport' => 'max:150',
+            'fournisseur' => 'max:50',
             'cieaerien' => 'max:200',
+            'numvoyagea' => 'max:200',
+            'nomnavire' => 'max:200',
+            'numvoyagem' => 'max:200',
             'numvehicul' => 'max:200',
-            'numvoyage' => 'max:200',
+            'numvoyaget' => 'max:200',
+            'numwagon' => 'max:200',
+            'numvoyagef' => 'max:200',
             'numconteneur' => 'max:200',
             'numconnaissement' => 'max:200',
             'dateembarque' => 'date',
@@ -76,13 +83,17 @@ class AmmsController extends Controller
             'totalamm' =>'numeric',
             'totalpoids' =>'numeric',
             'valeurcaf' =>'numeric',
-            'consoservice' =>'numeric',
             'idcontribuable' =>'required|numeric',
             'pj1' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj2' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj3' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj4' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj5' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj6' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj7' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj8' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj9' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj10' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
         ]);
 
         $show = Amms::create($validatedData);
@@ -94,7 +105,7 @@ class AmmsController extends Controller
         }
 
         //Sauvegarde des PJ
-        $facture_fournisseur = $validatedData['pj1'].'.'.$request->pj1->extension();
+        $facture_fournisseur = 'facture_fournisseur.'.$request->pj1->extension();
         $request->pj1->move($usager_folder, $facture_fournisseur);
         DocumentAmms::create([
             'libelle' => 'Facture Fournisseur',
@@ -102,7 +113,7 @@ class AmmsController extends Controller
             'pj' => $facture_fournisseur
         ]);
 
-        $fiche_securite = $validatedData['pj2'].'.'.$request->pj2->extension();
+        $fiche_securite = 'fiche_securite.'.$request->pj2->extension();
         $request->pj2->move($usager_folder, $fiche_securite);
         DocumentAmms::create([
             'libelle' => 'Fiche Sécurité',
@@ -110,7 +121,7 @@ class AmmsController extends Controller
             'pj' => $fiche_securite
         ]);
 
-        $certificat_conformite = $validatedData['pj3'].'.'.$request->pj3->extension();
+        $certificat_conformite = 'certificat_conformite.'.$request->pj3->extension();
         $request->pj3->move($usager_folder, $certificat_conformite);
         DocumentAmms::create([
             'libelle' => 'Certificat Conformité',
@@ -118,7 +129,7 @@ class AmmsController extends Controller
             'pj' => $certificat_conformite
         ]);
 
-        $cnt = $validatedData['pj4'].'.'.$request->pj4->extension();
+        $cnt = 'cnt_lta_lv.'.$request->pj4->extension();
         $request->pj4->move($usager_folder, $cnt);
         DocumentAmms::create([
             'libelle' => 'CNT/LTA/LV',
@@ -126,7 +137,7 @@ class AmmsController extends Controller
             'pj' => $cnt
         ]);
 
-        $certificat_origine = $validatedData['pj5'].'.'.$request->pj5->extension();
+        $certificat_origine = 'certificat_origine.'.$request->pj5->extension();
         $request->pj5->move($usager_folder, $certificat_origine);
         DocumentAmms::create([
             'libelle' => "Certificat d'origine",
@@ -140,6 +151,7 @@ class AmmsController extends Controller
             ProduitAmms::create([
                 'idamm' => $show->id,
                 'idproduit' => $request->prodA,
+                'paysorig' => $request->paysA,
                 'poids' => $request->poidsA,
                 'total' => $request->totalA
             ]);
@@ -149,6 +161,7 @@ class AmmsController extends Controller
             ProduitAmms::create([
                 'idamm' => $show->id,
                 'idproduit' => $request->prodB,
+                'paysorig' => $request->paysB,
                 'poids' => $request->poidsB,
                 'total' => $request->totalB
             ]);
@@ -158,6 +171,7 @@ class AmmsController extends Controller
             ProduitAmms::create([
                 'idamm' => $show->id,
                 'idproduit' => $request->prodC,
+                'paysorig' => $request->paysC,
                 'poids' => $request->poidsC,
                 'total' => $request->totalC
             ]);
@@ -167,13 +181,14 @@ class AmmsController extends Controller
             ProduitAmms::create([
                 'idamm' => $show->id,
                 'idproduit' => $request->prodD,
+                'paysorig' => $request->paysD,
                 'poids' => $request->poidsD,
                 'total' => $request->totalD
             ]);
         }
 
         //dd($request->prodD);
-        return redirect('/amm')->with('success', "Demande d'autorisation de mise en consommation enregistrée avec succès");
+        return redirect('/amm')->with('success', "Demande d'Autorisation de Mise sur le Marché enregistrée avec succès");
 
     }
 
@@ -186,7 +201,8 @@ class AmmsController extends Controller
     public function show($slug)
     {
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
-        return view('pages.amms.show', compact('amm'));
+        $doc_amms = DocumentAmms::where('idamm', '=', $amm->id)->get();
+        return view('pages.amms.show', compact('amm', 'doc_amms'));
     }
 
     /**
@@ -256,4 +272,5 @@ class AmmsController extends Controller
         return redirect('/amms')->with('success', 'Demande de AMM supprimée avec succès');
 
     }
+
 }

@@ -1,0 +1,61 @@
+Code;Libellé;Code Activité
+1;Agriculture, chasse et activités annexes;A
+2;Sylviculture, exploitation forestière, activités annexes;A
+5;Pêche, pisciculture, aquaculture;B
+10;"Extraction de charbon et de lignite ; extraction de tourbe";C
+11;"Extraction de pétrole brut et de gaz naturel ; activités annexes";C
+12;Extraction de minerais d'uranium;C
+13;Extraction de minerais métalliques;C
+14;Autres activités extractives;C
+15;Fabrication de produits alimentaires et de boissons;D
+16;Fabrication de produits a base de tabac;D
+17;Fabrication de textiles;D
+18;"Fabrication d'articles d'habillement ; préparation et teinture des fourrures";D
+19;"Travail du cuir ; fabrication d'articles de voyage ; fabrication de chaussures";D
+20;Travail du bois et fabrication d'articles en bois ou de vannerie;D
+21;Fabrication de papier, de carton et d'articles en papier ou en carton;D
+22;Édition, imprimerie et reproduction d'enregistrements;D
+23;Raffinage pétrolier, cokéfaction, industries nucléaires;D
+24;Fabrication de produits chimiques;D
+25;Fabrication de produits en caoutchouc ou en matières plastiques;D
+26;Fabrication de verre, poteries et matériaux pour la construction;D
+27;"Métallurgie ; fonderie";D
+28;"Fabrication d'ouvrages en métaux ; travail des métaux";D
+29;Fabrication de machines et de matériels n.c.a.;D
+30;Fabrication de machines de bureau et de matériel informatique;D
+31;Fabrication de machines et de matériels électriques;D
+32;Fabrication d'équipements et appareils de radio, télévision et communication;D
+33;Fabrication d'instruments médicaux, de précision, d'optique et d'horlogerie;D
+34;Construction de véhicules automobiles;D
+35;Fabrication d'autres matériels de transport;D
+36;"Fabrication de meubles ; activités de fabrication n.c.a";D
+37;Récupération;D
+40;Production et distribution électricité et de gaz;E
+41;Captage, traitement et distribution d'eau;E
+45;Construction;F
+50;Commerce et réparation d'automobiles;G
+51;Commerce de gros et activités d'intermédiaires du commerce de gros;G
+52;Commerce de détail et réparation d'articles domestiques;G
+55;Hôtels et restaurants;H
+60;Transports terrestres;I
+61;Transport par eau;I
+62;Transports aériens;I
+63;Activités des auxiliaire des transport;I
+64;Postes et télécommunications;I
+65;Intermédiation financière;J
+66;Assurance;J
+67;Activités d'auxiliaires financières et d'assurance;J
+70;Activités immobilières;K
+71;Location sans opérateur;K
+72;Activités informatiques et activités connexes;K
+73;Recherche - développement;K
+74;Services fournis principalement aux entreprises ;K
+75;Activités d'administration publique;L
+80;Éducation;M
+85;Activités de santé et d'action sociale;N
+90;Assainissement, voirie et gestion des déchets;O
+91;Activités associatives;O
+92;Activités récréatives, culturelles et sportives;O
+93;Activités de services personnels;O
+95;Activités des ménages en tant qu'employeurs de personnel domestique;P
+99;Activités des organisations extraterritoriales;Q

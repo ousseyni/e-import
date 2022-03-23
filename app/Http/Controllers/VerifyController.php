@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Activite;
+use App\Contribuables;
+use App\SousActivite;
 use App\TypeContribuables;
 use App\User;
 use Carbon\Carbon;
@@ -22,8 +25,10 @@ class VerifyController extends Controller
             return redirect('/login')->with('error', "Lien d'activation de compte expiré");
         }
         else {
-
-            return view('pages.demande-comptes.create', compact('user'));
+            $activite = Activite::all(['id', 'libelle']);
+            $sousactivite = SousActivite::all(['id', 'libelle', 'activiteid']);
+            return view('pages.demande-comptes.create',
+                compact('user', 'activite', 'sousactivite'));
         }
     }
 }

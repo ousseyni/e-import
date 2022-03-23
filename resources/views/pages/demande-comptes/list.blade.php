@@ -18,7 +18,7 @@
                     @endif
 
                     <div class="table-responsive mb-4 mt-4">
-                        <table id="contribuable" class="table table-hover" style="width:100%">
+                        <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
                                 <th>NIF</th>

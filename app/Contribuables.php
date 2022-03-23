@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Contribuables extends Model
 {
-    protected $fillable = ['nif', 'typecontribuableid', 'raisonsociale', 'siegesocial', 'bp', 'tel',
+    protected $fillable = ['nif', 'typecontribuableid', 'activiteid', 'sousactiviteid', 'raisonsociale', 'siegesocial', 'bp', 'tel',
                            'rccm', 'numagrement', 'numcartecomm', 'nomprenom', 'email', 'pj', 'slug'];
 
     protected static function boot() {
@@ -20,5 +20,15 @@ class Contribuables extends Model
     public function getTypeContribuables()
     {
         return $this->belongsTo(TypeContribuables::class, 'typecontribuableid');
+    }
+
+    public function getActivite()
+    {
+        return $this->belongsTo(Activite::class, 'activiteid');
+    }
+
+    public function getSousActivite()
+    {
+        return $this->belongsTo(SousActivite::class, 'sousactiviteid');
     }
 }

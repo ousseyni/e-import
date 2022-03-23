@@ -133,7 +133,55 @@ function GetIEVersion() {
     return 0; //It is not IE
 }
 
-function getProduit() {
+function getProduit(key, value) {
+
+    const index = key.substring(9, 10);
+    //console.log(key);
+    //console.log(value);
+    //console.log(index);
+
+    const prodIdx = "produits["+ index +"][produit]";
+    const poidIdx = "produits["+ index +"][poids]";
+    const totaIdx = "produits["+ index +"][total]";
+
+    const prodVal = $("select[name='"+ prodIdx +"']").val();
+    const poidVal = $("input[name='"+ poidIdx +"']").val();
+
+    $.ajax({
+        type:"POST",
+        url: "/produits/get_prix",
+        data: {
+            id: prodVal
+        },
+        dataType: 'json',
+        success: function(res){
+
+            const total = poidVal * res.montant;
+            $("input[name='"+ totaIdx +"']").val(total);
+
+            const nb=$('.repeater_item').length;
+            let totalpoids = 0;
+            let totalamm = 0;
+            for(let i=0; i<nb; i++) {
+                const npoidIdx = "produits["+ i +"][poids]";
+                const ntotaIdx = "produits["+ i +"][total]";
+
+                totalpoids += Number($("input[name='"+ npoidIdx +"']").val());
+                totalamm += Number($("input[name='"+ ntotaIdx +"']").val());
+            }
+            console.log(totalamm);
+            console.log(totalpoids);
+
+            /*const totalpoids = Number($("#poidsA").val()) + Number($("#poidsB").val()) + Number($("#poidsC").val()) + Number($("#poidsD").val());
+            const totalamm = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD) + Number(caf) + Number(cs);
+            */
+            $('#totalamm').val(totalamm);
+            $('#totalpoids').val(totalpoids);
+        }
+    });
+}
+
+function getProduitOld() {
     valA = $("#prodA :selected").val();
     valB = $("#prodB :selected").val();
     valC = $("#prodC :selected").val();
@@ -162,7 +210,6 @@ function getProduit() {
             $('#totalD').val(totalD);
 
             const caf = $("#valeurcaf").val();
-            const cs = $("#consoservice").val();
 
             const totalpoids = Number($("#poidsA").val()) + Number($("#poidsB").val()) + Number($("#poidsC").val()) + Number($("#poidsD").val());
             const totalamm = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD) + Number(caf) + Number(cs);
@@ -171,4 +218,36 @@ function getProduit() {
             $('#totalpoids').val(totalpoids);
         }
     });
+}
+
+function getModeTransport() {
+    const mode_t = $("#modetransport :selected").val();
+
+    if (mode_t == 'Aérienne') {
+        $(".aerienne").show();
+        $(".maritime").hide();
+        $(".terrestre").hide();
+        $(".ferroviaire").hide();
+    }
+
+    if (mode_t == 'Maritime') {
+        $(".aerienne").hide();
+        $(".maritime").show();
+        $(".terrestre").hide();
+        $(".ferroviaire").hide();
+    }
+
+    if (mode_t == 'Terrestre') {
+        $(".aerienne").hide();
+        $(".maritime").hide();
+        $(".terrestre").show();
+        $(".ferroviaire").hide();
+    }
+    if (mode_t == 'Ferroviaire') {
+        $(".aerienne").hide();
+        $(".maritime").hide();
+        $(".terrestre").hide();
+        $(".ferroviaire").show();
+    }
+
 }

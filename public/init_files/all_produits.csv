@@ -1,12 +1,141 @@
-Code;Libellé produit;Montant;Id Categorie
-1006;Riz;0;1
-1001;Froment [blé] et méteil;0;1
-1005;Maïs;0;1
-1008;Sarrasin, millet, alpiste et autres céréales (à l'excl. du froment [blé], du méteil, du seigle, ...;0;1
-1004;Avoine;0;1
-1007;Sorgho à grains;0;1
-1003;Orge;0;1
-9901;Ciment;100;2
-9902;Alcool;50;2
-9903;Tabac;25;2
-9904;Fer à béton;150;2
+Code;Libellé;Catégorie;Montant;Type
+P01;Eau de javel;C01;0;AMM
+P02;Couche bébé;C01;0;AMM
+P03;Brosserie;C01;0;AMM
+P04;Papier hygienique;C01;0;AMM
+P05;Autres;C01;0;AMM
+P06;Cahier;C02;0;AMM
+P07;Boite de rangement;C02;0;AMM
+P08;Ordinateur;C02;0;AMM
+P09;Imprimante ;C02;0;AMM
+P10;Stylos;C02;0;AMM
+P11;Autres;C02;0;AMM
+P12;Refrigerateur;C03;0;AMM
+P13;Congelateur;C03;0;AMM
+P14;Micro-onde;C03;0;AMM
+P15;Television ;C03;0;AMM
+P16;Autres;C03;0;AMM
+P17;Cardan;C04;0;AMM
+P18;Plaquette de frein;C04;0;AMM
+P19;Disque d'embrayage ;C04;0;AMM
+P20;Autres;C04;0;AMM
+P21;Acide;C05;0;AMM
+P22;Autres;C05;0;AMM
+P23;Medicaments;C06;0;AMM
+P24;Matériel médical;C06;0;AMM
+P25;Parapharmacie (lait, dentifrice, etc);C06;0;AMM
+P26;Autres;C06;0;AMM
+P27;Tronçonneuse;C07;0;AMM
+P28;Autres;C07;0;AMM
+P29;Ciment;C08;5;AMM
+P30;Fer;C08;5;AMM
+P31;Colle;C08;0;AMM
+P32;Brouette;C08;0;AMM
+P33;Carreaux ;C08;0;AMM
+P34;Reglette ;C08;0;AMM
+P35;Autres;C08;0;AMM
+P36;Huile de frein;C09;0;AMM
+P37;Huile moteur;C09;0;AMM
+P38;Huile de boite ;C09;0;AMM
+P39;Autres;C09;0;AMM
+P40;Chaise et/ou fauteuil de bureau;C10;0;AMM
+P41;Bureau;C10;0;AMM
+P42;Salon;C10;0;AMM
+P43;Salle à manger ;C10;0;AMM
+P44;Autres;C10;0;AMM
+P45;Vêtements;C11;0;AMM
+P46;Chaussures;C11;0;AMM
+P47;Sacs à mains;C11;0;AMM
+P48;Bijoux;C11;0;AMM
+P49;Autres;C11;0;AMM
+P50;Fripperie;C12;0;AMM
+P51;Pagnes, Balot de pagnes;C12;0;AMM
+P52;Autres;C12;0;AMM
+P53;Camion;C13;0;AMM
+P54;Engin ;C13;0;AMM
+P55;Autres;C13;0;AMM
+P56;Cuisses de poulet;C14;0;AMC
+P57;Ailes de poulet;C14;0;AMC
+P58;Pattes de poulet;C14;0;AMC
+P59;Poulet entier;C14;0;AMC
+P60;Saucisson & saucisse de poulet;C14;0;AMC
+P61;Ailes de dinde;C14;0;AMC
+P62;Cou de dinde;C14;0;AMC
+P63;Croupions;C14;0;AMC
+P64;Quart de poule;C14;0;AMC
+P65;Cuisses de poule;C14;0;AMC
+P66;Ailes de poule;C14;0;AMC
+P67;Poule pack;C14;0;AMC
+P68;Autres;C14;0;AMC
+P69;Ragout;C15;0;AMC
+P70;Queue;C15;0;AMC
+P71;Foie;C15;0;AMC
+P72;Entrecôte;C15;0;AMC
+P73;Tripes;C15;0;AMC
+P74;Rognon;C15;0;AMC
+P75;Autres;C16;0;AMC
+P76;Cotisse;C16;0;AMC
+P77;Queue;C16;0;AMC
+P78;Saucisson & saucisse;C16;0;AMC
+P79;Pattes;C16;0;AMC
+P80;Autres;C16;0;AMC
+P81;Mouton;C17;0;AMC
+P82;Agneau;C18;0;AMC
+P83;Bar;C19;0;AMC
+P84;Tilapia;C19;0;AMC
+P85;Poisson salé;C19;0;AMC
+P86;Maquereaux;C19;0;AMC
+P87;Chinchard;C19;0;AMC
+P88;Yarra;C19;0;AMC
+P89;Rouge;C19;0;AMC
+P90;Mademoiselle;C19;0;AMC
+P91;Crevettes;C19;0;AMC
+P92;Autres;C19;0;AMC
+P93;Poisson;C20;0;AMC
+P94;Viande;C20;0;AMC
+P95;Légumes;C20;0;AMC
+P96;Autres;C20;0;AMC
+P97;Lait concentré sucré;C21;0;AMC
+P98;Lait demi-écrémé;C21;0;AMC
+P99;Lait écrémé;C21;0;AMC
+P100;Lait en poudre;C21;0;AMC
+P101;lait non sucré;C21;0;AMC
+P102;Yaourt;C21;0;AMC
+P103;Fromage;C21;0;AMC
+P104;Lait infantile (nécessite une ASI);C21;0;AMC
+P105;Lait entier;C21;0;AMC
+P106;Autres;C21;0;AMC
+P107;Bières;C22;5;AMC
+P108;Boissons alcoolisées;C22;5;AMC
+P109;Boissons non alcoolisées;C22;0;AMC
+P110;Eau;C22;0;AMC
+P111;Autres;C22;0;AMC
+P112;Fruits;C23;0;AMC
+P113;Légumes;C23;0;AMC
+P114;Riz;C24;0;AMC
+P115;Blé;C24;0;AMC
+P116;Farine;C24;0;AMC
+P117;Autres;C24;0;AMC
+P118;Chocolat;C25;0;AMC
+P119;Lévure;C25;0;AMC
+P120;Produits de boulangerie;C25;0;AMC
+P121;Mayonnaise;C25;0;AMC
+P122;Moutarde;C25;0;AMC
+P123;Confiserie;C25;0;AMC
+P124;Biscuits;C25;0;AMC
+P125;Autres;C25;0;AMC
+P126;Huiles;C26;0;AMC
+P127;Beurre;C26;0;AMC
+P128;Margarine;C26;0;AMC
+P129;Sel;C27;0;AMC
+P130;Divers produits surgélés/congelés;C28;0;AMC
+P131;Igname;C29;0;AMC
+P132;Frites congelées;C29;0;AMC
+P133;Pâtes alimentaires;C29;0;AMC
+P134;Spaguetti;C29;0;AMC
+P135;Maïzena;C29;0;AMC
+P136;Maïs;C29;0;AMC
+P137;Autres;C29;0;AMC
+P138;Cigarettes;C30;200;AMC
+P139;Cigare;C30;200;AMC
+P140;Autres;C30;200;AMC

@@ -16,11 +16,32 @@
 {{-- Forms Input Mask --}}
 <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
 
+{{-- Components Tabs --}}
+<link href="{{asset('assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
+
 {{-- Font Icons --}}
 <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/regular.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/fontawesome.css')}}">
 <style>
+
+    .form-group label, label {
+        color: #263544 !important;
+    }
+
+    .form-row label, label {
+        color: #263544 !important;
+    }
+
+    .input-group > hr {
+        border-top: 1px solid black;
+    }
+
+    .table > tbody > tr > td {
+         color: #000000 !important;
+         font-size: 12px !important;
+        letter-spacing: 0px !important;
+    }
     .feather-icon .icon-section {
         padding: 30px;
     }
@@ -350,12 +371,6 @@
       <link href="{{asset('plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
-      @break
-
-    @case('tabs')
-      {{-- Components Tabs --}}
-      <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link href="{{asset('assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
       @break
 
     @case('timeline')

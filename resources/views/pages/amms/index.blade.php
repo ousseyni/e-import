@@ -22,8 +22,8 @@
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
+                                <th>N° demande</th>
                                 <th>Date demande</th>
-                                <th>Contribuable</th>
                                 <th>Provenance</th>
                                 <th>Fournisseur</th>
                                 <th>N° Conteneur</th>
@@ -34,26 +34,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($amms as $amms)
+                            @foreach($amms as $amm)
                                 <tr>
-                                    <td>{{ $amms->created_at->format('d/m/Y') }}</td>
-                                    <td>{{ $amms->getContribuable->nif }}</td>
-                                    <td>{{ $amms->paysprov }}</td>
-                                    <td>{{ $amms->fournisseur }}</td>
-                                    <td>{{ $amms->numconteneur }}</td>
-                                    <td>{{ number_format($amms->totalamm, 0, '.', ' ') }}</td>
+                                    <td>{{ $amm->getNumDemande() }}</td>
+                                    <td>{{ $amm->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $amm->paysprov }}</td>
+                                    <td>{{ $amm->fournisseur }}</td>
+                                    <td>{{ $amm->numconteneur }}</td>
+                                    <td>{{ number_format($amm->totalamm, 0, '.', ' ') }}</td>
                                     <td>
-                                        <a href="{{ route('amm.show', $amms->slug) }}">
+                                        <a href="{{ route('amm.show', $amm->slug) }}">
                                             <i class="far fa-eye"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('amm.edit', $amms->slug) }}">
+                                        <a href="{{ route('amm.edit', $amm->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette demande ?')" action="{{ route('amm.destroy', $amms->slug) }}" method="post">
+                                        <form onclick="return confirm('Voulez vous suppriemr cette demande ?')" action="{{ route('amm.destroy', $amm->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>

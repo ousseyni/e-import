@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategorieProduitsTable extends Migration
+class CreateSousActivitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateCategorieProduitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('categorie_produits', function (Blueprint $table) {
+        Schema::create('sous_activites', function (Blueprint $table) {
             $table->id();
+            $table->integer('activiteid')->unsigned()->nullable();
             $table->string('code',10);
             $table->string('libelle',200);
-            $table->enum('type', ['AMM', 'AMC']);
             $table->string('slug', 100);
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('activiteid')->references('id')->on('activites')->nullOnDelete();
+
         });
     }
 
@@ -31,6 +33,6 @@ class CreateCategorieProduitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorie_produits');
+        Schema::dropIfExists('sous_activites');
     }
 }

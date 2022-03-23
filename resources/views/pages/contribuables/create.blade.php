@@ -40,7 +40,7 @@
                                         <input type="text" name="nif" id="nif" class="form-control" />
                                     </div>
                                     <div class="col-6 input-group-sm">
-                                        <label for="typecontribuableid">Type de contribution</label>
+                                        <label for="typecontribuableid">Type d'usagers</label>
                                         <select class="form-control" id="typecontribuableid " name="typecontribuableid">
                                             @foreach($typeContribuables as $type)
                                                 <option value="{{$type->id}}">{{$type->libelle}}</option>

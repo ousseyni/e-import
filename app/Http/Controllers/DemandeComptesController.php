@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CategorieProduit;
 use App\Contribuables;
 use App\DemandeComptes;
 use App\Mail\MailTemplates;
@@ -236,14 +237,12 @@ class DemandeComptesController extends Controller
     public function activate(Request $request, $token)
     {
 
-        //dd($request->password1);
-
         if ($token == null) {
             return redirect('/login')->with('error', 'Tentative de connexion invalide');
         }
 
         if ($request->password1 != $request->password2) {
-            return redirect('/login')->with('error', 'Les deux mot de passe ne sont pas identiques');
+            return redirect()->back()->with('error', 'Les deux mot de passe ne sont pas identiques');
         }
 
         $user = User::where('email_verification_token',$token)->first();
@@ -251,6 +250,15 @@ class DemandeComptesController extends Controller
         if($user == null ){
             return redirect('/login')->with('error', 'Tentative de connexion invalide');
         }
+
+
+        $validatedData = $request->validate([
+            'localisation' => 'required|max:150',
+            'activiteid' => 'required',
+            'sousactiviteid' => 'required'
+        ]);
+        //dd($validatedData);
+        Contribuables::where('nif', '=', $user->login)->update($validatedData);
 
         $user->update([
             'password' => bcrypt($request->password1),
@@ -260,7 +268,6 @@ class DemandeComptesController extends Controller
             'email_verification_token' => ''
         ]);
 
-        return redirect('/login')->with('success', 'Votre compte est activé, vous pouvez vous connecter maintenant');;
-
+        return redirect('/connexion')->with('success', 'Votre compte est activé, vous pouvez vous connecter maintenant');;
     }
 }

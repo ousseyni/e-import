@@ -15,15 +15,16 @@ class CreateAmmsTable extends Migration
     {
         Schema::create('amms', function (Blueprint $table) {
             $table->id();
-            $table->string('numfact', 20);
-            $table->date('datefact');
-            $table->string('paysorig', 50);
             $table->string('paysprov', 50);
-            $table->string('fournisseur', 200);
-            $table->string('nomnavire', 200)->nullable();
+            $table->string('modetransport', 100);
             $table->string('cieaerien', 200)->nullable();
+            $table->string('numvoyagea', 200)->nullable();
+            $table->string('nomnavire', 200)->nullable();
+            $table->string('numvoyagem', 200)->nullable();
             $table->string('numvehicul', 200)->nullable();
-            $table->string('numvoyage', 200)->nullable();
+            $table->string('numvoyaget', 200)->nullable();
+            $table->string('numwagon', 200)->nullable();
+            $table->string('numvoyagef', 200)->nullable();
             $table->string('numconteneur', 200)->nullable();
             $table->string('numconnaissement', 200)->nullable();
             $table->date('dateembarque')->nullable();
@@ -38,11 +39,11 @@ class CreateAmmsTable extends Migration
             $table->integer('consoservice')->nullable();
             $table->integer('idcontribuable')->unsigned()->nullable();
             $table->string('slug', 100);
-            $table->tinyInteger('etat')->default('1');
+            $table->integer('etat')->unsigned()->default(1);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('idcontribuable')->references('id')->on('contribuables')->nullOnDelete();
-
+            $table->foreign('etat')->references('id')->on('etat_demandes')->nullOnDelete();
         });
     }
 

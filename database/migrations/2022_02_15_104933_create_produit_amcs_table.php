@@ -17,6 +17,7 @@ class CreateProduitAmcsTable extends Migration
             $table->id();
             $table->integer('idamc')->unsigned()->nullable();
             $table->integer('idproduit')->unsigned()->nullable();
+            $table->string('paysorig', 50);
             $table->integer('poids')->nullable();
             $table->integer('total')->nullable();
             $table->timestamps();

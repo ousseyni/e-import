@@ -33,11 +33,14 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::resource('produits', 'ProduitsController');
     Route::any('produits/info', 'ProduitsController@getcategorie');
     Route::any('produits/prix', 'ProduitsController@getprix');
+    Route::any('produits/get_prix', 'ProduitsController@get_prix');
 
     Route::resource('amm', 'AmmsController');
     Route::resource('amc', 'AmcsController');
 
     Route::get('demande-comptes/list', 'DemandeComptesController@list');
+
+    Route::get('logout', 'LoginController@logout');
 
     Route::get('/dashboard', function() {
         // $category_name = '';
@@ -92,14 +95,32 @@ Route::get('/', function() {
     }
 });
 
+Route::get('/demande-comptes/connexion', function() {
+    return redirect('/connexion');
+});
+Route::view('/connexion', 'pages.demande-comptes.connexion');
+
 Route::resource('demande-comptes', 'DemandeComptesController');
 
 Route::get('/demande-comptes', function() {
     $typeContribuables = TypeContribuables::all(['id', 'libelle']);
     return view('pages.demande-comptes.index', compact('typeContribuables'));
 });
+
 Route::match(['put', 'patch'],'demande-comptes/activate/{token}',
                            'DemandeComptesController@activate');
 
 Route::get('/verify/{token}', 'VerifyController@VerifyEmail');
+
+Route::get('/pass_recovery', function() {
+    // $category_name = 'auth';
+    $data = [
+        'category_name' => 'auth',
+        'page_name' => 'auth_default',
+        'has_scrollspy' => 0,
+        'scrollspy_offset' => '',
+    ];
+    // $pageName = 'auth_default';
+    return view('pages.authentication.auth_pass_recovery')->with($data);
+});
 

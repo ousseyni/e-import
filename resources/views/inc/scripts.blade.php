@@ -18,16 +18,6 @@
 
 {{-- Tables Datatable Basic --}}
 <script src="{{asset('plugins/table/datatable/datatables.js')}}"></script>
-
-{{-- Forms Wizards --}}
-<script src="{{asset('plugins/jquery-step/jquery.steps.min.js')}}"></script>
-<script src="{{asset('plugins/jquery-step/custom-jquery.steps.js')}}"></script>
-<script src="{{asset('plugins/jquery-step/steps.js')}}"></script>
-
-{{-- Forms Select2 --}}
-<script src="{{asset('plugins/select2/select2.min.js')}}"></script>
-
-
 <script>
 
     $('#contribuable').DataTable({
@@ -74,6 +64,14 @@
     });
 </script>
 
+{{-- Forms Wizards --}}
+<script src="{{asset('plugins/jquery-step/jquery.steps.min.js')}}"></script>
+<script src="{{asset('plugins/jquery-step/custom-jquery.steps.js')}}"></script>
+<script src="{{asset('plugins/jquery-step/steps.js')}}"></script>
+
+{{-- Forms Select2 --}}
+<script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+
 <script src="{{asset('plugins/font-icons/feather/feather.min.js')}}"></script>
 <script type="text/javascript">
     feather.replace();
@@ -88,6 +86,30 @@
 <script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
 <script src="{{asset('assets/js/dashboard/dash_2.js')}}"></script>
 
+
+
+<script src="{{asset('assets/js/forms/jquery.repeater.min.js')}}"></script>
+<script src="{{asset('assets/js/forms/form-repeater.js')}}"></script>
+
+<script src="{{asset('assets/js/forms/jquery.chained.js')}}"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('body').on('change', '#modetransport', function () {
+            getModeTransport();
+        });
+
+        $("#produit").chained("#catprod");
+
+    });
+
+</script>
 
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
@@ -291,11 +313,6 @@
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
       <script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
       <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
-      @break
-
-    @case('tabs')
-      {{-- Components Tabs --}}
-      <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
       @break
 
     @case('drag_n_drop')

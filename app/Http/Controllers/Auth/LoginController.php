@@ -67,7 +67,15 @@ class LoginController extends Controller
                 return redirect('/verify/'.$user->email_verification_token)->with('success', 'Compte activé avec succès');
             }
         }
+        return redirect()->back()->withSuccess("Oups... Login et/ou Mot de passe incorects");
+    }
 
-        return redirect("login")->withSuccess("Oups... Login et/ou Mot de passe incorects");
+    public function logout(Request $request) {
+        $route = "/login";
+        if (Auth::user()->profilid == 2) {
+            $route = "/connexion";
+        }
+        Auth::logout();
+        return redirect($route);
     }
 }

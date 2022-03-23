@@ -220,7 +220,7 @@ span.red {
 /*      Form Group Label       */
 .form-group label, label {
   font-size: 15px;
-  color: #acb0c3;
+  color: #263544;
   letter-spacing: 1px;
 }
 
@@ -247,8 +247,8 @@ span.red {
   color: #3b3f5c;
 }
 .form-control::-webkit-input-placeholder, .form-control::-ms-input-placeholder, .form-control::-moz-placeholder {
-  color: #acb0c3;
-  font-size: 15px;
+    color: #263544;
+    font-size: 15px;
 }
 .form-control:focus::-webkit-input-placeholder, .form-control:focus::-ms-input-placeholder, .form-control:focus::-moz-placeholder {
   color: #d3d3d3;
@@ -1776,7 +1776,7 @@ select.form-control.form-custom {
 input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly] {
   cursor: not-allowed;
   background-color: #f1f2f3 !important;
-  color: #acb0c3;
+  color: #263544;
 }
 
 .help-block, .help-inline {
@@ -1992,13 +1992,13 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   color: #fff;
 }
 
-/*  
+/*
     ==========================
-        Background Colors  
+        Background Colors
     ==========================
 */
-/*  
-    Default  
+/*
+    Default
 */
 .bg-primary {
   background-color: #1b55e2 !important;
@@ -2042,8 +2042,8 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   color: #fff;
 }
 
-/*  
-    Light Background  
+/*
+    Light Background
 */
 .bg-light-primary {
   background-color: #c2d5ff !important;
@@ -2087,7 +2087,7 @@ table .badge-success, table .badge-primary, table .badge-warning, table .badge-d
   color: #fff;
 }
 
-/*  
+/*
     Progress Bar
 */
 .progress {

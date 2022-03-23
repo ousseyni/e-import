@@ -33,7 +33,7 @@
             <div class="form-container">
                 <div class="form-content">
 
-                    <h1 class="">Création d'un compte <span class="brand-name">E-SERVICES</span></h1>
+                    <h1 class="">Création d'un compte <span class="brand-name">e-Service</span></h1>
                     <p class="signup-link">Faites la demande de création de votre compte directement en ligne</p>
 
                     @if(session()->get('success'))
@@ -46,11 +46,11 @@
                         @csrf
                         <div class="form-row mb-2">
                             <div class="col-6 input-group-sm">
-                                <label for="nif">NIF</label>
+                                <label for="nif">NIF/N° Stat/Matricule</label>
                                 <input type="text" required="" name="nif" id="nif" class="form-control" />
                             </div>
                             <div class="col-6 input-group-sm">
-                                <label for="typecontribuableid">Type de contribution</label>
+                                <label for="typecontribuableid">Type d'usagers</label>
                                 <select class="form-control" id="typecontribuableid " name="typecontribuableid">
                                     @foreach($typeContribuables as $type)
                                         <option value="{{$type->id}}">{{$type->libelle}}</option>
@@ -90,7 +90,7 @@
                         <button type="submit" class="btn btn-primary mb-3">Envoyez la demande</button>
                     </form>
 
-                    <p class="signup-link text-right">Vous avez un compte? <a href="/login">Connexion</a></p>
+                    <p class="signup-link text-right">Vous avez un compte? <a href="/connexion">Connexion</a></p>
 
                     <p class="terms-conditions">© 2022 Tous droits reservé. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
 
@@ -106,7 +106,6 @@
 
 
 <script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
-<script src="{{asset('assets/js/custom.js')}}"></script>
 <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/authentication/form-1.js')}}"></script></body>
