@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Amms;
 use App\CategorieProduit;
+use App\ConteneurAmm;
 use App\Contribuables;
 use App\DemandeComptes;
+use App\DeviseEtrangere;
 use App\DocumentAmms;
 use App\ModeTransport;
 use App\Pays;
@@ -13,6 +15,8 @@ use App\ProduitAmms;
 use App\Produits;
 use App\SuiviAmms;
 use App\TypeContribuables;
+use App\VehiculeAmm;
+use App\VolAmm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,8 +52,11 @@ class AmmsController extends Controller
         $nif = Auth::user()->login;
         $contribuable = Contribuables::where('nif', '=', $nif)->firstOrFail();
 
+        $tab_devise = DeviseEtrangere::orderBy('code', 'ASC')->get();
+
         return view('pages.amms.create',
-            compact('pays_pr', 'contribuable', 'produits', 'mode_t', 'pays_or', 'categorie_produits'));
+            compact('pays_pr', 'contribuable', 'produits', 'mode_t',
+                'pays_or', 'categorie_produits', 'tab_devise'));
     }
 
     /**
@@ -61,57 +68,72 @@ class AmmsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'numfact' => 'required|max:20',
-            'datefact' => 'date',
             'paysprov' => 'max:200',
             'modetransport' => 'max:150',
-            'fournisseur' => 'max:50',
-            'cieaerien' => 'max:200',
-            'numvoyagea' => 'max:200',
-            'nomnavire' => 'max:200',
-            'numvoyagem' => 'max:200',
-            'numvehicul' => 'max:200',
-            'numvoyaget' => 'max:200',
-            'numwagon' => 'max:200',
-            'numvoyagef' => 'max:200',
-            'numconteneur' => 'max:200',
-            'numconnaissement' => 'max:200',
+
+            //'numlta' => 'max:100',
+            //'cieaerien' => 'max:200',
+            //'numvol' => 'max:200',
+
+            //'nomnavire' => 'max:200',
+            //'numvoyagem' => 'max:200',
+            //'numbietc' => 'max:200',
+            //'numconteneurm' => 'max:200',
+            //'numconnaissement' => 'max:200',
+
+            //'numlvi' => 'max:100',
+            //'numvehicule' => 'max:200',
+            //'numconteneurt' => 'max:200',
+
+            //'numvoyagef' => 'max:200',
+            //'numwagon' => 'max:200',
+
             'dateembarque' => 'date',
             'lieuembarque' => 'max:100',
             'datedebarque' => 'date',
             'lieudebarque' => 'max:100',
-            'totalamm' =>'numeric',
+
             'totalpoids' =>'numeric',
-            'valeurcaf' =>'numeric',
+            'totalfrais' =>'numeric',
+            'totalenr' =>'numeric',
+            'totalglobal' =>'numeric',
+
+            'valeurcaf_cfa' =>'numeric',
+            'valeurcaf_ext' =>'numeric',
+            'valeurcaf_dev' =>'max:10',
+
             'idcontribuable' =>'required|numeric',
-            'pj1' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+
+            /*'pj1' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj2' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj3' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj4' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj5' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj6' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj7' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj8' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj9' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj10' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj5' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',*/
         ]);
 
         $show = Amms::create($validatedData);
         $contribuable = Contribuables::where('id', '=', $validatedData['idcontribuable'])->firstOrFail();
 
-        $usager_folder = public_path('uploads/'.$contribuable->nif);
+        $usager_folder = public_path('uploads/'.$contribuable->nif.'/amm_'.$show->id);
         if (!is_dir($usager_folder)) {
             mkdir($usager_folder, 0777, true);
         }
 
         //Sauvegarde des PJ
-        $facture_fournisseur = 'facture_fournisseur.'.$request->pj1->extension();
-        $request->pj1->move($usager_folder, $facture_fournisseur);
-        DocumentAmms::create([
-            'libelle' => 'Facture Fournisseur',
-            'idamm' => $show->id,
-            'pj' => $facture_fournisseur
-        ]);
+        $i = 0;
+        $factures = $request->file('pj1');
+        foreach($factures as $fact)
+        {
+            $i++;
+            $name = "facture_fournisseur_$i.".$fact->extension();
+            $fact->move($usager_folder, $name);
+
+            DocumentAmms::create([
+                'libelle' => 'Facture Fournisseur '.$i,
+                'idamm' => $show->id,
+                'pj' => $name
+            ]);
+        }
 
         $fiche_securite = 'fiche_securite.'.$request->pj2->extension();
         $request->pj2->move($usager_folder, $fiche_securite);
@@ -142,52 +164,149 @@ class AmmsController extends Controller
         DocumentAmms::create([
             'libelle' => "Certificat d'origine",
             'idamm' => $show->id,
-            'pj' => $cnt
+            'pj' => $certificat_origine
         ]);
+
+        if($request->hasFile('pj6')) {
+            $ail = 'ail.'.$request->pj6->extension();
+            $request->pj6->move($usager_folder, $ail);
+            DocumentAmms::create([
+                'libelle' => "Autorisation Spéciale des Lubrifiants",
+                'idamm' => $show->id,
+                'pj' => $ail
+            ]);
+        }
+
+        if($request->hasFile('pj7')) {
+            $asi = 'asi.'.$request->pj7->extension();
+            $request->pj7->move($usager_folder, $asi);
+            DocumentAmms::create([
+                'libelle' => "Autorisation Spéciale d'Importation",
+                'idamm' => $show->id,
+                'pj' => $asi
+            ]);
+        }
+
+        if($request->hasFile('pj8')) {
+            $asipr = 'asipr.'.$request->pj8->extension();
+            $request->pj8->move($usager_folder, $asipr);
+            DocumentAmms::create([
+                'libelle' => "Autorisation Spéciale d'Importation des produits réglementés (SAO & GES)",
+                'idamm' => $show->id,
+                'pj' => $asipr
+            ]);
+        }
+
+        if($request->hasFile('pj9')) {
+            $ldusr = 'ldusr.'.$request->pj9->extension();
+            $request->pj9->move($usager_folder, $ldusr);
+            DocumentAmms::create([
+                'libelle' => "licence de détention/utilisation des substances réglementées",
+                'idamm' => $show->id,
+                'pj' => $ldusr
+            ]);
+        }
+
+        if($request->hasFile('pj10')) {
+            $cf = 'ldusr.'.$request->pj10->extension();
+            $request->pj10->move($usager_folder, $cf);
+            DocumentAmms::create([
+                'libelle' => "Certificat de fumigation (riz & friperie)",
+                'idamm' => $show->id,
+                'pj' => $cf
+            ]);
+        }
+
+        if($request->hasFile('pj11')) {
+            $bietc = 'bietc.'.$request->pj10->extension();
+            $request->pj10->move($usager_folder, $bietc);
+            DocumentAmms::create([
+                'libelle' => "Bordereau d'Identification Electronique de Traçabilité des Cargaisons",
+                'idamm' => $show->id,
+                'pj' => $bietc
+            ]);
+        }
 
 
         //Sauvegarde des produits associés à la demande
-        if ($request->prodA !== null) {
+        $tab_produits = $_POST['produits'];
+        //dd($request->$tab_produits);
+        $total_poids = 0;
+        $total_amm = 0;
+        foreach($tab_produits as $data) {
+            $numfact = $data['numfact'];
+            $datefact = $data['datefact'];
+            $fournisseur = $data['fournisseur'];
+            $pays_or = $data['pays_or'];
+            $produit = $data['idproduit'];
+            $marque = $data['marque'];
+            $poids = $data['poids'];
+            $total = $data['total'];
+
             ProduitAmms::create([
                 'idamm' => $show->id,
-                'idproduit' => $request->prodA,
-                'paysorig' => $request->paysA,
-                'poids' => $request->poidsA,
-                'total' => $request->totalA
+                'idproduit' => $produit,
+                'numfact' => $numfact,
+                'datefact' => $datefact,
+                'fournisseur' => $fournisseur,
+                'marque' => $marque,
+                'paysorig' => $pays_or,
+                'poids' => $poids,
+                'total' => $total,
             ]);
         }
 
-        if ($request->prodB !== null) {
-            ProduitAmms::create([
+        //Sauvegarde des vols associés à la demande (Aérienne)
+        if ($_POST['modetransport'] == 'Aérien') {
+            VolAmm::create([
                 'idamm' => $show->id,
-                'idproduit' => $request->prodB,
-                'paysorig' => $request->paysB,
-                'poids' => $request->poidsB,
-                'total' => $request->totalB
+                'numlta' => $_POST['numlta'],
+                'cieaerien' => $_POST['cieaerien'],
+                'numvol' => $_POST['numvol'],
             ]);
         }
 
-        if ($request->prodC !== null) {
-            ProduitAmms::create([
-                'idamm' => $show->id,
-                'idproduit' => $request->prodC,
-                'paysorig' => $request->paysC,
-                'poids' => $request->poidsC,
-                'total' => $request->totalC
-            ]);
+        //Sauvegarde des conteneurs associés à la demande (Maritime)
+        if ($_POST['modetransport'] == 'Maritime') {
+            $tab_conteneurs = $_POST['conteneurs'];
+            $nomnavire = $_POST['nomnavire'];
+            $numvoyagem = $_POST['numvoyagem'];
+            $numbietc = $_POST['numbietc'];
+            $numconnaissement = $_POST['numconnaissement'];
+            //dd($tab_conteneurs);
+            foreach($tab_conteneurs as $data) {
+                $numconteneur = $data['numconteneurm'];
+
+                ConteneurAmm::create([
+                    'idamm' => $show->id,
+                    'nomnavire' => $nomnavire,
+                    'numvoyage' => $numvoyagem,
+                    'numbietc' => $numbietc,
+                    'numconteneur' => $numconteneur,
+                    'numconnaissement' => $numconnaissement,
+                ]);
+            }
         }
 
-        if ($request->prodD !== null) {
-            ProduitAmms::create([
-                'idamm' => $show->id,
-                'idproduit' => $request->prodD,
-                'paysorig' => $request->paysD,
-                'poids' => $request->poidsD,
-                'total' => $request->totalD
-            ]);
+        //Sauvegarde des vehicules associés à la demande (Terrestre)
+        if ($_POST['modetransport'] == 'Terrestre') {
+            $tab_vehicules = $_POST['vehicules'];
+            //dd($tab_vehicules);
+            foreach($tab_vehicules as $data) {
+                $numlvi = $data['numlvi'];
+                $numvehicule = $data['numvehicule'];
+                $numconteneurt = $data['numconteneurt'];
+
+                VehiculeAmm::create([
+                    'idamm' => $show->id,
+                    'numlvi' => $numlvi,
+                    'numvehicule' => $numvehicule,
+                    'numconteneur' => $numconteneurt,
+                ]);
+            }
         }
 
-        //dd($request->prodD);
+
         return redirect('/amm')->with('success', "Demande d'Autorisation de Mise sur le Marché enregistrée avec succès");
 
     }
@@ -213,8 +332,8 @@ class AmmsController extends Controller
      */
     public function edit($slug)
     {
-        $amms = Amms::where('slug', '=', $slug)->firstOrFail();
-        return view('pages.amms.edit', compact('amms'));
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+        return view('pages.amms.edit', compact('amm'));
 
     }
 
@@ -266,10 +385,10 @@ class AmmsController extends Controller
      */
     public function destroy($slug)
     {
-        $amms = Amms::where('slug', '=', $slug)->firstOrFail();
-        $amms->delete();
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+        $amm->delete();
 
-        return redirect('/amms')->with('success', 'Demande de AMM supprimée avec succès');
+        return redirect('/amm')->with('success', 'Demande de AMM supprimée avec succès');
 
     }
 

@@ -9,7 +9,7 @@
 
         <div class="row layout-top-spacing">
 
-            <div class="col-xl-10 col-lg-10 col-sm-10  layout-spacing">
+            <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -21,7 +21,7 @@
                 @endif
                 <div class="widget-content widget-content-area animated-underline-content">
 
-                        <h3>Détails de la demande d'AMM {{ $amm->getNumDemande() }}</h3>
+                        <h4>Détails de la demande d'AMM {{ $amm->getNumDemande() }}</h4>
 
                         <ul class="nav nav-tabs mt-3" id="border-tabs" role="tablist">
                             <li class="nav-item">
@@ -82,20 +82,6 @@
                             <div class="tab-pane fade" id="border-voyage" role="tabpanel">
 
                                 <div class="form-row mb-2">
-                                    <div class="col-4 input-group-sm">
-                                        <label for="numfact">N° Facture</label>
-                                        <input type="text" readonly value="{{$amm->numfact}}" name="numfact" id="numfact" class="form-control" />
-                                    </div>
-                                    <div class="col-4 input-group-sm">
-                                        <label for="datefact">Date Facture</label>
-                                        <input type="date" readonly value="{{$amm->datefact}}" name="datefact" id="datefact" class="form-control" />
-                                    </div>
-                                    <div class="col-4 input-group-sm">
-                                        <label for="fournisseur">Nom Fournisseur</label>
-                                        <input type="text" readonly value="{{$amm->fournisseur}}" name="fournisseur" id="fournisseur" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-row mb-2">
                                     <div class="col-6 input-group-sm">
                                         <label for="paysprov">Pays de provenance</label>
                                         <input type="text" readonly value="{{$amm->paysprov}}" name="paysprov" id="paysprov" class="form-control" />
@@ -107,37 +93,57 @@
                                 </div>
                                 @if($amm->modetransport == "Aérienne")
                                     <div class="form-row mb-2 aerienne">
-                                        <div class="col-6 input-group-sm">
+                                        <div class="col-4 input-group-sm">
+                                            <label for="numlta">N° LTA</label>
+                                            <input readonly value="{{$amm->numlta}}" type="text" name="numlta" id="numlta" class="form-control" />
+                                        </div>
+                                        <div class="col-4 input-group-sm">
                                             <label for="cieaerien">Compagnie aérienne</label>
                                             <input readonly value="{{$amm->cieaerien}}" type="text" name="cieaerien" id="cieaerien" class="form-control" />
                                         </div>
-                                        <div class="col-6 input-group-sm">
-                                            <label for="numvoyagea">N° vol</label>
-                                            <input readonly value="{{$amm->numvoyagea}}" type="text" name="numvoyagea" id="numvoyagea" class="form-control" />
+                                        <div class="col-4 input-group-sm">
+                                            <label for="numvol">N° vol</label>
+                                            <input readonly value="{{$amm->numvol}}" type="text" name="numvol" id="numvol" class="form-control" />
                                         </div>
                                     </div>
                                 @endif
                                 @if($amm->modetransport == "Maritime")
                                     <div class="form-row mb-2 maritime">
-                                        <div class="col-6 input-group-sm">
+                                        <div class="col-2 input-group-sm">
                                             <label for="nomnavire">Nom du navire</label>
-                                            <input readonly value="{{$amm->nomnavire}}" type="text" name="nomnavire" id="nomnavire" class="form-control" />
+                                            <input readonly value="{{$amm->nomnavire}}" type="text" required name="nomnavire" id="nomnavire" class="form-control" />
                                         </div>
-                                        <div class="col-6 input-group-sm">
+                                        <div class="col-2 input-group-sm">
                                             <label for="numvoyagem">N° voyage</label>
                                             <input readonly value="{{$amm->numvoyagem}}" type="text" name="numvoyagem" id="numvoyagem" class="form-control" />
+                                        </div>
+                                        <div class="col-2 input-group-sm">
+                                            <label for="numbietc">N° BIETC</label>
+                                            <input readonly value="{{$amm->numbietc}}" type="text" name="numbietc" id="numbietc" class="form-control" />
+                                        </div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="numconteneurm">N° conteneur</label>
+                                            <input readonly value="{{$amm->numconteneurm}}" type="text" required name="numconteneurm" id="numconteneurm" class="form-control" />
+                                        </div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="numconnaissement">N° connaissement</label>
+                                            <input readonly value="{{$amm->numconnaissement}}" type="text" required name="numconnaissement" id="numconnaissement" class="form-control" />
                                         </div>
                                     </div>
                                 @endif
                                 @if($amm->modetransport == "Terrestre")
                                     <div class="form-row mb-2 terrestre">
-                                        <div class="col-6 input-group-sm">
-                                            <label for="numvehicul">N° véhicule</label>
-                                            <input readonly value="{{$amm->numvehicul}}" type="text" name="numvehicul" id="numvehicul" class="form-control" />
+                                        <div class="col-4 input-group-sm">
+                                            <label for="numlvi">N° LVI</label>
+                                            <input readonly value="{{$amm->numlvi}}" type="text" name="numlvi" id="numlvi" class="form-control" />
                                         </div>
-                                        <div class="col-6 input-group-sm">
-                                            <label for="numvoyaget">N° voyage</label>
-                                            <input readonly value="{{$amm->numvoyaget}}" type="text" name="numvoyaget" id="numvoyaget" class="form-control" />
+                                        <div class="col-4 input-group-sm">
+                                            <label for="numvehicule">N° véhicule</label>
+                                            <input readonly value="{{$amm->numvehicule}}" type="text" name="numvehicule" id="numvehicule" class="form-control" />
+                                        </div>
+                                        <div class="col-4 input-group-sm">
+                                            <label for="numconteneurt">N° conteneur (si disponible)</label>
+                                            <input readonly value="{{$amm->numconteneurt}}" type="text" name="numconteneurt" id="numconteneurt" class="form-control" />
                                         </div>
                                     </div>
                                 @endif
@@ -153,16 +159,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="form-row mb-2">
-                                    <div class="col-6 input-group-sm">
-                                        <label for="numconteneur">N° conteneur</label>
-                                        <input type="text" readonly value="{{$amm->numconteneur}}" name="numconteneur" id="numconteneur" class="form-control" />
-                                    </div>
-                                    <div class="col-6 input-group-sm">
-                                        <label for="numconnaissement">N° connaissement</label>
-                                        <input type="text" readonly value="{{$amm->numconnaissement}}" name="numconnaissement" id="numconnaissement" class="form-control" />
-                                    </div>
-                                </div>
                                 <div class="form-row mb-2">
                                     <div class="col-6 input-group-sm">
                                         <label for="dateembarque">Date embarquement</label>
@@ -188,45 +184,70 @@
                             <div class="tab-pane fade" id="border-produit" role="tabpanel">
 
                                 @foreach($amm->getProduitAmms as $amms_produit)
-                                    <div class="form-row mb-2">
-                                        <div class="col-6 input-group-sm">
-                                            <label for="prod{{ $loop->index }}">Produit {{ $loop->index }}</label>
-                                            <input type="text" readonly value="{{$amms_produit->getProduit->libelle}}" id="prod{{ $loop->index }}" class="form-control" />
+                                    <h6><u>Informations Produit {{ 1 + $loop->index }}</u></h6>
+                                    <div class="form-row mb-4">
+                                        <div class="col-2 input-group-sm">
+                                            <label for="numfact">N° facture</label>
+                                            <input type="text" readonly value="{{$amms_produit->numfact}}" name="numfact" id="numfact" class="form-control" />
                                         </div>
                                         <div class="col-3 input-group-sm">
-                                            <label for="poids{{ $loop->index }}">Poids total (Kg)</label>
-                                            <input type="number" readonly value="{{$amms_produit->poids}}" id="poids{{ $loop->index }}" class="form-control calculproduit" />
+                                            <label for="datefact">Date de facture</label>
+                                            <input type="date" readonly value="{{$amms_produit->datefact}}" name="datefact" id="datefact" class="form-control" />
                                         </div>
                                         <div class="col-3 input-group-sm">
-                                            <label for="total{{ $loop->index }}">Montant (F CFA)</label>
-                                            <input type="number" readonly value="{{$amms_produit->total}}" id="total{{ $loop->index }}" class="form-control" />
+                                            <label for="fournisseur">Nom du fournisseur</label>
+                                            <input type="text" readonly value="{{$amms_produit->fournisseur}}" name="fournisseur" id="fournisseur" class="form-control" />
+                                        </div>
+                                        <div class="col-4 input-group-sm">
+                                            <label for="paysorig">Pays d'origine</label>
+                                            <input type="text" readonly value="{{$amms_produit->paysorig}}" name="paysorig" id="pays_or" class="form-control" />
+                                        </div>
+                                        <div class="col-4 input-group-sm">
+                                            <label for="idproduit">Produit</label>
+                                            <input type="text" readonly value="{{$amms_produit->getProduit->libelle}}" name="marque" id="marque" class="form-control" />
+                                        </div>
+                                        <div class="col-2 input-group-sm">
+                                            <label for="marque">Marque</label>
+                                            <input type="text" readonly value="{{$amms_produit->marque}}" name="marque" id="marque" class="form-control" />
+                                        </div>
+                                        <div class="col-2 input-group-sm">
+                                            <label for="poids">Poids (Kg)</label>
+                                            <input type="text" readonly value="{{ number_format($amms_produit->poids, 0, ',', ' ') }}" name="poids" min="0" id="poids" class="form-control" onblur="getProduit(this.name, this.value)" />
+                                        </div>
+                                        <div class="col-4 input-group-sm">
+                                            <label for="total">Montant</label>
+                                            <input type="text" readonly value="{{ number_format($amms_produit->total, 0, ',', ' ') }}" name="total" id="total" class="form-control" />
                                         </div>
                                     </div>
+                                    <hr >
                                 @endforeach
-                                <hr />
-                                <div class="form-row mb-2">
-                                    <div class="col-6 input-group-sm">
-                                        <label for="valeurcaf">Valeur CAF totale (F CFA)</label>
-                                        <input readonly value="{{$amm->valeurcaf}}" type="number" name="valeurcaf" value="0" min="0" id="valeurcaf" class="form-control calculproduit" />
+                                    <div class="form-row mb-2">
+                                        <div class="col-3 input-group-sm">
+                                            <label for="valeurcaf_ext">Valeur CAF totale (Devise)</label>
+                                            <input type="text" readonly value="{{ number_format($amm->valeurcaf_ext, 0, ',', ' ') }}" name="valeurcaf_ext" min="0" id="valeurcaf_ext" class="form-control calculproduit" />
+                                        </div>
+                                        <div class="col-2 input-group-sm">
+                                            <label for="valeurcaf_dev">Devise</label>
+                                            <input type="text" readonly value="{{ $amm->valeurcaf_dev }}" name="valeurcaf_dev" min="0" id="valeurcaf_ext" class="form-control calculproduit" />
+                                        </div>
+                                        <div class="col-3"></div>
+                                        <div class="col-4 input-group-sm">
+                                            <label for="valeurcaf_cfa">Valeur CAF totale (F CFA)</label>
+                                            <input type="text" readonly value="{{ number_format($amm->valeurcaf_cfa, 0, ',', ' ') }}" name="valeurcaf_dev" min="0" id="valeurcaf_ext" class="form-control calculproduit" />
+                                        </div>
                                     </div>
-                                    <div class="col-6 input-group-sm">
-                                        <label for="consoservice">Consommables & services (F CFA)</label>
-                                        <input readonly value="{{$amm->consoservice}}" type="number" name="consoservice" value="0" min="0" id="consoservice" class="form-control calculproduit" />
+                                    <hr />
+                                    <div class="form-row mb-2">
+                                        <div class="col-6 input-group-sm"></div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="totalpoids">Poids total (Kg)</label>
+                                            <input type="text" readonly value="{{ number_format($amm->totalpoids, 0, ',', ' ') }}" name="totalpoids" id="totalpoids" class="form-control" />
+                                        </div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="totalfrais">Frais à payer (F CFA)</label>
+                                            <input type="text" readonly value="{{ number_format($amm->totalfrais, 0, ',', ' ') }}" name="totalfrais" id="totalfrais" class="form-control" />
+                                        </div>
                                     </div>
-                                </div>
-                                <hr />
-                                <div class="form-row mb-2">
-                                    <div class="col-6 input-group-sm"></div>
-                                    <div class="col-3 input-group-sm">
-                                        <label for="totalpoids">Poids Total (Kg)</label>
-                                        <input readonly value="{{$amm->totalpoids}}" type="number" name="totalpoids" id="totalpoids" class="form-control" />
-                                    </div>
-                                    <div class="col-3 input-group-sm">
-                                        <label for="totalamm">Montant Total (F CFA)</label>
-                                        <input readonly value="{{$amm->totalamm}}" type="number" name="totalamm" id="totalamm" class="form-control" />
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="tab-pane fade" id="border-pj" role="tabpanel">
                                 @foreach($amm->getDocumentAmms as $amms_doc)
@@ -235,7 +256,7 @@
                                         {{  $amms_doc->libelle }}
                                     </div>
                                     <div class="col-2 input-group-sm">
-                                        <a href="{{ url('/uploads/'.$amm->getContribuable->nif.'/'.$amms_doc->pj)}}" target="_blank"> <i data-feather="link"></i></a>
+                                        <a href="{{ url('/uploads/'.$amm->getContribuable->nif.'/amm_'.$amm->id.'/'.$amms_doc->pj)}}" target="_blank"> <i data-feather="link"></i></a>
                                     </div>
                                 </div>
                                 @endforeach

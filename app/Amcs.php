@@ -3,14 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Amcs extends Model
 {
-    protected $fillable = ['numfact', 'datefact', 'paysprov', 'modetransport', 'fournisseur',
-        'cieaerien', 'numvoyagea', 'nomnavire', 'numvoyagem', 'numvehicul', 'numvoyaget', 'numwagon', 'numvoyagef',
-        'numconteneur', 'numconnaissement', 'dateembarque', 'lieuembarque', 'datedebarque', 'lieudebarque',
-        'totalamc', 'totalpen', 'observation', 'totalpoids', 'valeurcaf', 'consoservice', 'idcontribuable',
-        'slug'];
+    /*protected $fillable = ['paysprov', 'modetransport', 'numlta', 'cieaerien', 'numvol', 'nomnavire', 'numvoyagem',
+        'numbietc', 'numconteneurm', 'numconnaissement', 'numlvi', 'numvehicule', 'numconteneurt', 'numvoyagef',
+        'numwagon', 'dateembarque', 'lieuembarque', 'datedebarque', 'lieudebarque', 'totalfrais', 'totalpen',
+        'observation', 'totalpoids', 'valeurcaf_cfa', 'valeurcaf_ext', 'valeurcaf_dev', 'consoservice',
+        'idcontribuable', 'slug'];*/
+
+    protected $fillable = ['paysprov', 'modetransport', 'dateembarque', 'lieuembarque', 'datedebarque', 'lieudebarque',
+        'totalpoids', 'totalfrais', 'totalenr', 'totalpen', 'totalglobal', 'observation', 'valeurcaf_cfa',
+        'valeurcaf_ext', 'valeurcaf_dev', 'idcontribuable', 'slug'];
 
     protected static function boot() {
         parent::boot();
@@ -19,19 +24,40 @@ class Amcs extends Model
             $type->slug = Str::slug('amc-'.Str::random(50), '-');
         });
     }
-    public function getContribuables(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+
+    public function getContribuable(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Contribuables::class, 'contribuableid');
+        return $this->belongsTo(Contribuables::class, 'idcontribuable');
+    }
+
+    public function getVols(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(VolAmc::class);
+    }
+
+    public function getConteneurs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConteneurAmc::class);
+    }
+
+    public function getVehicules(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(VehiculeAmc::class);
     }
 
     public function getSuivis(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(SuiviAmcs::class);
+        return $this->hasMany(SuiviAmms::class);
     }
 
-    public function getProduits(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function getProduitAmcs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Produits::class);
+        return $this->hasMany(ProduitAmcs::class, 'idamc', 'id');
+    }
+
+    public function getDocumentAmcs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DocumentAmcs::class, 'idamc', 'id');
     }
 
     public function getEtat(): \Illuminate\Database\Eloquent\Relations\BelongsTo

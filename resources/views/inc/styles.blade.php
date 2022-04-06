@@ -37,6 +37,10 @@
         border-top: 1px solid black;
     }
 
+    .table > thead > tr > th {
+        font-size: 11px !important;
+    }
+
     .table > tbody > tr > td {
          color: #000000 !important;
          font-size: 12px !important;

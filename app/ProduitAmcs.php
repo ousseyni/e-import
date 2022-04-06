@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProduitAmcs extends Model
 {
-    protected $fillable = ['idamc', 'idproduit', 'paysorig', 'poids', 'total'];
+    protected $fillable = ['numfact', 'datefact', 'fournisseur', 'marque', 'paysorig',
+        'poids', 'total', 'idamc', 'idproduit', 'paysorig'];
 
     public function getProduit()
     {

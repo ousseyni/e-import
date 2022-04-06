@@ -135,12 +135,13 @@ function GetIEVersion() {
 
 function getProduit(key, value) {
 
+    getFraisEnr();
     const index = key.substring(9, 10);
     //console.log(key);
     //console.log(value);
     //console.log(index);
 
-    const prodIdx = "produits["+ index +"][produit]";
+    const prodIdx = "produits["+ index +"][idproduit]";
     const poidIdx = "produits["+ index +"][poids]";
     const totaIdx = "produits["+ index +"][total]";
 
@@ -154,68 +155,55 @@ function getProduit(key, value) {
             id: prodVal
         },
         dataType: 'json',
-        success: function(res){
+        success: function(res) {
 
             const total = poidVal * res.montant;
             $("input[name='"+ totaIdx +"']").val(total);
 
-            const nb=$('.repeater_item').length;
+            const nb=$('.repeater_item_produits').length;
             let totalpoids = 0;
-            let totalamm = 0;
+            let totalfrais = 0;
             for(let i=0; i<nb; i++) {
                 const npoidIdx = "produits["+ i +"][poids]";
                 const ntotaIdx = "produits["+ i +"][total]";
 
                 totalpoids += Number($("input[name='"+ npoidIdx +"']").val());
-                totalamm += Number($("input[name='"+ ntotaIdx +"']").val());
+                totalfrais += Number($("input[name='"+ ntotaIdx +"']").val());
             }
-            console.log(totalamm);
-            console.log(totalpoids);
+            //console.log(totalfrais);
+            //console.log(totalpoids);
+            const totalenr = Number($("#totalenr").val());
 
-            /*const totalpoids = Number($("#poidsA").val()) + Number($("#poidsB").val()) + Number($("#poidsC").val()) + Number($("#poidsD").val());
-            const totalamm = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD) + Number(caf) + Number(cs);
-            */
-            $('#totalamm').val(totalamm);
+            $('#totalfrais').val(totalfrais);
             $('#totalpoids').val(totalpoids);
+            $('#totalglobal').val(totalenr + totalfrais);
         }
     });
 }
 
-function getProduitOld() {
-    valA = $("#prodA :selected").val();
-    valB = $("#prodB :selected").val();
-    valC = $("#prodC :selected").val();
-    valD = $("#prodD :selected").val();
+function getFraisEnr() {
+    const mode_t = $("#modetransport :selected").val();
+    let nb = 1;
+    if (mode_t === 'Aérien') {
+        //nb=$('.repeater_item_produits').length;
+    }
+    if (mode_t === 'Maritime') {
+        nb = $('.repeater_item_conteneurs').length;
+    }
+    if (mode_t === 'Terrestre') {
+        nb = $('.repeater_item_vehicules').length;
+    }
 
     $.ajax({
         type:"POST",
-        url: "/produits/prix",
+        url: "/produits/get_frais_dossier",
         data: {
-            idA: valA,
-            idB: valB,
-            idC: valC,
-            idD: valD,
+            designation: mode_t
         },
         dataType: 'json',
-        success: function(res){
-            console.log(res);
-            const totalA = $("#poidsA").val() * res.montantA;
-            const totalB = $("#poidsB").val() * res.montantB;
-            const totalC = $("#poidsC").val() * res.montantC;
-            const totalD = $("#poidsD").val() * res.montantD;
-
-            $('#totalA').val(totalA);
-            $('#totalB').val(totalB);
-            $('#totalC').val(totalC);
-            $('#totalD').val(totalD);
-
-            const caf = $("#valeurcaf").val();
-
-            const totalpoids = Number($("#poidsA").val()) + Number($("#poidsB").val()) + Number($("#poidsC").val()) + Number($("#poidsD").val());
-            const totalamm = Number(totalA) + Number(totalB) + Number(totalC) + Number(totalD) + Number(caf) + Number(cs);
-
-            $('#totalamm').val(totalamm);
-            $('#totalpoids').val(totalpoids);
+        success: function(res) {
+            const frais_enr = nb * res.totalenr;
+            $('#totalenr').val(frais_enr);
         }
     });
 }
@@ -223,31 +211,39 @@ function getProduitOld() {
 function getModeTransport() {
     const mode_t = $("#modetransport :selected").val();
 
-    if (mode_t == 'Aérienne') {
+    if (mode_t === 'Aérien') {
         $(".aerienne").show();
         $(".maritime").hide();
         $(".terrestre").hide();
         $(".ferroviaire").hide();
     }
 
-    if (mode_t == 'Maritime') {
+    if (mode_t === 'Maritime') {
         $(".aerienne").hide();
         $(".maritime").show();
         $(".terrestre").hide();
         $(".ferroviaire").hide();
     }
 
-    if (mode_t == 'Terrestre') {
+    if (mode_t === 'Terrestre') {
         $(".aerienne").hide();
         $(".maritime").hide();
         $(".terrestre").show();
         $(".ferroviaire").hide();
     }
-    if (mode_t == 'Ferroviaire') {
+
+    if (mode_t === 'Ferroviaire') {
         $(".aerienne").hide();
         $(".maritime").hide();
         $(".terrestre").hide();
         $(".ferroviaire").show();
     }
 
+}
+
+function submit_form(form_id) {
+    const rep = confirm('Voulez vous supprimer cette ligne ?');
+    if (rep) {
+        document.getElementById(form_id).submit();
+    }
 }

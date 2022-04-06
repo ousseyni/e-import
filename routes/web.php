@@ -34,13 +34,19 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::any('produits/info', 'ProduitsController@getcategorie');
     Route::any('produits/prix', 'ProduitsController@getprix');
     Route::any('produits/get_prix', 'ProduitsController@get_prix');
+    Route::any('produits/get_frais_dossier', 'ProduitsController@get_frais_dossier');
 
     Route::resource('amm', 'AmmsController');
     Route::resource('amc', 'AmcsController');
 
-    Route::get('demande-comptes/list', 'DemandeComptesController@list');
 
-    Route::get('logout', 'LoginController@logout');
+    Route::any('traitement-amc/etude', 'TraitementAMCController@etude')->name('traitement-amc.etude');
+    Route::any('traitement-amm/etude', 'TraitementAMMController@etude')->name('traitement-amm.etude');
+
+    Route::resource('traitement-amc', 'TraitementAMCController');
+    Route::resource('traitement-amm', 'TraitementAMMController');
+
+    Route::get('logout', 'Auth\LoginController@logout');
 
     Route::get('/dashboard', function() {
         // $category_name = '';
@@ -101,14 +107,12 @@ Route::get('/demande-comptes/connexion', function() {
 Route::view('/connexion', 'pages.demande-comptes.connexion');
 
 Route::resource('demande-comptes', 'DemandeComptesController');
-
+Route::get('demande-comptes/list', 'DemandeComptesController@list')->name('demande-comptes.list');
 Route::get('/demande-comptes', function() {
     $typeContribuables = TypeContribuables::all(['id', 'libelle']);
     return view('pages.demande-comptes.index', compact('typeContribuables'));
 });
-
-Route::match(['put', 'patch'],'demande-comptes/activate/{token}',
-                           'DemandeComptesController@activate');
+Route::match(['put', 'patch'],'demande-comptes/activate/{token}', 'DemandeComptesController@activate');
 
 Route::get('/verify/{token}', 'VerifyController@VerifyEmail');
 
@@ -122,5 +126,26 @@ Route::get('/pass_recovery', function() {
     ];
     // $pageName = 'auth_default';
     return view('pages.authentication.auth_pass_recovery')->with($data);
+});
+
+Route::get('routes', function () {
+    $routeCollection = Route::getRoutes();
+
+    echo "<table style='width:100%'>";
+    echo "<tr>";
+    echo "<td width='10%'><h4>HTTP Method</h4></td>";
+    echo "<td width='10%'><h4>Route</h4></td>";
+    echo "<td width='10%'><h4>Name</h4></td>";
+    echo "<td width='70%'><h4>Corresponding Action</h4></td>";
+    echo "</tr>";
+    foreach ($routeCollection as $value) {
+        echo "<tr>";
+        echo "<td>" . $value->methods()[0] . "</td>";
+        echo "<td>" . $value->uri() . "</td>";
+        echo "<td>" . $value->getName() . "</td>";
+        echo "<td>" . $value->getActionName() . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
 });
 

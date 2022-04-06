@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Amms;
 use App\CategorieProduit;
+use App\FraisDossier;
 use App\Produits;
 use Illuminate\Http\Request;
 
@@ -185,6 +186,26 @@ class ProduitsController extends Controller
 
         return response()->json([
             'montant' => $montant
+        ]);
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_frais_dossier(Request $request)
+    {
+        $frais_dossier = FraisDossier::where('designation', '=', $request->designation)->firstOrFail();
+        $totalenr = 0;
+        if ($frais_dossier != null) {
+            $totalenr = $frais_dossier->valeur_int;
+        }
+
+        return response()->json([
+            'totalenr' => $totalenr
         ]);
     }
 }

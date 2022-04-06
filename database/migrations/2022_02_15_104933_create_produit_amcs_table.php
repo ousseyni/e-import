@@ -15,11 +15,15 @@ class CreateProduitAmcsTable extends Migration
     {
         Schema::create('produit_amcs', function (Blueprint $table) {
             $table->id();
-            $table->integer('idamc')->unsigned()->nullable();
-            $table->integer('idproduit')->unsigned()->nullable();
+            $table->string('numfact', 20);
+            $table->date('datefact');
+            $table->string('fournisseur', 200);
+            $table->string('marque', 100);
             $table->string('paysorig', 50);
             $table->integer('poids')->nullable();
             $table->integer('total')->nullable();
+            $table->integer('idamc')->unsigned()->nullable();
+            $table->integer('idproduit')->unsigned()->nullable();
             $table->timestamps();
             $table->foreign('idamc')->references('id')->on('amcs')->nullOnDelete();
             $table->foreign('idproduit')->references('id')->on('produits')->nullOnDelete();

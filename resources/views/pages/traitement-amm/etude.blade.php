@@ -1,7 +1,7 @@
-@extends('layouts.app', ['page_name' => 'Mes demandes',
+@extends('layouts.app', ['page_name' => "Etude des demandes",
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Demandes A.M.C.'])
+                         'category_name' => 'Traitement des A.M.M.'])
 
 @section('content')
     <div class="layout-px-spacing">
@@ -18,15 +18,14 @@
                     @endif
 
                     <div class="table-responsive mb-4 mt-4">
-                        <a href="{{ route('amc.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouvelle demande</a>
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
                                 <th>N° demande</th>
                                 <th>Date demande</th>
+                                <th>Usager</th>
                                 <th>Provenance</th>
                                 <th>Mode Transport</th>
-                                <th>N° Conteneur</th>
                                 <th>Frais à payer</th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
@@ -34,35 +33,37 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($amcs as $amc)
+                            @foreach($demandes_etudes as $amm)
                                 <tr>
-                                    <td>{{ $amc->getNumDemande() }}</td>
-                                    <td>{{ $amc->created_at->format('d/m/Y') }}</td>
-                                    <td>{{ $amc->paysprov }}</td>
-                                    <td>{{ $amc->modetransport }}</td>
-                                    <td>{{ $amc->numconteneur }}</td>
-                                    <td>{{ number_format($amc->totalfrais, 0, '.', ' ') }}</td>
+                                    <td>{{ $amm->getNumDemande() }}</td>
+                                    <td>{{ $amm->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $amm->getContribuable->raisonsociale }}</td>
+                                    <td>{{ $amm->paysprov }}</td>
+                                    <td>{{ $amm->modetransport }}</td>
+                                    <td>{{ number_format($amm->totalfrais, 0, '.', ' ') }}</td>
                                     <td>
-                                        <a href="{{ route('amc.show', $amc->slug) }}">
+                                        <a href="{{ route('amm.show', $amm->slug) }}">
                                             <i class="far fa-eye"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('amc.edit', $amc->slug) }}">
+                                        <a href="{{ route('amm.edit', $amm->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette demande ?')" action="{{ route('amc.destroy', $amc->slug) }}" method="post">
+                                        <form id="form_del" action="{{ route('amm.destroy', $amm->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                                            <a href="#" onclick="submit_form('form_del')"><i class="far fa-trash-alt"></i></a>
                                         </form>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+
+                        {{ $demandes_etudes->links() }}
                     </div>
                 </div>
             </div>
@@ -70,4 +71,5 @@
         </div>
 
     </div>
+
 @endsection

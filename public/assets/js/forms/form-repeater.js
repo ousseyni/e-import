@@ -12,16 +12,41 @@
 	'use strict';
 
 	// Custom Show / Hide Configurations
-	$('.contact-repeater').repeater({
+	$('.produit-repeater').repeater({
         show: function () {
 			$(this).slideDown();
 		},
 		hide: function(remove) {
 		  if (confirm('Voulez vous retirer ce produit ?')) {
-                $(this).slideUp(remove);
+              $(this).slideUp(remove);
+              document.getElementById('poids').focus();
 			}
 		}
 	});
+
+    $('.conteneur-repeater').repeater({
+        show: function () {
+            $(this).slideDown();
+        },
+        hide: function(remove) {
+            if (confirm('Voulez vous retirer ce conteneur ?')) {
+                $(this).slideUp(remove);
+                document.getElementById('numconteneurm').focus();
+            }
+        }
+    });
+
+    $('.vehicule-repeater').repeater({
+        show: function () {
+            $(this).slideDown();
+        },
+        hide: function(remove) {
+            if (confirm('Voulez vous retirer ce véhicule ?')) {
+                $(this).slideUp(remove);
+                document.getElementById('numvehicule').focus();
+            }
+        }
+    });
 
 
 })(window, document, jQuery);

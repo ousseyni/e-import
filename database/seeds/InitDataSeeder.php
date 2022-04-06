@@ -3,7 +3,9 @@
 use App\Activite;
 use App\CategorieProduit;
 use App\Contribuables;
+use App\DeviseEtrangere;
 use App\EtatDemande;
+use App\FraisDossier;
 use App\ModeTransport;
 use App\Pays;
 use App\Produits;
@@ -81,7 +83,7 @@ class InitDataSeeder extends Seeder
         ]);
 
         ModeTransport::create([
-            'libelle'     => 'Aérienne',
+            'libelle'     => 'Aérien',
         ]);
         ModeTransport::create([
             'libelle'     => 'Maritime',
@@ -89,8 +91,82 @@ class InitDataSeeder extends Seeder
         ModeTransport::create([
             'libelle'     => 'Terrestre',
         ]);
-        ModeTransport::create([
+        /*ModeTransport::create([
             'libelle'     => 'Ferroviaire',
+        ]);*/
+
+
+        FraisDossier::create([
+            'designation'     => "Maritime",
+            'valeur_int'     => 25000,
+            'valeur_str'     => '',
+        ]);
+        FraisDossier::create([
+            'designation'     => "Aérien",
+            'valeur_int'     => 0,
+            'valeur_str'     => '',
+        ]);
+        FraisDossier::create([
+            'designation'     => "Terrestre",
+            'valeur_int'     => 25000,
+            'valeur_str'     => '',
+        ]);
+
+
+        DeviseEtrangere::create([
+            'code'     => 'EUR',
+            'libelle'     => 'Euro',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'JPY',
+            'libelle'     => 'Yen Japonais',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'GBP',
+            'libelle'     => 'Livre Sterling',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'AED',
+            'libelle'     => 'Dirham Arabes',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'BRL',
+            'libelle'     => 'Real (Brésilien)',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'CAD',
+            'libelle'     => 'Dollar Canadien',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'USD',
+            'libelle'     => 'Dollar Américain',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'RUB',
+            'libelle'     => 'Rouble Russe',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'CNY',
+            'libelle'     => 'Yuan Renminbi',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'NGN',
+            'libelle'     => 'Naira',
+            'taux'     => 0,
+        ]);
+        DeviseEtrangere::create([
+            'code'     => 'ZAR',
+            'libelle'     => 'Rand Sudafricano',
+            'taux'     => 0,
         ]);
 
 

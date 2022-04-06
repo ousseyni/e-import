@@ -70,6 +70,59 @@
                         </a>
                     </li>
 
+                    <li class="menu {{ ($category_name === 'Gestion des A.M.M.') ? 'active' : '' }}">
+                        <a href="#amm" data-active="{{ ($category_name === 'Gestion des A.M.M.') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des A.M.M.') ? 'true' : 'false' }}" class="dropdown-toggle">
+                            <div class="">
+                                <i data-feather="file"></i><span>Gestion des A.M.M.</span>
+                            </div>
+                            <div>
+                                <i data-feather="chevron-right"></i>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Traitement des A.M.M.') ? 'show' : '' }}" id="amm" data-parent="#accordionExample">
+                            <li class="{{ ($page_name === 'Nouvelle AMM') ? 'active' : '' }}">
+                                <a href="#"> Nouvelle demande </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Etude des demandes') ? 'active' : '' }}">
+                                <a href="{{ route('traitement-amm.etude')  }}"> Etude demandes </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Validation des demandes') ? 'active' : '' }}">
+                                <a href="#"> Validation demandes </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Demandes traitées') ? 'active' : '' }}">
+                                <a href="#"> Demandes traitées </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Etat des demandes') ? 'active' : '' }}">
+                                <a href="#"> Etat demandes </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu {{ ($category_name === 'Gestion des A.M.C.') ? 'active' : '' }}">
+                        <a href="#amc" data-active="{{ ($category_name === 'Gestion des A.M.C.') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des A.M.C.') ? 'true' : 'false' }}" class="dropdown-toggle">
+                            <div class="">
+                                <i data-feather="clipboard"></i><span>Gestion des A.M.C.</span>
+                            </div>
+                            <div>
+                                <i data-feather="chevron-right"></i>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
+                            <li class="{{ ($page_name === 'basic') ? 'active' : '' }}">
+                                <a href="#"> Nouvelle demande </a>
+                            </li>
+                            <li class="{{ ($page_name === 'input_group') ? 'active' : '' }}">
+                                <a href="#"> Demandes en attente </a>
+                            </li>
+                            <li class="{{ ($page_name === 'layouts') ? 'active' : '' }}">
+                                <a href="#"> Validation demandes </a>
+                            </li>
+                            <li class="{{ ($page_name === 'validation') ? 'active' : '' }}">
+                                <a href="#"> Demandes traitées </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="menu {{ ($category_name === 'Gestion des contribuables') ? 'active' : '' }}">
                         <a href="#contribuables" data-active="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="icon-container">
@@ -87,7 +140,7 @@
                                 <a href="{{ route('contribuables.index')  }}"> Liste contribuables</a>
                             </li>
                             <li class="{{ ($page_name === "Comptes en attente d'activation") ? 'active' : '' }}">
-                                <a href="{{ url('demande-comptes/list')  }}"> En attente de validation</a>
+                                <a href="{{ url('demande-comptes.list')  }}"> En attente de validation</a>
                             </li>
                             <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
                                 <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
@@ -113,56 +166,6 @@
                             </li>
                         </ul>
                     </li>
-
-                    <li class="menu {{ ($category_name === 'Gestion des A.M.M.') ? 'active' : '' }}">
-                        <a href="#amm" data-active="{{ ($category_name === 'Gestion des A.M.M.') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des A.M.M.') ? 'true' : 'false' }}" class="dropdown-toggle">
-                            <div class="">
-                                <i data-feather="file"></i><span>Gestion des A.M.M.</span>
-                            </div>
-                            <div>
-                                <i data-feather="chevron-right"></i>
-                            </div>
-                        </a>
-                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des A.M.M.') ? 'show' : '' }}" id="amm" data-parent="#accordionExample">
-                            <li class="{{ ($page_name === 'basic') ? 'active' : '' }}">
-                                <a href="#"> Nouvelle demande </a>
-                            </li>
-                            <li class="{{ ($page_name === 'input_group') ? 'active' : '' }}">
-                                <a href="#"> Demandes en attente </a>
-                            </li>
-                            <li class="{{ ($page_name === 'layouts') ? 'active' : '' }}">
-                                <a href="#"> Validation demandes </a>
-                            </li>
-                            <li class="{{ ($page_name === 'validation') ? 'active' : '' }}">
-                                <a href="#"> Demandes traitées </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                        <li class="menu {{ ($category_name === 'Gestion des A.M.C.') ? 'active' : '' }}">
-                            <a href="#amc" data-active="{{ ($category_name === 'Gestion des A.M.C.') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des A.M.C.') ? 'true' : 'false' }}" class="dropdown-toggle">
-                                <div class="">
-                                    <i data-feather="clipboard"></i><span>Gestion des A.M.C.</span>
-                                </div>
-                                <div>
-                                    <i data-feather="chevron-right"></i>
-                                </div>
-                            </a>
-                            <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
-                                <li class="{{ ($page_name === 'basic') ? 'active' : '' }}">
-                                    <a href="#"> Nouvelle demande </a>
-                                </li>
-                                <li class="{{ ($page_name === 'input_group') ? 'active' : '' }}">
-                                    <a href="#"> Demandes en attente </a>
-                                </li>
-                                <li class="{{ ($page_name === 'layouts') ? 'active' : '' }}">
-                                    <a href="#"> Validation demandes </a>
-                                </li>
-                                <li class="{{ ($page_name === 'validation') ? 'active' : '' }}">
-                                    <a href="#"> Demandes traitées </a>
-                                </li>
-                            </ul>
-                        </li>
 
                     <li class="menu {{ ($category_name === 'Administration') ? 'active' : '' }}">
                         <a href="#admin" data-active="{{ ($category_name === 'Administration') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Administration') ? 'true' : 'false' }}" class="dropdown-toggle">
