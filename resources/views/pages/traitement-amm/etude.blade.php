@@ -21,14 +21,15 @@
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
-                                <th>N° demande</th>
+                                <th>N°</th>
                                 <th>Date demande</th>
                                 <th>Usager</th>
                                 <th>Provenance</th>
-                                <th>Mode Transport</th>
-                                <th>Frais à payer</th>
-                                <th width="3%"></th>
-                                <th width="3%"></th>
+                                <th>Mode Transp.</th>
+                                <th>Date débarq.</th>
+                                <th>Frais</th>
+                                <th>Trace</th>
+                                <th>ODR</th>
                                 <th width="3%"></th>
                             </tr>
                             </thead>
@@ -37,26 +38,36 @@
                                 <tr>
                                     <td>{{ $amm->getNumDemande() }}</td>
                                     <td>{{ $amm->created_at->format('d/m/Y') }}</td>
-                                    <td>{{ $amm->getContribuable->raisonsociale }}</td>
+                                    <td>{{ $amm->getContribuable->nif.' - '.$amm->getContribuable->raisonsociale}}</td>
                                     <td>{{ $amm->paysprov }}</td>
                                     <td>{{ $amm->modetransport }}</td>
-                                    <td>{{ number_format($amm->totalfrais, 0, '.', ' ') }}</td>
+                                    <td>{{ date_format(new DateTime($amm->datedebarque), 'd/m/Y') }}</td>
+                                    <td>{{ number_format($amm->totalglobal, 0, '.', ' ') }}</td>
                                     <td>
-                                        <a href="{{ route('amm.show', $amm->slug) }}">
+                                        <a href="{{ route('traitement-amm.trace', $amm->slug) }}">
+                                            {{ $amm->getEtat->libelle_dgcc }}
+                                        </a>
+                                        {{--
+                                        @if($amm->estDepote())
+                                            <br><a target="_blank" href="{{ url('/storage/pdf/fiche_crtl.pdf') }}">
+                                                Télécharger la fiche de contrôle
+                                            </a>
+                                        @endif
+                                        --}}
+                                    </td>
+                                    <td>
+                                        @if($amm->haveOrdreRecette())
+                                            <a target="_blank" href="{{ route('traitement-amm.dwlord', $amm->slug) }}">
+                                                <i class="far fa-file"></i>
+                                            </a>
+                                        @else
+                                            N/D
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('traitement-amm.traitement', $amm->slug) }}">
                                             <i class="far fa-eye"></i>
                                         </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('amm.edit', $amm->slug) }}">
-                                            <i class="far fa-edit"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <form id="form_del" action="{{ route('amm.destroy', $amm->slug) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#" onclick="submit_form('form_del')"><i class="far fa-trash-alt"></i></a>
-                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -73,3 +84,5 @@
     </div>
 
 @endsection
+
+

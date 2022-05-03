@@ -12,4 +12,9 @@ class SuiviAmms extends Model
     {
         return $this->belongsTo(Amms::class, 'idamm');
     }
+
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'iduser');
+    }
 }

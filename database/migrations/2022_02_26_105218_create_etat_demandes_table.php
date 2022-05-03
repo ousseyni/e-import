@@ -17,6 +17,8 @@ class CreateEtatDemandesTable extends Migration
             $table->id();
             $table->string('libelle_dgcc',200);
             $table->string('libelle_user',200);
+            $table->integer('etat_actuel')->unsigned();
+            $table->string('etat_suivant', 200);
             $table->timestamps();
         });
     }

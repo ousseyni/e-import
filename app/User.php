@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'login', 'profilid', 'password', 'email_verification_token',
-        'email_verified_at', 'email_verified'
+        'email_verified_at', 'email_verified', 'slug'
     ];
 
     /**
@@ -38,8 +39,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function ($type) {
+            $type->slug = Str::slug('usr-'.Str::random(50), '-');
+        });
+    }
+
     public function getProfil()
     {
         return $this->belongsTo(Profils::class, 'profilid');
+    }
+    public function getRoute()
+    {
+        if ($this->email_verified == 1) {
+            if ($this->profilid == 2) {
+                return redirect('/accueil')->with('success', 'Bienvenue sur e-Services DGCC');
+            }
+            else {
+                return redirect('/dashboard')->with('success', 'Bienvenue sur e-Services DGCC');
+            }
+        }
+        else {
+            if ($this->profilid == 2) {
+                return redirect('/verify/'.$this->email_verification_token)->with('success', 'Compte activé avec succès');
+            }
+            else {
+                echo redirect('/verify-compte/'.$this->email_verification_token)->with('success', 'Compte activé avec succès');
+            }
+        }
     }
 }

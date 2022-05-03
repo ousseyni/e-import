@@ -47,9 +47,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row input-group-sm mb-4">
-                                    <label for="montant" class="col-sm-2 col-form-label col-form-label-sm">Montant</label>
+                                    <label for="type" class="col-sm-2 col-form-label col-form-label-sm">Type</label>
                                     <div class="col-sm-10">
-                                        <input type="number" name="montant" class="form-control form-control-sm" id="montant" placeholder="montant">
+                                        <select name="type" id="type" class="form-control form-control-sm">
+                                            <option value="AMM">AMM</option>
+                                            <option value="AMC">AMC</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Enregistrer</button>

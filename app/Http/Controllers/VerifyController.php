@@ -31,4 +31,21 @@ class VerifyController extends Controller
                 compact('user', 'activite', 'sousactivite'));
         }
     }
+
+    public function VerifyCompte($token = null)
+    {
+        if ($token == null) {
+            session()->flash('message', 'Tentative de connexion invalide');
+            return redirect()->route('login');
+        }
+
+        $user = User::where('email_verification_token',$token)->first();
+
+        if($user == null ){
+            return redirect('/login')->with('error', "Lien d'activation de compte expiré");
+        }
+        else {
+            return view('pages.demande-comptes.compte', compact('user'));
+        }
+    }
 }

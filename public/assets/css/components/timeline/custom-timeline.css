@@ -153,7 +153,7 @@
 }
 
 .mt-container {
-  max-width: 570px;
+  /* max-width: 570px; */
 }
 
 .modern-timeline {
@@ -554,7 +554,7 @@
   font-weight: 600;
 }
 .timeline-line .item-timeline .t-time {
-  margin: 0;
+  margin-right: 16px;
   min-width: 58px;
   max-width: 100px;
   font-size: 16px;
@@ -565,7 +565,7 @@
 .timeline-line .item-timeline .t-text .t-meta-time {
   margin: 0;
   min-width: 100px;
-  max-width: 100px;
+  max-width: 200px;
   font-size: 12px;
   font-weight: 700;
   color: #888ea8;

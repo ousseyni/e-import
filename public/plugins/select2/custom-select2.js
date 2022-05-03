@@ -1,5 +1,5 @@
 $(".basic").select2({
-    tags: true
+    tags: true,
 });
 /*
 var formSmall2 = $(".form-small").select2({ tags: true });

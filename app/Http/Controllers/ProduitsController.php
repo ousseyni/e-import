@@ -17,7 +17,7 @@ class ProduitsController extends Controller
      */
     public function index()
     {
-        $produits = Produits::paginate(10);
+        $produits = Produits::all();
         return view('pages.produits.index', compact('produits'));
     }
 
@@ -28,8 +28,10 @@ class ProduitsController extends Controller
      */
     public function create()
     {
-        $categories = CategorieProduit::all(['id', 'code', 'libelle']);
-        return view('pages.produits.create', compact('categories'));
+        $categoriesAmc = CategorieProduit::where('type', '=', 'AMC')->get();
+        $categoriesAmm = CategorieProduit::where('type', '=', 'AMM')->get();
+        return view('pages.produits.create',
+            compact('categoriesAmc', 'categoriesAmm'));
     }
 
     /**
@@ -44,11 +46,19 @@ class ProduitsController extends Controller
             'code' => 'required|max:10',
             'libelle' => 'required|max:100',
             'montant' => 'required|max:30',
-            'categorieid' =>'numeric',
+            'categorie_produit_id' =>'numeric',
         ]);
 
         //dd($validatedData);
-        $show = Produits::create($validatedData);
+        //$show = Produits::create($validatedData);
+        $categorie = CategorieProduit::find($request->categorie_produit_id);
+        $show = Produits::create([
+            'code'     => $request->code,
+            'libelle'  => $request->libelle,
+            'montant'  => $request->montant,
+            'type'     => $categorie->type,
+            'categorie_produit_id'     => $request->categorie_produit_id,
+        ]);
 
         return redirect('/produits')->with('success', 'Produit enregistré avec succès');
     }
@@ -73,9 +83,11 @@ class ProduitsController extends Controller
     public function edit($slug)
     {
         $produit = Produits::where('slug', '=', $slug)->firstOrFail();
-        $categories = CategorieProduit::all(['id', 'code', 'libelle']);
+        $categoriesAmc = CategorieProduit::where('type', '=', 'AMC')->get();
+        $categoriesAmm = CategorieProduit::where('type', '=', 'AMM')->get();
 
-        return view('pages.produits.edit', compact('produit', 'categories'));
+        return view('pages.produits.edit',
+            compact('produit', 'categoriesAmc', 'categoriesAmm'));
     }
 
     /**
@@ -91,9 +103,19 @@ class ProduitsController extends Controller
             'code' => 'required|max:10',
             'libelle' => 'required|max:100',
             'montant' => 'required|max:30',
-            'categorieid' =>'numeric',
+            'categorie_produit_id' =>'numeric',
         ]);
-        Produits::where('slug', '=', $slug)->update($validatedData);
+
+        //dd($validatedData);
+        //$show = Produits::create($validatedData);
+        $categorie = CategorieProduit::find($request->categorie_produit_id);
+        $show = Produits::where('slug', '=', $slug)->update([
+            'code'     => $request->code,
+            'libelle'  => $request->libelle,
+            'montant'  => $request->montant,
+            'type'     => $categorie->type,
+            'categorie_produit_id'     => $request->categorie_produit_id,
+        ]);
 
         return redirect('/produits')->with('success', 'Produit modifié avec succès');
     }

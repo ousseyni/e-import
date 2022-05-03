@@ -26,8 +26,9 @@
                                 <th>Date demande</th>
                                 <th>Provenance</th>
                                 <th>Mode Transport</th>
-                                <th>N° Conteneur</th>
+                                <th>Date débarquement</th>
                                 <th>Frais à payer</th>
+                                <th>Statut</th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
@@ -40,8 +41,9 @@
                                     <td>{{ $amc->created_at->format('d/m/Y') }}</td>
                                     <td>{{ $amc->paysprov }}</td>
                                     <td>{{ $amc->modetransport }}</td>
-                                    <td>{{ $amc->numconteneur }}</td>
-                                    <td>{{ number_format($amc->totalfrais, 0, '.', ' ') }}</td>
+                                    <td>{{ date_format(new DateTime($amc->datedebarque), 'd/m/Y') }}</td>
+                                    <td>{{ number_format($amc->totalglobal, 0, '.', ' ') }}</td>
+                                    <td><span class="badge badge-success" style="font-size: smaller">{{$amc->getEtat->libelle_user}}</span></td>
                                     <td>
                                         <a href="{{ route('amc.show', $amc->slug) }}">
                                             <i class="far fa-eye"></i>
@@ -53,10 +55,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette demande ?')" action="{{ route('amc.destroy', $amc->slug) }}" method="post">
+                                        <form id="form_del_{{ $loop->index }}" action="{{ route('amc.destroy', $amc->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                                            <a href="#" onclick="submit_form('form_del_{{ $loop->index }}')"><i class="far fa-trash-alt"></i></a>
                                         </form>
                                     </td>
                                 </tr>

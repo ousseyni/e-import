@@ -106,11 +106,36 @@
             getModeTransport();
         });
 
-        //$("#idproduit").chained("#catprod");
+        $("#affecter_demande").click(function() {
+            $(".affecter_demande").show();
+            $(".traiter_demande").hide();
+        });
+
+        $("#traiter_demande").change(function() {
+            $(".traiter_demande").show();
+            $(".affecter_demande").hide();
+
+            const demande = $("#traiter_demande :selected").val();
+
+            if (demande == 998 || demande == 999) {
+                $(".comments_traitement").show();
+                $(".etude").hide();
+                $("#comments_traitement").prop('required',true);
+                $("#comments_avis").prop('required',false);
+            }
+            else {
+                $(".comments_traitement").hide();
+                $(".etude").show();
+                $("#comments_traitement").prop('required',false);
+                $("#comments_avis").prop('required',true);
+            }
+        });
 
     });
 
 </script>
+
+<script src="{{asset('plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
@@ -1044,7 +1069,7 @@
     @case('bootstrap_select')
       {{-- Forms Bootstrap Select --}}
       <script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
-      <script src="{{asset('plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+
       @break
 
     @case('touchspin')

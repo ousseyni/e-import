@@ -140,7 +140,7 @@
                                 <a href="{{ route('contribuables.index')  }}"> Liste contribuables</a>
                             </li>
                             <li class="{{ ($page_name === "Comptes en attente d'activation") ? 'active' : '' }}">
-                                <a href="{{ url('demande-comptes.list')  }}"> En attente de validation</a>
+                                <a href="{{ url('demande-comptes/list')  }}"> En attente de validation</a>
                             </li>
                             <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
                                 <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
@@ -171,19 +171,19 @@
                         <a href="#admin" data-active="{{ ($category_name === 'Administration') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Administration') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="">
                                 <div class="icon-container">
-                                    <i data-feather="users"></i><span>Administration</span>
+                                    <i data-feather="list"></i><span>Administration</span>
                                 </div>
                             </div>
                             <div>
                                 <i data-feather="chevron-right"></i>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'users') ? 'show' : '' }}" id="admin" data-parent="#accordionExample">
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Administration') ? 'show' : '' }}" id="admin" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Utilisateurs') ? 'active' : '' }}">
-                                <a href="#"> Utilisateurs </a>
+                                <a href="{{ route('users.index')  }}"> Utilisateurs </a>
                             </li>
                             <li class="{{ ($page_name === 'Profils') ? 'active' : '' }}">
-                                <a href="/users/profile"> Profils </a>
+                                <a href="{{ route('profils.index')  }}"> Profils </a>
                             </li>
                             <li class="{{ ($page_name === 'Habilitations') ? 'active' : '' }}">
                                 <a href="#"> Habilitations </a>

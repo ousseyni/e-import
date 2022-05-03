@@ -32,22 +32,22 @@ class Amcs extends Model
 
     public function getVols(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(VolAmc::class);
+        return $this->hasMany(VolAmc::class, 'idamc', 'id');
     }
 
     public function getConteneurs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(ConteneurAmc::class);
+        return $this->hasMany(ConteneurAmc::class, 'idamc', 'id');
     }
 
     public function getVehicules(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(VehiculeAmc::class);
+        return $this->hasMany(VehiculeAmc::class, 'idamc', 'id');
     }
 
     public function getSuivis(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(SuiviAmms::class);
+        return $this->hasMany(SuiviAmms::class, 'idamc', 'id');
     }
 
     public function getProduitAmcs(): \Illuminate\Database\Eloquent\Relations\HasMany

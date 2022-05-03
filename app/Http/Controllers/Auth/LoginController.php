@@ -55,17 +55,7 @@ class LoginController extends Controller
         $credentials = $request->only('login', 'password');
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            if ($user->email_verified == 1) {
-                if ($user->profilid == 2) {
-                    return redirect('/accueil')->with('success', 'Bienvenue sur e-Services DGCC');
-                }
-                else {
-                    return redirect('/dashboard')->with('success', 'Bienvenue sur e-Services DGCC');
-                }
-            }
-            else {
-                return redirect('/verify/'.$user->email_verification_token)->with('success', 'Compte activé avec succès');
-            }
+
         }
         return redirect()->back()->withSuccess("Oups... Login et/ou Mot de passe incorects");
     }

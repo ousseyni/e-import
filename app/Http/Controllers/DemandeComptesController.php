@@ -248,7 +248,7 @@ class DemandeComptesController extends Controller
         $user = User::where('email_verification_token',$token)->first();
 
         if($user == null ){
-            return redirect('/login')->with('error', 'Tentative de connexion invalide');
+            return redirect('/connexion')->with('error', 'Tentative de connexion invalide');
         }
 
 
@@ -269,5 +269,40 @@ class DemandeComptesController extends Controller
         ]);
 
         return redirect('/connexion')->with('success', 'Votre compte est activé, vous pouvez vous connecter maintenant');;
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string $token
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function ActivateCompte(Request $request, $token)
+    {
+
+        if ($token == null) {
+            return redirect('/login')->with('error', 'Tentative de connexion invalide');
+        }
+
+        if ($request->password1 != $request->password2) {
+            return redirect()->back()->with('error', 'Les deux mot de passe ne sont pas identiques');
+        }
+
+        $user = User::where('email_verification_token',$token)->first();
+
+        if($user == null ){
+            return redirect('/login')->with('error', 'Tentative de connexion invalide');
+        }
+
+        $user->update([
+            'password' => bcrypt($request->password1),
+            'email_verified' => 1,
+            'email_verified_at' => Carbon::now(),
+            'email_verification_token' => ''
+        ]);
+
+        return redirect('/login')->with('success', 'Votre compte est activé, vous pouvez vous connecter maintenant');;
     }
 }

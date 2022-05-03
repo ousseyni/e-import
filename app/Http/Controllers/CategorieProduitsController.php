@@ -39,12 +39,11 @@ class CategorieProduitsController extends Controller
         $validatedData = $request->validate([
             'code' => 'required|max:10',
             'libelle' => 'required|max:100',
-            'montant' => 'required|numeric'
+            'type' => 'required'
         ]);
         $show = CategorieProduit::create($validatedData);
 
         return redirect('/categorie-produits')->with('success', 'Categorie Produit enregistrée avec succès');
-
     }
 
     /**
@@ -68,7 +67,6 @@ class CategorieProduitsController extends Controller
     {
         $categorieproduits = CategorieProduit::where('slug', '=', $slug)->firstOrFail();
         return view('pages.categorie-produits.edit', compact('categorieproduits'));
-
     }
 
     /**
@@ -83,7 +81,7 @@ class CategorieProduitsController extends Controller
         $validatedData = $request->validate([
             'code' => 'required|max:10',
             'libelle' => 'required|max:100',
-            'montant' => 'required|max:30'
+            'type' => 'required'
         ]);
         //TypeContribuables::whereId($id)->update($validatedData);
         CategorieProduit::where('slug', '=', $slug)->update($validatedData);

@@ -32,22 +32,22 @@ class Amms extends Model
 
     public function getSuivis(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(SuiviAmms::class);
+        return $this->hasMany(SuiviAmms::class, 'idamm', 'id');
     }
 
     public function getVols(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(VolAmm::class);
+        return $this->hasMany(VolAmm::class, 'idamm', 'id');
     }
 
     public function getConteneurs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(ConteneurAmm::class);
+        return $this->hasMany(ConteneurAmm::class, 'idamm', 'id');
     }
 
     public function getVehicules(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(VehiculeAmm::class);
+        return $this->hasMany(VehiculeAmm::class, 'idamm', 'id');
     }
 
     public function getProduitAmms(): \Illuminate\Database\Eloquent\Relations\HasMany
@@ -60,9 +60,33 @@ class Amms extends Model
         return $this->hasMany(DocumentAmms::class, 'idamm', 'id');
     }
 
+    public function getPrescriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PrescriptionAmm::class, 'idamm', 'id');
+    }
+
     public function getEtat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(EtatDemande::class, 'etat');
+    }
+
+    public function estDepote() {
+        $estDepote = false;
+        foreach ($this->getPrescriptions as $prescription_amm) {
+            if ($prescription_amm->idprescription == 2) {
+                $estDepote = true;
+            }
+        }
+        return $estDepote;
+    }
+
+    public function haveOrdreRecette()
+    {
+        $haveOrdreRecette = false;
+        if (OrdreRecetteAmm::where('idamm', '=', $this->id)->exists()) {
+            $haveOrdreRecette = true;
+        }
+        return $haveOrdreRecette;
     }
 
     public function getNumDemande(): string

@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Amcs;
-use App\Amms;
 use App\CategorieProduit;
+use App\ConteneurAmc;
 use App\Contribuables;
 use App\DeviseEtrangere;
 use App\DocumentAmcs;
-use App\DocumentAmms;
 use App\ModeTransport;
 use App\Pays;
 use App\ProduitAmcs;
-use App\ProduitAmms;
 use App\Produits;
+use App\SuiviAmcs;
+use App\VehiculeAmc;
+use App\VolAmc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,30 +69,32 @@ class AmcsController extends Controller
             'paysprov' => 'max:200',
             'modetransport' => 'max:150',
 
-            'numlta' => 'max:100',
-            'cieaerien' => 'max:200',
-            'numvol' => 'max:200',
+            //'numlta' => 'max:100',
+            //'cieaerien' => 'max:200',
+            //'numvol' => 'max:200',
 
-            'nomnavire' => 'max:200',
-            'numvoyagem' => 'max:200',
-            'numbietc' => 'max:200',
-            'numconteneurm' => 'max:200',
-            'numconnaissement' => 'max:200',
+            //'nomnavire' => 'max:200',
+            //'numvoyagem' => 'max:200',
+            //'numbietc' => 'max:200',
+            //'numconteneurm' => 'max:200',
+            //'numconnaissement' => 'max:200',
 
-            'numlvi' => 'max:100',
-            'numvehicule' => 'max:200',
-            'numconteneurt' => 'max:200',
+            //'numlvi' => 'max:100',
+            //'numvehicule' => 'max:200',
+            //'numconteneurt' => 'max:200',
 
-            'numvoyagef' => 'max:200',
-            'numwagon' => 'max:200',
+            //'numvoyagef' => 'max:200',
+            //'numwagon' => 'max:200',
 
             'dateembarque' => 'date',
             'lieuembarque' => 'max:100',
             'datedebarque' => 'date',
             'lieudebarque' => 'max:100',
 
-            'totalfrais' =>'numeric',
             'totalpoids' =>'numeric',
+            'totalfrais' =>'numeric',
+            'totalenr' =>'numeric',
+            'totalglobal' =>'numeric',
 
             'valeurcaf_cfa' =>'numeric',
             'valeurcaf_ext' =>'numeric',
@@ -99,10 +102,10 @@ class AmcsController extends Controller
 
             'idcontribuable' =>'required|numeric',
 
-            'pj1' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            /*'pj1' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj2' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
             'pj3' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
-            'pj4' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+            'pj4' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',*/
         ]);
 
         $show = Amcs::create($validatedData);
@@ -156,9 +159,9 @@ class AmcsController extends Controller
         if($request->hasFile('pj6')) {
             $ail = 'ail.'.$request->pj6->extension();
             $request->pj6->move($usager_folder, $ail);
-            DocumentAmms::create([
+            DocumentAmcs::create([
                 'libelle' => "Autorisation Spéciale des Lubrifiants",
-                'idamm' => $show->id,
+                'idamc' => $show->id,
                 'pj' => $ail
             ]);
         }
@@ -166,9 +169,9 @@ class AmcsController extends Controller
         if($request->hasFile('pj7')) {
             $asi = 'asi.'.$request->pj7->extension();
             $request->pj7->move($usager_folder, $asi);
-            DocumentAmms::create([
+            DocumentAmcs::create([
                 'libelle' => "Autorisation Spéciale d'Importation",
-                'idamm' => $show->id,
+                'idamc' => $show->id,
                 'pj' => $asi
             ]);
         }
@@ -176,9 +179,9 @@ class AmcsController extends Controller
         if($request->hasFile('pj8')) {
             $asipr = 'asipr.'.$request->pj8->extension();
             $request->pj8->move($usager_folder, $asipr);
-            DocumentAmms::create([
+            DocumentAmcs::create([
                 'libelle' => "Autorisation Spéciale d'Importation des produits réglementés (SAO & GES)",
-                'idamm' => $show->id,
+                'idamc' => $show->id,
                 'pj' => $asipr
             ]);
         }
@@ -186,9 +189,9 @@ class AmcsController extends Controller
         if($request->hasFile('pj9')) {
             $ldusr = 'ldusr.'.$request->pj9->extension();
             $request->pj9->move($usager_folder, $ldusr);
-            DocumentAmms::create([
+            DocumentAmcs::create([
                 'libelle' => "licence de détention/utilisation des substances réglementées",
-                'idamm' => $show->id,
+                'idamc' => $show->id,
                 'pj' => $ldusr
             ]);
         }
@@ -196,9 +199,9 @@ class AmcsController extends Controller
         if($request->hasFile('pj10')) {
             $cf = 'ldusr.'.$request->pj10->extension();
             $request->pj10->move($usager_folder, $cf);
-            DocumentAmms::create([
+            DocumentAmcs::create([
                 'libelle' => "Certificat de fumigation (riz & friperie)",
-                'idamm' => $show->id,
+                'idamc' => $show->id,
                 'pj' => $cf
             ]);
         }
@@ -206,9 +209,9 @@ class AmcsController extends Controller
         if($request->hasFile('pj11')) {
             $bietc = 'bietc.'.$request->pj10->extension();
             $request->pj10->move($usager_folder, $bietc);
-            DocumentAmms::create([
+            DocumentAmcs::create([
                 'libelle' => "Bordereau d'Identification Electronique de Traçabilité des Cargaisons",
-                'idamm' => $show->id,
+                'idamc' => $show->id,
                 'pj' => $bietc
             ]);
         }
@@ -217,8 +220,6 @@ class AmcsController extends Controller
         //Sauvegarde des produits associés à la demande
         $tab_produits = $_POST['produits'];
         //dd($request->$tab_produits);
-        $total_poids = 0;
-        $total_amm = 0;
         foreach($tab_produits as $data) {
             $numfact = $data['numfact'];
             $datefact = $data['datefact'];
@@ -242,8 +243,64 @@ class AmcsController extends Controller
             ]);
         }
 
-        return redirect('/amc')->with('success', "Demande d'Autorisation de Mise en Consommation enregistrée avec succès");
+        //Sauvegarde des vols associés à la demande (Aérienne)
+        if ($_POST['modetransport'] == 'Aérien') {
+            VolAmc::create([
+                'idamc' => $show->id,
+                'numlta' => $_POST['numlta'],
+                'cieaerien' => $_POST['cieaerien'],
+                'numvol' => $_POST['numvol'],
+            ]);
+        }
 
+        //Sauvegarde des conteneurs associés à la demande (Maritime)
+        if ($_POST['modetransport'] == 'Maritime') {
+            $tab_conteneurs = $_POST['conteneurs'];
+            $nomnavire = $_POST['nomnavire'];
+            $numvoyagem = $_POST['numvoyagem'];
+            $numbietc = $_POST['numbietc'];
+            $numconnaissement = $_POST['numconnaissement'];
+            //dd($tab_conteneurs);
+            foreach($tab_conteneurs as $data) {
+                $numconteneur = $data['numconteneurm'];
+
+                ConteneurAmc::create([
+                    'idamc' => $show->id,
+                    'nomnavire' => $nomnavire,
+                    'numvoyage' => $numvoyagem,
+                    'numbietc' => $numbietc,
+                    'numconteneur' => $numconteneur,
+                    'numconnaissement' => $numconnaissement,
+                ]);
+            }
+        }
+
+        //Sauvegarde des vehicules associés à la demande (Terrestre)
+        if ($_POST['modetransport'] == 'Terrestre') {
+            $tab_vehicules = $_POST['vehicules'];
+            //dd($tab_vehicules);
+            foreach($tab_vehicules as $data) {
+                $numlvi = $data['numlvi'];
+                $numvehicule = $data['numvehicule'];
+                $numconteneurt = $data['numconteneurt'];
+
+                VehiculeAmc::create([
+                    'idamc' => $show->id,
+                    'numlvi' => $numlvi,
+                    'numvehicule' => $numvehicule,
+                    'numconteneur' => $numconteneurt,
+                ]);
+            }
+        }
+
+        SuiviAmcs::create([
+            'idamc' => $show->id,
+            'etat' => 1,
+            'iduser' => Auth::id(),
+            'comments' => "Nouvelle demande soumise à la DGCC",
+        ]);
+
+        return redirect('/amc')->with('success', "Demande d'Autorisation de Mise en Consommation enregistrée avec succès");
     }
 
     /**
@@ -277,7 +334,7 @@ class AmcsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $slug)
     {

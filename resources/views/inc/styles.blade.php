@@ -23,6 +23,11 @@
 <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/regular.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/font-icons/fontawesome/css/fontawesome.css')}}">
+
+<link href="{{asset('plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/css/components/timeline/custom-timeline.css')}}" rel="stylesheet" type="text/css" />
+
 <style>
 
     .form-group label, label {
@@ -38,7 +43,7 @@
     }
 
     .table > thead > tr > th {
-        font-size: 11px !important;
+        font-size: 10px !important;
     }
 
     .table > tbody > tr > td {
@@ -46,6 +51,13 @@
          font-size: 12px !important;
         letter-spacing: 0px !important;
     }
+
+    .table_ammc > tbody > tr > td {
+        color: #000000 !important;
+        font-size: 11px !important;
+        letter-spacing: 0px !important;
+    }
+
     .feather-icon .icon-section {
         padding: 30px;
     }
@@ -143,6 +155,7 @@
 {{-- Forms Select 2 --}}
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
 
+<link rel="stylesheet" type="text/css" href="{{asset('plugins/bootstrap-select/bootstrap-select.min.css')}}">
 
 @endif
 <!-- END GLOBAL MANDATORY STYLES -->
@@ -323,12 +336,6 @@
       <link href="{{asset('assets/css/components/custom-media_object.css')}}" rel="stylesheet" type="text/css" />
       @break
 
-    @case('modals')
-      {{-- Components Modal --}}
-      <link href="{{asset('plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
-      <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link href="{{asset('assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css" />
-      @break
 
     @case('pricing_table')
       {{-- Component Pricing Table --}}
@@ -380,7 +387,6 @@
     @case('timeline')
       {{-- Component Timeline --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link href="{{asset('assets/css/components/timeline/custom-timeline.css')}}" rel="stylesheet" type="text/css" />
       <style>
           .toggle-code-snippet { margin-bottom: 0px; }
       </style>
@@ -911,7 +917,6 @@
     @case('bootstrap_select')
       {{-- Forms Select --}}
       <link href="{{asset('assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-      <link rel="stylesheet" type="text/css" href="{{asset('plugins/bootstrap-select/bootstrap-select.min.css')}}">
       @break
 
     @case('touchspin')

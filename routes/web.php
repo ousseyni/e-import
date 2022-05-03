@@ -3,6 +3,7 @@
 use App\Http\Controllers\DemandeComptesController;
 use App\TypeContribuables;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,12 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
 Route::group(['middleware' => 'auth'] , function() {
 
     // $this->middleware
@@ -36,17 +43,28 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::any('produits/get_prix', 'ProduitsController@get_prix');
     Route::any('produits/get_frais_dossier', 'ProduitsController@get_frais_dossier');
 
+    Route::get('amm/paiementodr/{amm}','AmmsController@paiementodr')->name('amm.paiementodr');
+    Route::match(['put', 'patch', 'post'],'amm/save_paiement/{amm}', 'AmmsController@save_paiement')->name('amm.save_paiement');
     Route::resource('amm', 'AmmsController');
+
     Route::resource('amc', 'AmcsController');
 
-
     Route::any('traitement-amc/etude', 'TraitementAMCController@etude')->name('traitement-amc.etude');
+
     Route::any('traitement-amm/etude', 'TraitementAMMController@etude')->name('traitement-amm.etude');
+    Route::any('traitement-amm/etude/{amm}', 'TraitementAMMController@traitement')->name('traitement-amm.traitement');
+    Route::get('traitement-amm/dwlord/{amm}','TraitementAMMController@dwlord')->name('traitement-amm.dwlord');
+    Route::get('traitement-amm/trace/{amm}','TraitementAMMController@trace')->name('traitement-amm.trace');
 
     Route::resource('traitement-amc', 'TraitementAMCController');
     Route::resource('traitement-amm', 'TraitementAMMController');
 
+    Route::resource('profils', 'ProfilsController');
+    Route::resource('users', 'UsersController');
+
     Route::get('logout', 'Auth\LoginController@logout');
+
+    Route::get('demande-comptes/list', 'DemandeComptesController@list');
 
     Route::get('/dashboard', function() {
         // $category_name = '';
@@ -89,12 +107,8 @@ Route::get('/demande-comptes/index', function() {
 
 Route::get('/', function() {
     if (Auth::user()) {
-        if (Auth::user()->profilid == 2) {
-            return redirect('/accueil');
-        }
-        else {
-            return redirect('/dashboard');
-        }
+        $user = Auth::user();
+        return $user->getRoute();
     }
     else {
         return redirect('/login');
@@ -106,15 +120,19 @@ Route::get('/demande-comptes/connexion', function() {
 });
 Route::view('/connexion', 'pages.demande-comptes.connexion');
 
-Route::resource('demande-comptes', 'DemandeComptesController');
-Route::get('demande-comptes/list', 'DemandeComptesController@list')->name('demande-comptes.list');
+
+Route::get('demande-comptes/compte', 'DemandeComptesController@compte')->name('demande-comptes.compte');
 Route::get('/demande-comptes', function() {
     $typeContribuables = TypeContribuables::all(['id', 'libelle']);
     return view('pages.demande-comptes.index', compact('typeContribuables'));
 });
 Route::match(['put', 'patch'],'demande-comptes/activate/{token}', 'DemandeComptesController@activate');
+Route::match(['put', 'patch'],'demande-comptes/activate-compte/{token}', 'DemandeComptesController@ActivateCompte');
+
+Route::resource('demande-comptes', 'DemandeComptesController');
 
 Route::get('/verify/{token}', 'VerifyController@VerifyEmail');
+Route::get('/verify-compte/{token}', 'VerifyController@VerifyCompte');
 
 Route::get('/pass_recovery', function() {
     // $category_name = 'auth';

@@ -16,6 +16,7 @@ class Profils extends Model
             $type->slug = Str::slug('prf-'.Str::random(50), '-');
         });
     }
+
     public function getUsers()
     {
         return $this->hasMany(User::class);

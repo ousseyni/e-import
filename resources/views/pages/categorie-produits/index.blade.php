@@ -22,9 +22,9 @@
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Code</th>
+                                <th width="3%">Code</th>
                                 <th>Libelle</th>
-                                <th>Montant</th>
+                                <th>Type</th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
                             </tr>
@@ -34,17 +34,17 @@
                                 <tr>
                                     <td>{{ $categorieproduit->code }}</td>
                                     <td>{{ $categorieproduit->libelle }}</td>
-                                    <td>{{ number_format($categorieproduit->montant, 0, '.', ' ') }}</td>
+                                    <td>{{ $categorieproduit->type }}</td>
                                     <td>
                                         <a href="{{ route('categorie-produits.edit', $categorieproduit->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette ligne ?')" action="{{ route('categorie-produits.destroy', $categorieproduit->slug) }}" method="post">
+                                        <form id="form_del_{{ $loop->index }}" action="{{ route('categorie-produits.destroy', $categorieproduit->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                                            <a href="#" onclick="submit_form('form_del_{{ $loop->index }}')"><i class="far fa-trash-alt"></i></a>
                                         </form>
                                     </td>
                                 </tr>

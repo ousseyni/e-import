@@ -10,6 +10,7 @@ use App\DemandeComptes;
 use App\DeviseEtrangere;
 use App\DocumentAmms;
 use App\ModeTransport;
+use App\OrdreRecetteAmm;
 use App\Pays;
 use App\ProduitAmms;
 use App\Produits;
@@ -231,8 +232,6 @@ class AmmsController extends Controller
         //Sauvegarde des produits associés à la demande
         $tab_produits = $_POST['produits'];
         //dd($request->$tab_produits);
-        $total_poids = 0;
-        $total_amm = 0;
         foreach($tab_produits as $data) {
             $numfact = $data['numfact'];
             $datefact = $data['datefact'];
@@ -306,9 +305,14 @@ class AmmsController extends Controller
             }
         }
 
+        SuiviAmms::create([
+            'idamm' => $show->id,
+            'etat' => 1,
+            'iduser' => Auth::id(),
+            'comments' => "Nouvelle demande soumise à la DGCC",
+        ]);
 
         return redirect('/amm')->with('success', "Demande d'Autorisation de Mise sur le Marché enregistrée avec succès");
-
     }
 
     /**
@@ -322,6 +326,77 @@ class AmmsController extends Controller
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
         $doc_amms = DocumentAmms::where('idamm', '=', $amm->id)->get();
         return view('pages.amms.show', compact('amm', 'doc_amms'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function paiementodr($slug)
+    {
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+        $odr = OrdreRecetteAmm::where('idamm', '=', $amm->id)->firstOrFail();
+        return view('pages.amms.paiementodr', compact('amm', 'odr'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function save_paiement(Request $request)
+    {
+        $validatedData = $request->validate([
+            'numero_quittance' => 'required|max:200',
+            'pj_quittance' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+        ]);
+        $numero_quittance = $request->numero_quittance;
+
+        if (OrdreRecetteAmm::where('quittance', '=', $numero_quittance)->exists()) {
+            return redirect('/amm')->with('error', "Numéro de quittance non valide ou déjà utilisé ");
+        }
+        else {
+
+            $idamm = $request->idamm;
+
+            //Mettre à jour l'amm
+            $amm = Amms::where('id', '=', $idamm)->firstOrFail();
+            $amm->etat = 7;
+            $amm->save();
+
+            //Mettre à jour le paiment
+            $odr = OrdreRecetteAmm::where('idamm', '=', $idamm)->firstOrFail();
+            $odr->quittance = $request->numero_quittance;
+            $odr->est_paye = true;
+            $odr->save();
+
+            //Sauvegarder la quittance numérique
+            $nif = auth()->user()->login;
+            $usager_folder = public_path('uploads/'.$nif.'/amm_'.$idamm);
+            if (!is_dir($usager_folder)) {
+                mkdir($usager_folder, 0777, true);
+            }
+
+            $pj_quittance = 'pj_quittance.'.$request->pj_quittance->extension();
+            $request->pj_quittance->move($usager_folder, $pj_quittance);
+            DocumentAmms::create([
+                'libelle' => "Quittance de paiement de l'odre de recette n° ".$odr->getNumOdr(),
+                'idamm' => $idamm,
+                'pj' => $pj_quittance
+            ]);
+
+            SuiviAmms::create([
+                'idamm' => $idamm,
+                'etat' => 7,
+                'iduser' => Auth::id(),
+                'comments' => "Paiement de l'ordre de recette n° ".$odr->getNumOdr(),
+            ]);
+
+            return redirect('/amm')->with('success', "Paiement de l'odre de recette effectué avec succès");
+        }
     }
 
     /**
@@ -342,7 +417,7 @@ class AmmsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $slug)
     {

@@ -21,7 +21,7 @@
                 @endif
                 <div class="widget-content widget-content-area animated-underline-content">
 
-                        <h4>Détails de la demande d'AMM {{ $amm->getNumDemande() }}</h4>
+                        <h4>Détails de la demande d'AMM <strong>N° {{ $amm->getNumDemande() }}</strong> </h4>
 
                         <ul class="nav nav-tabs mt-3" id="border-tabs" role="tablist">
                             <li class="nav-item">
@@ -69,7 +69,26 @@
                                         </tr>
                                         <tr>
                                             <td>Ordre de recette</td>
-                                            <td>N/D</td>
+                                            <td class="row">
+                                                @if($amm->haveOrdreRecette())
+                                                    <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlord', $amm->slug) }}">
+                                                        <i class="far fa-file"></i> Télécharger
+                                                    </a>
+
+                                                    @if($amm->etat == 6)
+                                                    <a class="col-6" href="{{ route('amm.paiementodr', $amm->slug) }}">
+                                                        <i class="far fa-money"></i> Joindre la quittance de paiement
+                                                    </a>
+                                                    @elseif($amm->etat >= 8 && $amm->etat != 998 && $amm->etat != 999)
+                                                        <a style="margin-left: 5%" href="{{ url('/uploads/'.$amm->getContribuable->nif.'/amm_'.$amm->id.'/pj_quittance.pdf')}}" target="_blank">
+                                                            Paiement de la quittance déjà effectué
+                                                        </a>
+                                                    @endif
+
+                                                @else
+                                                    N/D
+                                                @endif
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Document - Autorisation de Mise sur le Marché</td>
@@ -92,60 +111,66 @@
                                     </div>
                                 </div>
                                 @if($amm->modetransport == "Aérienne")
+                                    @foreach($amm->getVols as $amm_vol)
                                     <div class="form-row mb-2 aerienne">
                                         <div class="col-4 input-group-sm">
                                             <label for="numlta">N° LTA</label>
-                                            <input readonly value="{{$amm->numlta}}" type="text" name="numlta" id="numlta" class="form-control" />
+                                            <input readonly value="{{$amm_vol->numlta}}" type="text" name="numlta" id="numlta" class="form-control" />
                                         </div>
                                         <div class="col-4 input-group-sm">
                                             <label for="cieaerien">Compagnie aérienne</label>
-                                            <input readonly value="{{$amm->cieaerien}}" type="text" name="cieaerien" id="cieaerien" class="form-control" />
+                                            <input readonly value="{{$amm_vol->cieaerien}}" type="text" name="cieaerien" id="cieaerien" class="form-control" />
                                         </div>
                                         <div class="col-4 input-group-sm">
                                             <label for="numvol">N° vol</label>
-                                            <input readonly value="{{$amm->numvol}}" type="text" name="numvol" id="numvol" class="form-control" />
+                                            <input readonly value="{{$amm_vol->numvol}}" type="text" name="numvol" id="numvol" class="form-control" />
                                         </div>
                                     </div>
+                                    @endforeach
                                 @endif
                                 @if($amm->modetransport == "Maritime")
+                                    @foreach($amm->getConteneurs as $amm_cont)
                                     <div class="form-row mb-2 maritime">
                                         <div class="col-2 input-group-sm">
                                             <label for="nomnavire">Nom du navire</label>
-                                            <input readonly value="{{$amm->nomnavire}}" type="text" required name="nomnavire" id="nomnavire" class="form-control" />
+                                            <input readonly value="{{$amm_cont->nomnavire}}" type="text" required name="nomnavire" id="nomnavire" class="form-control" />
                                         </div>
                                         <div class="col-2 input-group-sm">
                                             <label for="numvoyagem">N° voyage</label>
-                                            <input readonly value="{{$amm->numvoyagem}}" type="text" name="numvoyagem" id="numvoyagem" class="form-control" />
+                                            <input readonly value="{{$amm_cont->numvoyage}}" type="text" name="numvoyagem" id="numvoyagem" class="form-control" />
                                         </div>
                                         <div class="col-2 input-group-sm">
                                             <label for="numbietc">N° BIETC</label>
-                                            <input readonly value="{{$amm->numbietc}}" type="text" name="numbietc" id="numbietc" class="form-control" />
-                                        </div>
-                                        <div class="col-3 input-group-sm">
-                                            <label for="numconteneurm">N° conteneur</label>
-                                            <input readonly value="{{$amm->numconteneurm}}" type="text" required name="numconteneurm" id="numconteneurm" class="form-control" />
+                                            <input readonly value="{{$amm_cont->numbietc}}" type="text" name="numbietc" id="numbietc" class="form-control" />
                                         </div>
                                         <div class="col-3 input-group-sm">
                                             <label for="numconnaissement">N° connaissement</label>
-                                            <input readonly value="{{$amm->numconnaissement}}" type="text" required name="numconnaissement" id="numconnaissement" class="form-control" />
+                                            <input readonly value="{{$amm_cont->numconnaissement}}" type="text" required name="numconnaissement" id="numconnaissement" class="form-control" />
+                                        </div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="numconteneurm">N° conteneur</label>
+                                            <input readonly value="{{$amm_cont->numconteneur}}" type="text" required name="numconteneurm" id="numconteneurm" class="form-control" />
                                         </div>
                                     </div>
+                                    @endforeach
                                 @endif
                                 @if($amm->modetransport == "Terrestre")
+                                    @foreach($amm->getVehicules as $amm_veh)
                                     <div class="form-row mb-2 terrestre">
                                         <div class="col-4 input-group-sm">
                                             <label for="numlvi">N° LVI</label>
-                                            <input readonly value="{{$amm->numlvi}}" type="text" name="numlvi" id="numlvi" class="form-control" />
+                                            <input readonly value="{{$amm_veh->numlvi}}" type="text" name="numlvi" id="numlvi" class="form-control" />
                                         </div>
                                         <div class="col-4 input-group-sm">
                                             <label for="numvehicule">N° véhicule</label>
-                                            <input readonly value="{{$amm->numvehicule}}" type="text" name="numvehicule" id="numvehicule" class="form-control" />
+                                            <input readonly value="{{$amm_veh->numvehicule}}" type="text" name="numvehicule" id="numvehicule" class="form-control" />
                                         </div>
                                         <div class="col-4 input-group-sm">
                                             <label for="numconteneurt">N° conteneur (si disponible)</label>
-                                            <input readonly value="{{$amm->numconteneurt}}" type="text" name="numconteneurt" id="numconteneurt" class="form-control" />
+                                            <input readonly value="{{$amm_veh->numconteneur}}" type="text" name="numconteneurt" id="numconteneurt" class="form-control" />
                                         </div>
                                     </div>
+                                    @endforeach
                                 @endif
                                 @if($amm->modetransport == "Ferroviaire")
                                     <div class="form-row mb-2 ferroviaire">
@@ -238,7 +263,7 @@
                                     </div>
                                     <hr />
                                     <div class="form-row mb-2">
-                                        <div class="col-6 input-group-sm"></div>
+                                        <div class="col-3 input-group-sm"></div>
                                         <div class="col-3 input-group-sm">
                                             <label for="totalpoids">Poids total (Kg)</label>
                                             <input type="text" readonly value="{{ number_format($amm->totalpoids, 0, ',', ' ') }}" name="totalpoids" id="totalpoids" class="form-control" />
@@ -246,6 +271,18 @@
                                         <div class="col-3 input-group-sm">
                                             <label for="totalfrais">Frais à payer (F CFA)</label>
                                             <input type="text" readonly value="{{ number_format($amm->totalfrais, 0, ',', ' ') }}" name="totalfrais" id="totalfrais" class="form-control" />
+                                        </div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="totalenr">Frais d'enregistrement (F CFA)</label>
+                                            <input type="text" readonly value="{{ number_format($amm->totalenr, 0, ',', ' ') }}" name="totalenr" id="totalenr" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-row mb-2">
+                                        <div class="col-9 input-group-sm"></div>
+                                        <div class="col-3 input-group-sm">
+                                            <label for="totalglobal">Total des frais (F CFA)</label>
+                                            <input type="text" readonly value="{{ number_format($amm->totalglobal, 0, ',', ' ') }}" name="totalglobal" id="totalglobal" class="form-control" />
                                         </div>
                                     </div>
                             </div>

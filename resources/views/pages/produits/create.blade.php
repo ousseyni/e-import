@@ -47,17 +47,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row input-group-sm mb-2">
-                                    <label for="categorieid" class="col-sm-2 col-form-label col-form-label-sm">Catégorie</label>
+                                    <label for="categorie_produit_id" class="col-sm-2 col-form-label col-form-label-sm">Catégorie</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control form-control-sm" id="categorieid" name="categorieid">
+                                        <select class="form-control" required="" id="categorie_produit_id" name="categorie_produit_id">
                                             <option value="">-- Sélectionnez une catégorie --</option>
-                                            @foreach($categories as $categories)
-                                                <option value="{{$categories->id}}">{{$categories->libelle}}</option>
-                                            @endforeach
+                                            <optgroup label="Catégorie des AMC">
+                                                @foreach($categoriesAmc as $categorie)
+                                                    <option value="{{$categorie->id}}">{{$categorie->libelle}}</option>
+                                                @endforeach
+                                            </optgroup>
+                                            <optgroup label="Catégorie des AMM">
+                                                @foreach($categoriesAmm as $categorie)
+                                                    <option value="{{$categorie->id}}">{{$categorie->libelle}}</option>
+                                                @endforeach
+                                            </optgroup>
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group row input-group-sm mb-2">
                                     <label for="montant" class="col-sm-2 col-form-label col-form-label-sm">Montant</label>
                                     <div class="col-sm-10">

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EtatDemande extends Model
 {
-    protected $fillable = ['libelle_dgcc', 'libelle_user'];
+    protected $fillable = ['libelle_dgcc', 'libelle_user', 'etat_actuel', 'etat_suivant'];
 
     public function getAmm(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

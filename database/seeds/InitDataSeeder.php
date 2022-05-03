@@ -8,6 +8,7 @@ use App\EtatDemande;
 use App\FraisDossier;
 use App\ModeTransport;
 use App\Pays;
+use App\Prescriptions;
 use App\Produits;
 use App\Profils;
 use App\SousActivite;
@@ -48,7 +49,7 @@ class InitDataSeeder extends Seeder
             'libelle'     => 'Administrateur',
         ]);
         Profils::create([
-            'libelle'     => 'Usager',
+            'libelle'     => 'Opérateur économique',
         ]);
 
         User::create([
@@ -62,8 +63,8 @@ class InitDataSeeder extends Seeder
             'password' => bcrypt('admin'),
         ]);
         User::create([
-            'name' => 'Usager DGCC',
-            'email' => 'usager@gmail.com',
+            'name' => 'Opérateur DGCC',
+            'email' => 'operateur@gmail.com',
             'email_verified_at' => Carbon::now(),
             'email_verified' => 1,
             'email_verification_token' => '',
@@ -170,47 +171,127 @@ class InitDataSeeder extends Seeder
         ]);
 
 
+        Prescriptions::create([
+            'code'     => 'RAS',
+            'libelle'     => 'Rien à signaler',
+        ]);
+        Prescriptions::create([
+            'code'     => 'DEP',
+            'libelle'     => 'Dépotage',
+        ]);
+        Prescriptions::create([
+            'code'     => 'ANA',
+            'libelle'     => 'Analyse',
+        ]);
+        Prescriptions::create([
+            'code'     => 'SAI',
+            'libelle'     => 'Saisie',
+        ]);
+        Prescriptions::create([
+            'code'     => 'DES',
+            'libelle'     => 'Destruction',
+        ]);
+        Prescriptions::create([
+            'code'     => 'REX',
+            'libelle'     => 'Réexportation',
+        ]);
+
+
+
 
         EtatDemande::create([
-            'libelle_dgcc'     => 'Nouvelle Demande reçue - en attente de traitement',
-            'libelle_user'     => 'Demande transmise à la DGCC',
+            'id'     => 1,
+            'libelle_dgcc'     => "Nouvelle Demande reçue - en attente de traitement",
+            'libelle_user'     => "Demande transmise à la DGCC",
+            'etat_actuel'     => 1,
+            'etat_suivant'     => "3-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Demande transmis pour évaluation - Agents',
-            'libelle_user'     => 'Evaluation de la demande en cours à la DGCC',
+            'id'     => 2,
+            'libelle_dgcc'     => "Transmission aux agents - en attente d'étude",
+            'libelle_user'     => "Demande en cours d'étude",
+            'etat_actuel'     => 2,
+            'etat_suivant'     => "3-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Evaluation effectuée - En attente de dépôtage',
-            'libelle_user'     => 'Demande en cours de traitement - Dépôtage à effectuer',
+            'id'     => 3,
+            'libelle_dgcc'     => "Etude terminée - en attente de confirmation",
+            'libelle_user'     => "Demande en cours d'étude",
+            'etat_actuel'     => 3,
+            'etat_suivant'     => "4-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Evaluation terminée - En attente de confirmation',
-            'libelle_user'     => 'Demande en cours de traitement - Dépôtage terminé',
+            'id'     => 4,
+            'libelle_dgcc'     => "Confirmation terminée - en attente de validation",
+            'libelle_user'     => "Demande en cours d'étude",
+            'etat_actuel'     => 4,
+            'etat_suivant'     => "5-8-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Confirmation effectuée - En attente de paiement',
-            'libelle_user'     => 'Demande en cours de traitement - Paiement à effectuer',
+            'id'     => 5,
+            'libelle_dgcc'     => "Validation terminée - ordre de recette à établir",
+            'libelle_user'     => "Demande en cours d'étude",
+            'etat_actuel'     => 5,
+            'etat_suivant'     => "6",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Paiement effectuée - En attente de validation',
-            'libelle_user'     => 'Demande en cours de validation',
+            'id'     => 6,
+            'libelle_dgcc'     => "Génération de l'ordre de recette - en attente de paiement",
+            'libelle_user'     => "Demande en cours de traitement - paiement à effectuer",
+            'etat_actuel'     => 6,
+            'etat_suivant'     => "7-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Validation terminée - En attente de visa',
+            'id'     => 7,
+            'libelle_dgcc'     => "Paiement effectué - en attente de confirmation",
+            'libelle_user'     => "Paiement en cours de vérification",
+            'etat_actuel'     => 7,
+            'etat_suivant'     => "8-998-999",
+        ]);
+        EtatDemande::create([
+            'id'     => 8,
+            'libelle_dgcc'     => "Paiement confirmé - en attente de validation",
+            'libelle_user'     => "Demande en cours de validation",
+            'etat_actuel'     => 8,
+            'etat_suivant'     => "9-998-999",
+        ]);
+        EtatDemande::create([
+            'id'     => 9,
+            'libelle_dgcc'     => 'Validation terminée - en attente de visa',
             'libelle_user'     => 'Demande en cours de signature',
+            'etat_actuel'     => 9,
+            'etat_suivant'     => "10-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Visa terminé - En attente de signature',
+            'id'     => 10,
+            'libelle_dgcc'     => 'Visa terminé - en attente de signature',
             'libelle_user'     => 'Demande en cours de signature',
+            'etat_actuel'     => 10,
+            'etat_suivant'     => "11-998-999",
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Signature terminée - Demande disponible',
-            'libelle_user'     => 'Demande signée - Téléchargeable',
+            'id'     => 11,
+            'libelle_dgcc'     => 'Signature terminée - demande disponible',
+            'libelle_user'     => 'Demande signée - téléchargeable',
+            'etat_actuel'     => 11,
+            'etat_suivant'     => '',
         ]);
         EtatDemande::create([
-            'libelle_dgcc'     => 'Demande rejetée - Non conforme',
-            'libelle_user'     => 'Demande rejetée - Non conforme',
+            'id' => 998,
+            'libelle_dgcc'     => 'Demande rejetée - A completer/corriger',
+            'libelle_user'     => 'Demande rejetée - A completer/corriger',
+            'etat_actuel'     => 998,
+            'etat_suivant'     => '',
         ]);
+        EtatDemande::create([
+            'id' => 999,
+            'libelle_dgcc'     => 'Demande annulée - Refaire une nouvelle demande',
+            'libelle_user'     => 'Demande annulée - Refaire une nouvelle demande',
+            'etat_actuel'     => 999,
+            'etat_suivant'     => '',
+        ]);
+
+
 
         $file = public_path('init_files/contribuables.csv');
         $row = 0;
