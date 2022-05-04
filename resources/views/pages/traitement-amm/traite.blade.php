@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page_name' => "Etude des demandes",
+@extends('layouts.app', ['page_name' => "Demandes traitées",
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
                          'category_name' => 'Traitement des A.M.M.'])
@@ -16,7 +16,7 @@
                             {{ session()->get('success') }}
                         </div><br />
                     @endif
-                    <h4><u>Demandes en cours d'étude</u></h4>
+                    <h4><u>Demandes traitées</u></h4>
                     <div class="table-responsive mb-4 mt-4">
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>

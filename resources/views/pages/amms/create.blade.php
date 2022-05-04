@@ -263,7 +263,7 @@
                                                 <input type="number" readonly name="totalpoids" id="totalpoids" class="form-control" />
                                             </div>
                                             <div class="col-3 input-group-sm">
-                                                <label for="totalfrais">Frais à payer (F CFA)</label>
+                                                <label for="totalfrais">Montant total (F CFA)</label>
                                                 <input type="number" readonly name="totalfrais" id="totalfrais" class="form-control" />
                                             </div>
                                             <div class="col-3 input-group-sm">
@@ -275,7 +275,7 @@
                                         <div class="form-row mb-2">
                                             <div class="col-9 input-group-sm"></div>
                                             <div class="col-3 input-group-sm">
-                                                <label for="totalglobal">Total des frais (F CFA)</label>
+                                                <label for="totalglobal">Frais total à payer (F CFA)</label>
                                                 <input type="number" readonly name="totalglobal" id="totalglobal" class="form-control" />
                                             </div>
                                         </div>

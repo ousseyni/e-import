@@ -351,6 +351,7 @@ class AmmsController extends Controller
     {
         $validatedData = $request->validate([
             'numero_quittance' => 'required|max:200',
+            'date_paye' => 'required',
             'pj_quittance' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
         ]);
         $numero_quittance = $request->numero_quittance;
@@ -367,9 +368,10 @@ class AmmsController extends Controller
             $amm->etat = 7;
             $amm->save();
 
-            //Mettre à jour le paiment
+            //Mettre à jour le paiement
             $odr = OrdreRecetteAmm::where('idamm', '=', $idamm)->firstOrFail();
             $odr->quittance = $request->numero_quittance;
+            $odr->date_paye = $request->date_paye;
             $odr->est_paye = true;
             $odr->save();
 

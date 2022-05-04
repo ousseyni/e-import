@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrdreRecetteAmm extends Model
 {
-    protected $fillable = ['exercice', 'date_emission', 'est_paye', 'idamm', 'quittance'];
+    protected $fillable = ['exercice', 'date_emission', 'est_paye', 'date_paye', 'idamm', 'quittance'];
 
     public function getAmm()
     {

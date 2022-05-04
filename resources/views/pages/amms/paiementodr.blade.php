@@ -23,7 +23,8 @@
                     @endif
 
                     <div class="-content widget-content-area">
-                        <h5>Paiement Ordre de recette A.M.M. N° <b>{{ $odr->getNumOdr() }}</b>  </h3><br>
+                        <h5>Paiement de l'ordre de recette N° <b>{{ $odr->getNumOdr() }}</b>  </h5><br>
+                        <strong>Relatif à l'A.M.M N° <b>{{ $amm->getNumDemande() }}</b>  </strong><br><br>
                         <div></div>
                             <form method="post" id="form-amm-amc" action="{{ route('amm.save_paiement', $amm) }}" enctype="multipart/form-data">
                                 @csrf
@@ -31,6 +32,12 @@
                                     <label for="numero_quittance" class="col-sm-4 col-form-label col-form-label-sm">Numéro de la quittance</label>
                                     <div class="col-sm-8">
                                         <input type="text" required name="numero_quittance" class="form-control form-control-sm" id="numero_quittance" placeholder="Numéro de la quitance de paiement">
+                                    </div>
+                                </div>
+                                <div class="form-group row input-group-sm mb-4">
+                                    <label for="date_paye" class="col-sm-4 col-form-label col-form-label-sm">Date de la quittance</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" required name="date_paye" class="form-control form-control-sm" id="date_paye">
                                     </div>
                                 </div>
                                 <div class="form-group row input-group-sm mb-4">

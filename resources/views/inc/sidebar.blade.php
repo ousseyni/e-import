@@ -87,13 +87,13 @@
                                 <a href="{{ route('traitement-amm.etude')  }}"> Etude demandes </a>
                             </li>
                             <li class="{{ ($page_name === 'Validation des demandes') ? 'active' : '' }}">
-                                <a href="#"> Validation demandes </a>
+                                <a href="{{ route('traitement-amm.valide')  }}"> Validation demandes </a>
                             </li>
                             <li class="{{ ($page_name === 'Demandes traitées') ? 'active' : '' }}">
-                                <a href="#"> Demandes traitées </a>
+                                <a href="{{ route('traitement-amm.traite')  }}"> Demandes traitées </a>
                             </li>
-                            <li class="{{ ($page_name === 'Etat des demandes') ? 'active' : '' }}">
-                                <a href="#"> Etat demandes </a>
+                            <li class="{{ ($page_name === 'Etat de toutes les demandes') ? 'active' : '' }}">
+                                <a href="{{ route('traitement-amm.state')  }}"> Toutes les demandes </a>
                             </li>
                         </ul>
                     </li>

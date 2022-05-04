@@ -108,18 +108,18 @@
     <!-- Define header and footer blocks before your content -->
     <header class="clearfix">
         <div class="header1">
-            <b>MINISTERE DE L’ECONOMIE ET DE LA RELANCE</b> <br>
+            MINISTERE DE L’ECONOMIE ET DE LA RELANCE <br>
             ------------------ <br>
             SECRETARIAT GENERAL <br>
             ------------------ <br>
-            <b>DIRECTION GENERALE DE LA CONCURRENCE <br> ET DE LA CONSOMMATION</b>
+            <b>DIRECTION GENERALE DE LA CONCURRENCE ET <br> DE LA CONSOMMATION</b>
             <br><br>
             N° <b>{{ $odr->getNumOdr() }}</b> /MER/SG/DGCC
         </div>
         <div class="header3"></div>
         <div class="header2">
             <div style="border-top: solid 2px gray; border-bottom: solid 10px gray; width: 80px; padding: 10px 0px; float: right">
-                N° {{ $amm->getNumDemande() }}
+                N° {{ $odr->getNumOdr() }}
             </div>
             <br><br><br><br><br>
             <img src="data:image/jpg;base64,{{ $image }}" width="120" style="float: right" />
@@ -229,7 +229,7 @@
 
             <img src="data:image/jpg;base64,{{ $sign_odr }}" width="200"  />
 
-            <b>Jacob Calixte OTHA </b>
+            <b>Jacob Calixte OTHA</b>
         </div>
 
     </main>

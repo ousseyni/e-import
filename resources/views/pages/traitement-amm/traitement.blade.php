@@ -48,6 +48,14 @@
                                 <span>Pièces Jutificatives</span>
                             </a>
                         </li>
+                        @if($amm->estDepote())
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#border-ra" role="tab" aria-selected="false">
+                                    <i data-feather="edit"></i>
+                                    <span>Rapport d'inspection</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                     <div class="tab-content mb-4" id="border-tabsContent">
                         <div class="tab-pane fade show active" id="border-home" role="tabpanel">
@@ -134,11 +142,33 @@
                                             <div class="col-6 input-group-sm">
                                                 <label for="traiter_demande">Traitement à effectuer</label>
                                                 <input type="hidden" value="traiter_demande" name="traitement_demande">
-                                                <select class="form-control" name="traiter_demande" id="traiter_demande">
-                                                    @foreach($tab_suivant as $suivant)
-                                                        <option value="{{ $suivant->id }}">{{ $suivant->libelle_dgcc }}</option>
-                                                    @endforeach
-                                                </select>
+                                                    @if($amm->etat == '6')
+                                                        <br><span>En attente de <b>paiement de l'ordre de recette</b> par l'usager</span>
+                                                    @elseif($amm->etat == '10')
+                                                        <br><span>Chaine de traitement du dossier terminée</span>
+                                                    @elseif($amm->etat == '4' && $amm->totalglobal != 0)
+                                                        <select class="form-control" name="traiter_demande" id="traiter_demande">
+                                                            @foreach($tab_suivant as $suivant)
+                                                                @if($suivant->id != '9')
+                                                                    <option value="{{ $suivant->id }}">{{ $suivant->libelle_dgcc }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    @elseif($amm->etat == '4' && $amm->totalglobal == 0)
+                                                        <select class="form-control" name="traiter_demande" id="traiter_demande">
+                                                            @foreach($tab_suivant as $suivant)
+                                                                @if($suivant->id != '5')
+                                                                    <option value="{{ $suivant->id }}">{{ $suivant->libelle_dgcc }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    @else
+                                                        <select class="form-control" name="traiter_demande" id="traiter_demande">
+                                                            @foreach($tab_suivant as $suivant)
+                                                                <option value="{{ $suivant->id }}">{{ $suivant->libelle_dgcc }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    @endif
                                             </div>
                                             <div class="col-6"></div>
                                             <div class="col-6 comments_traitement" style="display: none"><br>
@@ -178,7 +208,10 @@
                                     </div>
                                     <hr>
                                 @endif
-                                <button type="submit" class="btn btn-primary">Valider</button>
+
+                                @if(!in_array($amm->etat, array(6, 10, 998)))
+                                    <button type="submit" class="btn btn-primary">Valider</button>
+                                @endif
                             </form>
                         </div>
                         <div class="tab-pane fade" id="border-voyage" role="tabpanel">
@@ -380,6 +413,17 @@
                                     </div>
                                 </div>
                             @endforeach
+                        </div>
+                        <div class="tab-pane fade" id="border-ra" role="tabpanel">
+                            Aucun rapport disponible
+                            <div class="row">
+                                <div class="col-7">
+
+                                </div>
+                                <div class="col-5">
+                                    <a class="btn btn-success">Ajouter le rapport d'inspection d'un conteneur</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

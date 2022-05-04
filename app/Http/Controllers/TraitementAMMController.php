@@ -15,6 +15,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TraitementAMMController extends Controller
 {
@@ -35,10 +36,48 @@ class TraitementAMMController extends Controller
      */
     public function etude()
     {
-        $etat = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+        $etat = array(1, 2, 3, 4, 998, 999, 9991);
         $demandes_etudes = Amms::whereIn('etat', $etat)->paginate(10);
 
         return view('pages.traitement-amm.etude', compact('demandes_etudes'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function valide()
+    {
+        $etat = array(5, 6, 7, 8, 9);
+        $demandes_etudes = Amms::whereIn('etat', $etat)->paginate(10);
+
+        return view('pages.traitement-amm.valide', compact('demandes_etudes'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function traite()
+    {
+        $etat = array(10);
+        $demandes_etudes = Amms::whereIn('etat', $etat)->paginate(10);
+
+        return view('pages.traitement-amm.traite', compact('demandes_etudes'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function state()
+    {
+        $demandes_etudes = Amms::paginate(10);
+
+        return view('pages.traitement-amm.state', compact('demandes_etudes'));
     }
 
     /**
@@ -83,7 +122,7 @@ class TraitementAMMController extends Controller
         $precriptions = Prescriptions::all();
 
         $odr = "";
-        if ($amm->etat == 7) {
+        if ($amm->etat >= 6 && $amm->etat != 998 && $amm->etat != 999) {
             $odr = OrdreRecetteAmm::where('idamm', '=', $amm->id)->firstOrFail();
         }
 
@@ -133,7 +172,6 @@ class TraitementAMMController extends Controller
             ]);
 
             $amm->etat = 2;
-            $amm->save();
         }
         else {
             $new_etat = $request->traiter_demande;
@@ -189,7 +227,7 @@ class TraitementAMMController extends Controller
             $etat = EtatDemande::where('id', '=', $new_etat)->firstOrFail();
             $comments = $etat->libelle_dgcc;
 
-            if ($new_etat == 10 || $new_etat == 11) {
+            if ($new_etat == 998 || $new_etat == 999) {
                 $comments = $request->comments_traitement;
             }
 
@@ -201,8 +239,8 @@ class TraitementAMMController extends Controller
             ]);
 
             $amm->etat = $new_etat;
-            $amm->save();
         }
+        $amm->save();
 
         return redirect('/traitement-amm/etude')->with('success', "Traitement de la demande d'AMM enregistré avec succès");
     }
@@ -268,4 +306,50 @@ class TraitementAMMController extends Controller
         //return $pdf->download($filename);
         return $pdf->stream($filename, array("Attachment" => false));
     }
+
+    public function dwlamm($slug) {
+
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+        $suivi = SuiviAmms::where('idamm', '=', $amm->id)
+            ->where('etat', '=', 10)->firstOrFail();
+
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amm.jpg')));
+
+        $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
+        $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
+        $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
+
+        $nif = $amm->getContribuable->nif;
+        Qrcode::size(100)->generate("https://www.akilischool.com", public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
+        $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg")));
+
+        $pdf = PDF::loadView('pages.traitement-amm.amm',
+            compact('amm', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi'))
+            ->setPaper('A4', 'landscape');;
+
+        $filename = "DOC_AMM_".$amm->getNumDemande().".pdf";
+        //return $pdf->download($filename);
+        return $pdf->stream($filename, array("Attachment" => false));
+    }
+
+    public function dwlanx($slug) {
+
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+        $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
+
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_anx_amm.jpg')));
+
+        $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
+        $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
+        $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
+
+        $pdf = PDF::loadView('pages.traitement-amm.annexe',
+                compact('amm', 'image', 'chef', 'dir', 'dg', 'prescriptions'))
+                ->setPaper('A4', 'portrait');;
+
+        $filename = "DOC_ANNEXE_AMM_".$amm->getNumDemande().".pdf";
+        //return $pdf->download($filename);
+        return $pdf->stream($filename, array("Attachment" => false));
+    }
+
 }

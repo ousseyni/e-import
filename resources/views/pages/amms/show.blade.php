@@ -71,20 +71,18 @@
                                             <td>Ordre de recette</td>
                                             <td class="row">
                                                 @if($amm->haveOrdreRecette())
-                                                    <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlord', $amm->slug) }}">
-                                                        <i class="far fa-file"></i> Télécharger
-                                                    </a>
-
+                                                        <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlord', $amm->slug) }}">
+                                                            Télécharger l'ordre de recette
+                                                        </a>
                                                     @if($amm->etat == 6)
-                                                    <a class="col-6" href="{{ route('amm.paiementodr', $amm->slug) }}">
-                                                        <i class="far fa-money"></i> Joindre la quittance de paiement
-                                                    </a>
+                                                        <a class="col-6" href="{{ route('amm.paiementodr', $amm->slug) }}">
+                                                            Joindre la quittance de paiement
+                                                        </a>
                                                     @elseif($amm->etat >= 8 && $amm->etat != 998 && $amm->etat != 999)
-                                                        <a style="margin-left: 5%" href="{{ url('/uploads/'.$amm->getContribuable->nif.'/amm_'.$amm->id.'/pj_quittance.pdf')}}" target="_blank">
+                                                        <a class="col-6" href="{{ url('/uploads/'.$amm->getContribuable->nif.'/amm_'.$amm->id.'/pj_quittance.pdf')}}" target="_blank">
                                                             Paiement de la quittance déjà effectué
                                                         </a>
                                                     @endif
-
                                                 @else
                                                     N/D
                                                 @endif
@@ -92,7 +90,18 @@
                                         </tr>
                                         <tr>
                                             <td>Document - Autorisation de Mise sur le Marché</td>
-                                            <td>N/D</td>
+                                            <td class="row">
+                                                @if($amm->etat == 10)
+                                                    <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlamm', $amm->slug) }}">
+                                                        Télécharger l'AMM
+                                                    </a>
+                                                    <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlanx', $amm->slug) }}">
+                                                        Télécharger les annexes
+                                                    </a>
+                                                @else
+                                                    N/D
+                                                @endif
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

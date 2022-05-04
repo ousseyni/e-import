@@ -18,6 +18,7 @@ class CreateOrdreRecetteAmmsTable extends Migration
             $table->integer('exercice')->unsigned();
             $table->date('date_emission');
             $table->boolean('est_paye')->default(false);
+            $table->date('date_paye')->nullable();
             $table->string('quittance', 150)->unique();
             $table->integer('idamm')->unsigned()->nullable();
             $table->timestamps();

@@ -201,43 +201,43 @@ class InitDataSeeder extends Seeder
 
         EtatDemande::create([
             'id'     => 1,
-            'libelle_dgcc'     => "Nouvelle Demande reçue - en attente de traitement",
-            'libelle_user'     => "Demande transmise à la DGCC",
+            'libelle_dgcc'     => "Nouvelle demande reçue - en attente de traitement",
+            'libelle_user'     => "Demande envoyée à la DGCC",
             'etat_actuel'     => 1,
             'etat_suivant'     => "3-998-999",
         ]);
         EtatDemande::create([
             'id'     => 2,
-            'libelle_dgcc'     => "Transmission aux agents - en attente d'étude",
-            'libelle_user'     => "Demande en cours d'étude",
+            'libelle_dgcc'     => "Dossier transmis aux agents - en attente d'étude",
+            'libelle_user'     => "Dossier en cours d'étude",
             'etat_actuel'     => 2,
             'etat_suivant'     => "3-998-999",
         ]);
         EtatDemande::create([
             'id'     => 3,
-            'libelle_dgcc'     => "Etude terminée - en attente de confirmation",
-            'libelle_user'     => "Demande en cours d'étude",
+            'libelle_dgcc'     => "Etude terminée - en attente de validation",
+            'libelle_user'     => "Dossier en cours d'étude",
             'etat_actuel'     => 3,
             'etat_suivant'     => "4-998-999",
         ]);
         EtatDemande::create([
             'id'     => 4,
-            'libelle_dgcc'     => "Confirmation terminée - en attente de validation",
-            'libelle_user'     => "Demande en cours d'étude",
+            'libelle_dgcc'     => "Validation terminée - en attente de visa",
+            'libelle_user'     => "Dossier en cours d'étude",
             'etat_actuel'     => 4,
-            'etat_suivant'     => "5-8-998-999",
+            'etat_suivant'     => "5-9-998-999",
         ]);
         EtatDemande::create([
             'id'     => 5,
-            'libelle_dgcc'     => "Validation terminée - ordre de recette à établir",
-            'libelle_user'     => "Demande en cours d'étude",
+            'libelle_dgcc'     => "Visa terminé - ordre de recette à établir",
+            'libelle_user'     => "Etablissement de l'ordre de recette en cours",
             'etat_actuel'     => 5,
             'etat_suivant'     => "6",
         ]);
         EtatDemande::create([
             'id'     => 6,
             'libelle_dgcc'     => "Génération de l'ordre de recette - en attente de paiement",
-            'libelle_user'     => "Demande en cours de traitement - paiement à effectuer",
+            'libelle_user'     => "Ordre de recette disponible - paiement à effectuer",
             'etat_actuel'     => 6,
             'etat_suivant'     => "7-998-999",
         ]);
@@ -250,45 +250,46 @@ class InitDataSeeder extends Seeder
         ]);
         EtatDemande::create([
             'id'     => 8,
-            'libelle_dgcc'     => "Paiement confirmé - en attente de validation",
-            'libelle_user'     => "Demande en cours de validation",
+            'libelle_dgcc'     => "Paiement confirmé - en attente de signature",
+            'libelle_user'     => "Paiement confirmé _ dossier en cours de signature",
             'etat_actuel'     => 8,
-            'etat_suivant'     => "9-998-999",
+            'etat_suivant'     => "10-998-999",
         ]);
         EtatDemande::create([
             'id'     => 9,
-            'libelle_dgcc'     => 'Validation terminée - en attente de visa',
-            'libelle_user'     => 'Demande en cours de signature',
+            'libelle_dgcc'     => 'Visa terminé - en attente de signature',
+            'libelle_user'     => 'Dossier en cours de signature',
             'etat_actuel'     => 9,
             'etat_suivant'     => "10-998-999",
         ]);
         EtatDemande::create([
             'id'     => 10,
-            'libelle_dgcc'     => 'Visa terminé - en attente de signature',
-            'libelle_user'     => 'Demande en cours de signature',
-            'etat_actuel'     => 10,
-            'etat_suivant'     => "11-998-999",
-        ]);
-        EtatDemande::create([
-            'id'     => 11,
-            'libelle_dgcc'     => 'Signature terminée - demande disponible',
+            'libelle_dgcc'     => 'Signature terminée - rendre demande disponible',
             'libelle_user'     => 'Demande signée - téléchargeable',
-            'etat_actuel'     => 11,
+            'etat_actuel'     => 10,
             'etat_suivant'     => '',
         ]);
         EtatDemande::create([
             'id' => 998,
-            'libelle_dgcc'     => 'Demande rejetée - A completer/corriger',
-            'libelle_user'     => 'Demande rejetée - A completer/corriger',
+            'libelle_dgcc'     => 'Demande rejetée - Dossier incomplet',
+            'libelle_user'     => 'Demande rejetée - Dossier incomplet',
             'etat_actuel'     => 998,
             'etat_suivant'     => '',
         ]);
+
         EtatDemande::create([
             'id' => 999,
-            'libelle_dgcc'     => 'Demande annulée - Refaire une nouvelle demande',
-            'libelle_user'     => 'Demande annulée - Refaire une nouvelle demande',
+            'libelle_dgcc'     => 'Demande traitée - Dossier en infraction',
+            'libelle_user'     => 'Demande traitée - Dossier en infraction',
             'etat_actuel'     => 999,
-            'etat_suivant'     => '',
+            'etat_suivant'     => 9991,
+        ]);
+        EtatDemande::create([
+            'id' => 9991,
+            'libelle_dgcc'     => "Infraction levée - Génération de l'ordre de recette",
+            'libelle_user'     => "Infraction levée - Génération de l'ordre de recette",
+            'etat_actuel'     => 9991,
+            'etat_suivant'     => 6,
         ]);
 
 
