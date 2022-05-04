@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Ordre de recette N° {{ $amm->getNumDemande() }} </title>
+        <title>Ordre de recette de l'AMC N° {{ $amc->getNumDemande() }} </title>
 
 
 
@@ -142,17 +142,17 @@
         <table class="table">
             <tr>
                 <td style="width: 130px">NOM DU DEBITEUR :</td>
-                <td style="width: 330px"><b>{{ $amm->getContribuable->raisonsociale }}</b></td>
+                <td style="width: 330px"><b>{{ $amc->getContribuable->raisonsociale }}</b></td>
 
                 <td>TEL :</td>
-                <td><b>{{ $amm->getContribuable->tel }}</b></td>
+                <td><b>{{ $amc->getContribuable->tel }}</b></td>
             </tr>
             <tr>
                 <td>NUMERO STATISTIQUE :</td>
-                <td><b>{{ $amm->getContribuable->nif }}</b></td>
+                <td><b>{{ $amc->getContribuable->nif }}</b></td>
 
                 <td>ADRESSE :</td>
-                <td><b>{{ $amm->getContribuable->siegesocial }}</b></td>
+                <td><b>{{ $amc->getContribuable->siegesocial }}</b></td>
             </tr>
         </table>
         <br>
@@ -184,23 +184,23 @@
                 <td style="padding: 0% 3%">En application des dispositions de l’arrête
                     <b>n°0029/MEDEPIP/CAB/SG/DGCC du 09 juin 2016 portant
                     modification de l’arrêté 1067.</b></td>
-                <td style="text-align: right; padding: 0% 3%">{{ number_format($amm->totalenr, 0, '.', ' ')  }} F CFA</td>
+                <td style="text-align: right; padding: 0% 3%">{{ number_format($amc->totalenr, 0, '.', ' ')  }} F CFA</td>
             </tr>
-            @foreach($amm->getProduitAmms as $prodAmms)
+            @foreach($amc->getProduitAmcs as $prodAmcs)
             <tr>
-                <td style="padding: 0% 0% 0.5% 3%" colspan="2">{{ strtoupper($prodAmms->getProduit->libelle)  }}</td>
-                <td style="padding: 0% 0% 0.5% 3%">{{ number_format($prodAmms->poids, 0, '.', ' ').'KG * '.number_format($prodAmms->getProduit->montant, 0, '.', ' ')  }}</td>
-                <td style="padding: 0% 3%; text-align: right">{{ number_format($prodAmms->total, 0, '.', ' ')  }} F CFA</td>
+                <td style="padding: 0% 0% 0.5% 3%" colspan="2">{{ strtoupper($prodAmcs->getProduit->libelle)  }}</td>
+                <td style="padding: 0% 0% 0.5% 3%">{{ number_format($prodAmcs->poids, 0, '.', ' ').'KG * '.number_format($prodAmcs->getProduit->montant, 0, '.', ' ')  }}</td>
+                <td style="padding: 0% 3%; text-align: right">{{ number_format($prodAmcs->total, 0, '.', ' ')  }} F CFA</td>
             </tr>
             @endforeach
-            @if($amm->totalpen != 0)
+            @if($amc->totalpen != 0)
                 <tr>
                     <td style="padding: 0% 0% 0.5% 3%" colspan="2"></td>
                     <td style="padding: 0% 0% 0.5% 3%">
                         PENALITES APPLIQUEES
                     </td>
                     <td style="padding: 0% 3%; text-align: right">
-                        {{ number_format($amm->totalpen, 0, '.', ' ') }} F CFA
+                        {{ number_format($amc->totalpen, 0, '.', ' ') }} F CFA
                     </td>
                 </tr>
             @endif
@@ -211,7 +211,7 @@
             <tr>
                 <td colspan="3"></td>
                 <th style="padding-bottom: 3%; text-align: right">
-                    {{ number_format($amm->totalglobal, 0, '.', ' ') }} F CFA
+                    {{ number_format($amc->totalglobal, 0, '.', ' ') }} F CFA
                 </th>
             </tr>
         </table>

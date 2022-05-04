@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>AMM N° {{ $amm->getNumDemande() }} </title>
+        <title>AMC N° {{ $amc->getNumDemande() }} </title>
 
         <style>
 
@@ -24,7 +24,7 @@
                 letter-spacing: 2px;
                 font-family: "Courier New", Courier, monospace;
                 color: red;
-                top: 158px;
+                top: 178px;
                 right: 370px;
             }
 
@@ -61,28 +61,28 @@
 
             .date_sign {
                 position: absolute;
-                bottom: 340px;
+                bottom: 301px;
                 right: 135px;
                 font-size: 16px;
             }
 
             .sign1 {
                 position: absolute;
-                bottom: 160px;
+                bottom: 135px;
                 left: 100px;
                 width: 120px;
             }
 
             .sign2 {
                 position: absolute;
-                bottom: 160px;
+                bottom: 135px;
                 left: 480px;
                 width: 120px;
             }
 
             .sign3 {
                 position: absolute;
-                bottom: 160px;
+                bottom: 120px;
                 left: 850px;
                 width: 175px;
             }
@@ -94,12 +94,12 @@
         <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width:100%;">
         <img class="qrcode" src="data:image/jpg;base64,{{ $qrcode }}">
 
-        <div class="num_amm">{{$amm->getNumDemande()}}</div>
+        <div class="num_amm">{{$amc->getNumDemande()}}</div>
 
-        <div class="cont1">{{ $amm->getContribuable->raisonsociale }}</div>
-        <div class="cont2">{{ $amm->getContribuable->getTypeContribuables->libelle }}</div>
-        <div class="cont3">{{ $amm->getContribuable->nif }}</div>
-        <div class="cont4">{{ $amm->getContribuable->siegesocial }}</div>
+        <div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
+        <div class="cont2">{{ $amc->getContribuable->getTypeContribuables->libelle }}</div>
+        <div class="cont3">{{ $amc->getContribuable->nif }}</div>
+        <div class="cont4">{{ $amc->getContribuable->siegesocial }}</div>
 
         <img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
         <img class="sign2" src="data:image/jpg;base64,{{ $dir }}">

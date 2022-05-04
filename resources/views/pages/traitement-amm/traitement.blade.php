@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page_name' => "Etude des demandes",
+@extends('layouts.app', ['page_name' => "Chaine de validation des demandes",
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
                          'category_name' => 'Traitement des A.M.M.'])
@@ -98,7 +98,7 @@
 
                                                 <div class="col-12 input-group-sm traiter_demande" style="display: none">
                                                     <label for="comments_traitement">Commentaire sur le traitement</label>
-                                                    <textarea class="form-control" name="comments_traitement" required id="comments_traitement"></textarea>
+                                                    <textarea class="form-control" name="comments_traitement" id="comments_traitement"></textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -145,7 +145,15 @@
                                                     @if($amm->etat == '6')
                                                         <br><span>En attente de <b>paiement de l'ordre de recette</b> par l'usager</span>
                                                     @elseif($amm->etat == '10')
-                                                        <br><span>Chaine de traitement du dossier terminée</span>
+                                                        <span>Chaine de traitement du dossier terminée</span><br><br>
+                                                        <div class="row">
+                                                            <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlamm', $amm->slug) }}">
+                                                                Voir l'AMM
+                                                            </a>
+                                                            <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlanx', $amm->slug) }}">
+                                                                Voir les annexes
+                                                            </a>
+                                                        </div>
                                                     @elseif($amm->etat == '4' && $amm->totalglobal != 0)
                                                         <select class="form-control" name="traiter_demande" id="traiter_demande">
                                                             @foreach($tab_suivant as $suivant)
@@ -226,7 +234,7 @@
                                     <input type="text" readonly value="{{$amm->modetransport}}" name="modetransport" id="modetransport" class="form-control" />
                                 </div>
                             </div>
-                            @if($amm->modetransport == "Aérienne")
+                            @if($amm->modetransport == "Aérien")
                                 @foreach($amm->getVols as $amm_vol)
                                     <div class="form-row mb-2 aerienne">
                                         <div class="col-4 input-group-sm">
@@ -302,21 +310,21 @@
                             @endif
                             <div class="form-row mb-2">
                                 <div class="col-6 input-group-sm">
-                                    <label for="dateembarque">Date embarquement</label>
+                                    <label for="dateembarque">Date d'embarquement</label>
                                     <input type="date" readonly value="{{$amm->dateembarque}}" name="dateembarque" id="dateembarque" class="form-control" />
                                 </div>
                                 <div class="col-6 input-group-sm">
-                                    <label for="lieuembarque">Lieu embarquement</label>
+                                    <label for="lieuembarque">Lieu d'embarquement</label>
                                     <input type="text" readonly value="{{$amm->lieuembarque}}" name="lieuembarque" id="lieuembarque" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-row mb-2">
                                 <div class="col-6 input-group-sm">
-                                    <label for="datedebarque">Date débarquement</label>
+                                    <label for="datedebarque">Date de débarquement</label>
                                     <input type="date" readonly value="{{$amm->datedebarque}}" name="datedebarque" id="datedebarque" class="form-control" />
                                 </div>
                                 <div class="col-6 input-group-sm">
-                                    <label for="lieudebarque">Lieu débarquement</label>
+                                    <label for="lieudebarque">Lieu de débarquement</label>
                                     <input type="text" readonly value="{{$amm->lieudebarque}}" name="lieudebarque" id="lieudebarque" class="form-control" />
                                 </div>
                             </div>
@@ -385,11 +393,11 @@
                                     <input type="text" readonly value="{{ number_format($amm->totalpoids, 0, ',', ' ') }}" name="totalpoids" id="totalpoids" class="form-control" />
                                 </div>
                                 <div class="col-3 input-group-sm">
-                                    <label for="totalfrais">Frais à payer (F CFA)</label>
+                                    <label for="totalfrais">Montant total (F CFA)</label>
                                     <input type="text" readonly value="{{ number_format($amm->totalfrais, 0, ',', ' ') }}" name="totalfrais" id="totalfrais" class="form-control" />
                                 </div>
                                 <div class="col-3 input-group-sm">
-                                    <label for="totalenr">Frais d'enregistrement (F CFA)</label>
+                                    <label for="totalenr">Frais total à payer (F CFA)</label>
                                     <input type="text" readonly value="{{ number_format($amm->totalenr, 0, ',', ' ') }}" name="totalenr" id="totalenr" class="form-control" />
                                 </div>
                             </div>

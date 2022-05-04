@@ -61,28 +61,28 @@
 
             .date_sign {
                 position: absolute;
-                bottom: 340px;
+                bottom: 317px;
                 right: 135px;
                 font-size: 16px;
             }
 
             .sign1 {
                 position: absolute;
-                bottom: 160px;
+                bottom: 150px;
                 left: 100px;
                 width: 120px;
             }
 
             .sign2 {
                 position: absolute;
-                bottom: 160px;
+                bottom: 150px;
                 left: 480px;
                 width: 120px;
             }
 
             .sign3 {
                 position: absolute;
-                bottom: 160px;
+                bottom: 130px;
                 left: 850px;
                 width: 175px;
             }

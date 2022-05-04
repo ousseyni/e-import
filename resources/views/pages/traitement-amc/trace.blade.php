@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page_name' => "Etude des demandes",
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Traitement des A.M.M.'])
+                         'category_name' => 'Traitement des A.M.C.'])
 
 @section('content')
 
@@ -13,7 +13,7 @@
 
                 <div class="widget-content widget-content-area animated-underline-content">
 
-                    <h4>Trace de la demande d'AMM <strong>N° {{ $amm->getNumDemande() }}</strong> </h4>
+                    <h4>Trace de la demande d'AMC <strong>N° {{ $amc->getNumDemande() }}</strong> </h4>
                     <hr>
                     <div class="mt-container mx-auto">
                         <div class="timeline-alter">

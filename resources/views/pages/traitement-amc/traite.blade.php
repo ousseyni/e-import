@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page_name' => "Demandes traitées",
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Traitement des A.M.M.'])
+                         'category_name' => 'Traitement des A.M.C.'])
 
 @section('content')
     <div class="layout-px-spacing">
@@ -44,13 +44,13 @@
                                     <td>{{ date_format(new DateTime($amm->datedebarque), 'd/m/Y') }}</td>
                                     <td>{{ number_format($amm->totalglobal, 0, '.', ' ') }}</td>
                                     <td>
-                                        <a href="{{ route('traitement-amm.trace', $amm->slug) }}">
+                                        <a href="{{ route('traitement-amc.trace', $amm->slug) }}">
                                             {{ $amm->getEtat->libelle_dgcc }}
                                         </a>
                                     </td>
                                     <td>
                                         @if($amm->haveOrdreRecette())
-                                            <a target="_blank" href="{{ route('traitement-amm.dwlord', $amm->slug) }}">
+                                            <a target="_blank" href="{{ route('traitement-amc.dwlord', $amm->slug) }}">
                                                 <i class="far fa-file"></i>
                                             </a>
                                         @else
@@ -58,7 +58,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('traitement-amm.traitement', $amm->slug) }}">
+                                        <a href="{{ route('traitement-amc.traitement', $amm->slug) }}">
                                             <i class="far fa-eye"></i>
                                         </a>
                                     </td>

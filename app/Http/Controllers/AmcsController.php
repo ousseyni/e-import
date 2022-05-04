@@ -9,6 +9,7 @@ use App\Contribuables;
 use App\DeviseEtrangere;
 use App\DocumentAmcs;
 use App\ModeTransport;
+use App\OrdreRecetteAmc;
 use App\Pays;
 use App\ProduitAmcs;
 use App\Produits;
@@ -363,10 +364,83 @@ class AmcsController extends Controller
             'consoservice' =>'numeric',
             'idcontribuable' =>'required|numeric',
         ]);
-        //Amms::whereId($id)->update($validatedData);
+        //Amcs::whereId($id)->update($validatedData);
         Amcs::where('slug', '=', $slug)->update($validatedData);
 
         return redirect('/amc')->with('success', 'AMC modifiée avec succès');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function paiementodr($slug)
+    {
+        $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
+        $odr = OrdreRecetteAmc::where('idamc', '=', $amc->id)->firstOrFail();
+        return view('pages.amcs.paiementodr', compact('amc', 'odr'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function save_paiement(Request $request)
+    {
+        $validatedData = $request->validate([
+            'numero_quittance' => 'required|max:200',
+            'date_paye' => 'required',
+            'pj_quittance' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
+        ]);
+        $numero_quittance = $request->numero_quittance;
+
+        if (OrdreRecetteAmc::where('quittance', '=', $numero_quittance)->exists()) {
+            return redirect('/amc')->with('error', "Numéro de quittance non valide ou déjà utilisé ");
+        }
+        else {
+
+            $idamc = $request->idamc;
+
+            //Mettre à jour l'amc
+            $amc = Amcs::where('id', '=', $idamc)->firstOrFail();
+            $amc->etat = 7;
+            $amc->save();
+
+            //Mettre à jour le paiement
+            $odr = OrdreRecetteAmc::where('idamc', '=', $idamc)->firstOrFail();
+            $odr->quittance = $request->numero_quittance;
+            $odr->date_paye = $request->date_paye;
+            $odr->est_paye = true;
+            $odr->save();
+
+            //Sauvegarder la quittance numérique
+            $nif = auth()->user()->login;
+            $usager_folder = public_path('uploads/'.$nif.'/amc_'.$idamc);
+            if (!is_dir($usager_folder)) {
+                mkdir($usager_folder, 0777, true);
+            }
+
+            $pj_quittance = 'pj_quittance.'.$request->pj_quittance->extension();
+            $request->pj_quittance->move($usager_folder, $pj_quittance);
+            DocumentAmcs::create([
+                'libelle' => "Quittance de paiement de l'odre de recette n° ".$odr->getNumOdr(),
+                'idamc' => $idamc,
+                'pj' => $pj_quittance
+            ]);
+
+            SuiviAmcs::create([
+                'idamc' => $idamc,
+                'etat' => 7,
+                'iduser' => Auth::id(),
+                'comments' => "Paiement de l'ordre de recette n° ".$odr->getNumOdr(),
+            ]);
+
+            return redirect('/amc')->with('success', "Paiement de l'odre de recette effectué avec succès");
+        }
     }
 
     /**

@@ -54,30 +54,57 @@
 
                             <table id="zero-" class="table table-hover">
                                 <thead>
-                                <tr>
-                                    <th>Notifications</th>
-                                    <th>Statut</th>
-                                    <th width="3%"></th>
-                                </tr>
+                                    <tr>
+                                        <th>Notifications</th>
+                                        <th>Statut</th>
+                                        <th width="3%"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Etat de la demande</td>
-                                    <td>
-                                        <span class="badge badge-success">{{$amc->getEtat->libelle_user}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ordre de recette</td>
-                                    <td>N/D</td>
-                                </tr>
-                                <tr>
-                                    <td>Document - Autorisation de Mise en Consommation</td>
-                                    <td>N/D</td>
-                                </tr>
+                                    <tr>
+                                        <td>Etat de la demande</td>
+                                        <td>
+                                            <span class="badge badge-success">{{$amc->getEtat->libelle_user}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ordre de recette</td>
+                                        <td class="row">
+                                            @if($amc->haveOrdreRecette())
+                                                <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlord', $amc->slug) }}">
+                                                    Télécharger l'ordre de recette
+                                                </a>
+                                                @if($amc->etat == 6)
+                                                    <a class="col-6" href="{{ route('amc.paiementodr', $amc->slug) }}">
+                                                        Joindre la quittance de paiement
+                                                    </a>
+                                                @elseif($amc->etat >= 8 && $amc->etat != 998 && $amc->etat != 999)
+                                                    <a class="col-6" href="{{ url('/uploads/'.$amc->getContribuable->nif.'/amc_'.$amc->id.'/pj_quittance.pdf')}}" target="_blank">
+                                                        Paiement de la quittance déjà effectué
+                                                    </a>
+                                                @endif
+                                            @else
+                                                N/D
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Document - Autorisation de Mise en Consommation</td>
+                                        <td class="row">
+                                            @if($amc->etat == 10)
+                                                <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlamc', $amc->slug) }}">
+                                                    Télécharger l'AMC
+                                                </a>
+                                                <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlanx', $amc->slug) }}">
+                                                    Télécharger les annexes
+                                                </a>
+                                            @else
+                                                N/D
+                                            @endif
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
-
                         </div>
                         <div class="tab-pane fade" id="border-voyage" role="tabpanel">
 

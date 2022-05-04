@@ -246,7 +246,15 @@ class TraitementAMMController extends Controller
         }
         $amm->save();
 
-        return redirect('/traitement-amm/etude')->with('success', "Traitement de la demande d'AMM enregistré avec succès");
+        $link = 'etude';
+        if ($amm->etat >= 5 && $amm->etat <= 9) {
+            $link = 'valide';
+        }
+        elseif ($amm->etat == 10) {
+            $link = 'traite';
+        }
+
+        return redirect('/traitement-amm/'.$link)->with('success', "Traitement de la demande d'AMM enregistré avec succès");
     }
 
     /**

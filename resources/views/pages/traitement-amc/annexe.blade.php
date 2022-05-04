@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ANNEXE DE L'AMM N° {{ $amm->getNumDemande() }} </title>
+        <title>ANNEXE DE L'AMC N° {{ $amc->getNumDemande() }} </title>
 
         <style>
 
@@ -34,7 +34,7 @@
                 letter-spacing: 2px;
                 font-family: "Courier New", Courier, monospace;
                 color: red;
-                top: 217px;
+                top: 235px;
                 right: 165px;
                 font-weight: bold;
                 font-size: 14px;
@@ -104,7 +104,7 @@
 
             .agent {
                 position: absolute;
-                top: 305px;
+                top: 290px;
                 left: 600px;
             }
 
@@ -129,14 +129,14 @@
 
         <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width:100%;">
 
-        <div class="num_amm">{{$amm->getNumDemande()}}</div>
+        <div class="num_amm">{{$amc->getNumDemande()}}</div>
 
-        <div class="cont1">{{ $amm->getContribuable->raisonsociale }}</div>
-        <div class="cont2">{{ $amm->getContribuable->siegesocial }}</div>
-        <div class="cont3">{{ $amm->getContribuable->tel }}</div>
-        <div class="cont4">{{ $amm->getContribuable->email }}</div>
-        <div class="cont5">{{ $amm->getContribuable->nif }}</div>
-        <div class="cont6">{{ $amm->getContribuable->rccm }}</div>
+        <div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
+        <div class="cont2">{{ $amc->getContribuable->siegesocial }}</div>
+        <div class="cont3">{{ $amc->getContribuable->tel }}</div>
+        <div class="cont4">{{ $amc->getContribuable->email }}</div>
+        <div class="cont5">{{ $amc->getContribuable->nif }}</div>
+        <div class="cont6">{{ $amc->getContribuable->rccm }}</div>
 
         <div class="mentions">
             <ul>
@@ -144,8 +144,8 @@
                     <li>{{ $prescription->getPrescription->libelle  }}</li>
                 @endforeach
             </ul>
-            <br><br>
-            <span style="margin-left: 30px">{{ $prescriptions[0]->comments }}</span>
+            <br>
+            <div style="margin-left: 30px; word-wrap: break-word; width: 250px">{{ $prescriptions[0]->comments }}</div>
         </div>
 
         <div class="agent">
@@ -160,13 +160,13 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        Pays de provenance : <b>{{ $amm->paysprov }}</b>
+                        Pays de provenance : <b>{{ $amc->paysprov }}</b>
                     </td>
                     <td colspan="2">
-                        Mode de transport : <b>{{ $amm->modetransport }}</b>
+                        Mode de transport : <b>{{ $amc->modetransport }}</b>
                     </td>
                 </tr>
-                @if($amm->modetransport == 'Aérien')
+                @if($amc->modetransport == 'Aérien')
                     @foreach($infos_voyage as $infos)
                     <tr>
                         <td colspan="2">
@@ -180,7 +180,7 @@
                         </td>
                     </tr>
                     @endforeach
-                @elseif($amm->modetransport == 'Terrestre')
+                @elseif($amc->modetransport == 'Terrestre')
                     @foreach($infos_voyage as $infos)
                         <tr>
                             <td colspan="2">
@@ -190,7 +190,7 @@
                                 N° Véhicule : <b>{{ $infos->numvehicule }}</b>
                             </td>
                             <td>
-                                N° Conteneur : <b>{{ $infos->numconteneurt }}</b>
+                                N° Conteneur : <b>{{ $infos->numconteneur }}</b>
                             </td>
                         </tr>
                     @endforeach
@@ -215,22 +215,22 @@
                 @endif
                 <tr>
                     <td width="150px">
-                        Date d'embarquement : <br><b>{{ date_format(new DateTime($amm->dateembarque), 'd/m/Y')  }} </b>
+                        Date d'embarquement : <br><b>{{ date_format(new DateTime($amc->dateembarque), 'd/m/Y')  }} </b>
                     </td>
                     <td width="150px">
-                        Port d’embarquement : <br><b>{{ $amm->lieuembarque }}</b>
+                        Port d’embarquement : <br><b>{{ $amc->lieuembarque }}</b>
                     </td>
                     <td width="150px">
-                        Date de débarquement :<br><b>{{ date_format(new DateTime($amm->datedebarque), 'd/m/Y') }}</b>
+                        Date de débarquement :<br><b>{{ date_format(new DateTime($amc->datedebarque), 'd/m/Y') }}</b>
                     </td>
                     <td width="150px">
-                        Port de débarquement :<br><b>{{ $amm->lieudebarque }} </b>
+                        Port de débarquement :<br><b>{{ $amc->lieudebarque }} </b>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
                     <td>
-                        Poids net : <br><b> {{ $amm->totalpoids }} Kg</b>
+                        Poids net : <br><b> {{ number_format($amc->totalpoids, 0, '.', ' ') }} Kg</b>
                     </td>
                 </tr>
             </table>
@@ -243,7 +243,7 @@
                 <tr>
                     <th colspan="4"> Informations de produits</th>
                 </tr>
-                @foreach($produits_amm as $produit)
+                @foreach($produits_amc as $produit)
                     <tr>
                         <td width="150px">
                             Produit {{ 1 + $loop->index  }} :<br> <b>{{ $produit->getProduit->libelle }}</b>
@@ -262,7 +262,7 @@
                 <tr>
                     <td colspan="3"></td>
                     <td>
-                        Valeur CAF :<br><b> {{ number_format($amm->valeurcaf_cfa, 0, '.', ' ')  }} F CFA</b>
+                        Valeur CAF :<br><b> {{ number_format($amc->valeurcaf_cfa, 0, '.', ' ')  }} F CFA</b>
                     </td>
                 </tr>
             </table>

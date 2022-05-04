@@ -264,7 +264,7 @@ class InitDataSeeder extends Seeder
         ]);
         EtatDemande::create([
             'id'     => 10,
-            'libelle_dgcc'     => 'Signature terminée - rendre demande disponible',
+            'libelle_dgcc'     => 'Signature terminée - demande disponible',
             'libelle_user'     => 'Demande signée - téléchargeable',
             'etat_actuel'     => 10,
             'etat_suivant'     => '',

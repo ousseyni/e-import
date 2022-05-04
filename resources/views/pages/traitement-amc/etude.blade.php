@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page_name' => "Etude des demandes",
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Traitement des A.M.M.'])
+                         'category_name' => 'Traitement des A.M.C.'])
 
 @section('content')
     <div class="layout-px-spacing">
@@ -34,23 +34,23 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($demandes_etudes as $amm)
+                            @foreach($demandes_etudes as $amc)
                                 <tr>
-                                    <td>{{ $amm->getNumDemande() }}</td>
-                                    <td>{{ $amm->created_at->format('d/m/Y') }}</td>
-                                    <td>{{ $amm->getContribuable->nif.' - '.$amm->getContribuable->raisonsociale}}</td>
-                                    <td>{{ $amm->paysprov }}</td>
-                                    <td>{{ $amm->modetransport }}</td>
-                                    <td>{{ date_format(new DateTime($amm->datedebarque), 'd/m/Y') }}</td>
-                                    <td>{{ number_format($amm->totalglobal, 0, '.', ' ') }}</td>
+                                    <td>{{ $amc->getNumDemande() }}</td>
+                                    <td>{{ $amc->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $amc->getContribuable->nif.' - '.$amc->getContribuable->raisonsociale}}</td>
+                                    <td>{{ $amc->paysprov }}</td>
+                                    <td>{{ $amc->modetransport }}</td>
+                                    <td>{{ date_format(new DateTime($amc->datedebarque), 'd/m/Y') }}</td>
+                                    <td>{{ number_format($amc->totalglobal, 0, '.', ' ') }}</td>
                                     <td>
-                                        <a href="{{ route('traitement-amm.trace', $amm->slug) }}">
-                                            {{ $amm->getEtat->libelle_dgcc }}
+                                        <a href="{{ route('traitement-amc.trace', $amc->slug) }}">
+                                            {{ $amc->getEtat->libelle_dgcc }}
                                         </a>
                                     </td>
                                     <td>
-                                        @if($amm->haveOrdreRecette())
-                                            <a target="_blank" href="{{ route('traitement-amm.dwlord', $amm->slug) }}">
+                                        @if($amc->haveOrdreRecette())
+                                            <a target="_blank" href="{{ route('traitement-amc.dwlord', $amc->slug) }}">
                                                 <i class="far fa-file"></i>
                                             </a>
                                         @else
@@ -58,7 +58,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('traitement-amm.traitement', $amm->slug) }}">
+                                        <a href="{{ route('traitement-amc.traitement', $amc->slug) }}">
                                             <i class="far fa-eye"></i>
                                         </a>
                                     </td>

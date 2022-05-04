@@ -107,7 +107,7 @@
                                 <i data-feather="chevron-right"></i>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Traitement des A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
                             <li class="{{ ($page_name === 'Nouvelle AMC') ? 'active' : '' }}">
                                 <a href="#"> Nouvelle demande </a>
                             </li>

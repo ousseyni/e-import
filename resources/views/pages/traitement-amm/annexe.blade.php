@@ -230,7 +230,7 @@
                 <tr>
                     <td colspan="3"></td>
                     <td>
-                        Poids net : <br><b> {{ $amm->totalpoids }} Kg</b>
+                        Poids net : <br><b> {{ number_format($amm->totalpoids, 0, '.', ' ') }} Kg</b>
                     </td>
                 </tr>
             </table>

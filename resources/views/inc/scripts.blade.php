@@ -116,18 +116,21 @@
             $(".affecter_demande").hide();
 
             const demande = $("#traiter_demande :selected").val();
+            alert('A');
 
             if (demande == 998 || demande == 999) {
                 $(".comments_traitement").show();
                 $(".etude").hide();
                 $("#comments_traitement").prop('required',true);
                 $("#comments_avis").prop('required',false);
+                alert('B');
             }
             else {
                 $(".comments_traitement").hide();
                 $(".etude").show();
                 $("#comments_traitement").prop('required',false);
                 $("#comments_avis").prop('required',true);
+                alert('C');
             }
         });
 
