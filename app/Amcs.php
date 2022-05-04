@@ -60,9 +60,33 @@ class Amcs extends Model
         return $this->hasMany(DocumentAmcs::class, 'idamc', 'id');
     }
 
+    public function getPrescriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PrescriptionAmc::class, 'idamc', 'id');
+    }
+
     public function getEtat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(EtatDemande::class, 'etat');
+    }
+
+    public function estDepote() {
+        $estDepote = false;
+        foreach ($this->getPrescriptions as $prescription_amc) {
+            if ($prescription_amc->idprescription == 2) {
+                $estDepote = true;
+            }
+        }
+        return $estDepote;
+    }
+
+    public function haveOrdreRecette()
+    {
+        $haveOrdreRecette = false;
+        if (OrdreRecetteAmm::where('idamm', '=', $this->id)->exists()) {
+            $haveOrdreRecette = true;
+        }
+        return $haveOrdreRecette;
     }
 
     public function getNumDemande(): string

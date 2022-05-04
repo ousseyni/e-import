@@ -108,17 +108,20 @@
                             </div>
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
-                            <li class="{{ ($page_name === 'basic') ? 'active' : '' }}">
+                            <li class="{{ ($page_name === 'Nouvelle AMC') ? 'active' : '' }}">
                                 <a href="#"> Nouvelle demande </a>
                             </li>
-                            <li class="{{ ($page_name === 'input_group') ? 'active' : '' }}">
-                                <a href="#"> Demandes en attente </a>
+                            <li class="{{ ($page_name === 'Etude des demandes') ? 'active' : '' }}">
+                                <a href="{{ route('traitement-amc.etude')  }}"> Etude demandes </a>
                             </li>
-                            <li class="{{ ($page_name === 'layouts') ? 'active' : '' }}">
-                                <a href="#"> Validation demandes </a>
+                            <li class="{{ ($page_name === 'Validation des demandes') ? 'active' : '' }}">
+                                <a href="{{ route('traitement-amc.valide')  }}"> Validation demandes </a>
                             </li>
-                            <li class="{{ ($page_name === 'validation') ? 'active' : '' }}">
-                                <a href="#"> Demandes traitées </a>
+                            <li class="{{ ($page_name === 'Demandes traitées') ? 'active' : '' }}">
+                                <a href="{{ route('traitement-amc.traite')  }}"> Demandes traitées </a>
+                            </li>
+                            <li class="{{ ($page_name === 'Etat de toutes les demandes') ? 'active' : '' }}">
+                                <a href="{{ route('traitement-amc.state')  }}"> Toutes les demandes </a>
                             </li>
                         </ul>
                     </li>

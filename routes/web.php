@@ -46,13 +46,7 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::get('amm/paiementodr/{amm}','AmmsController@paiementodr')->name('amm.paiementodr');
     Route::match(['put', 'patch', 'post'],'amm/save_paiement/{amm}', 'AmmsController@save_paiement')->name('amm.save_paiement');
     Route::resource('amm', 'AmmsController');
-
     Route::resource('amc', 'AmcsController');
-
-    Route::any('traitement-amc/etude', 'TraitementAMCController@etude')->name('traitement-amc.etude');
-    Route::any('traitement-amc/valide', 'TraitementAMCController@valide')->name('traitement-amc.valide');
-    Route::any('traitement-amc/traite', 'TraitementAMCController@traite')->name('traitement-amc.traite');
-    Route::any('traitement-amc/state', 'TraitementAMCController@state')->name('traitement-amc.state');
 
     Route::any('traitement-amm/etude', 'TraitementAMMController@etude')->name('traitement-amm.etude');
     Route::any('traitement-amm/valide', 'TraitementAMMController@valide')->name('traitement-amm.valide');
@@ -63,6 +57,16 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::get('traitement-amm/dwlamm/{amm}','TraitementAMMController@dwlamm')->name('traitement-amm.dwlamm');
     Route::get('traitement-amm/dwlanx/{amm}','TraitementAMMController@dwlanx')->name('traitement-amm.dwlanx');
     Route::get('traitement-amm/trace/{amm}','TraitementAMMController@trace')->name('traitement-amm.trace');
+
+    Route::any('traitement-amc/etude', 'TraitementAMCController@etude')->name('traitement-amc.etude');
+    Route::any('traitement-amc/valide', 'TraitementAMCController@valide')->name('traitement-amc.valide');
+    Route::any('traitement-amc/traite', 'TraitementAMCController@traite')->name('traitement-amc.traite');
+    Route::any('traitement-amc/state', 'TraitementAMCController@state')->name('traitement-amc.state');
+    Route::any('traitement-amc/etude/{amc}', 'TraitementAMCController@traitement')->name('traitement-amc.traitement');
+    Route::get('traitement-amc/dwlord/{amc}','TraitementAMCController@dwlord')->name('traitement-amc.dwlord');
+    Route::get('traitement-amc/dwlamm/{amc}','TraitementAMCController@dwlamc')->name('traitement-amc.dwlamc');
+    Route::get('traitement-amc/dwlanx/{amc}','TraitementAMCController@dwlanx')->name('traitement-amc.dwlanx');
+    Route::get('traitement-amc/trace/{amc}','TraitementAMCController@trace')->name('traitement-amc.trace');
 
     Route::resource('traitement-amc', 'TraitementAMCController');
     Route::resource('traitement-amm', 'TraitementAMMController');

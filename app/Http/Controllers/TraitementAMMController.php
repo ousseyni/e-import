@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\AffectationAmm;
 use App\Amms;
+use App\ConteneurAmm;
 use App\DocumentAmms;
 use App\EtatDemande;
 use App\OrdreRecetteAmm;
 use App\PrescriptionAmm;
 use App\Prescriptions;
+use App\ProduitAmms;
 use App\SuiviAmms;
 use App\User;
+use App\VehiculeAmm;
+use App\VolAmm;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -339,13 +343,27 @@ class TraitementAMMController extends Controller
 
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_anx_amm.jpg')));
 
+        $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
         $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
 
+        if ($amm->modetransport == 'Aérien') {
+            $infos_voyage = VolAmm::where('idamm', '=', $amm->id)->get();
+        }
+        else if ($amm->modetransport == 'Terrestre') {
+            $infos_voyage = VehiculeAmm::where('idamm', '=', $amm->id)->get();
+        }
+        else {
+            $infos_voyage = ConteneurAmm::where('idamm', '=', $amm->id)->get();
+        }
+
+        $produits_amm = ProduitAmms::where('idamm', '=', $amm->id)->get();
+
         $pdf = PDF::loadView('pages.traitement-amm.annexe',
-                compact('amm', 'image', 'chef', 'dir', 'dg', 'prescriptions'))
-                ->setPaper('A4', 'portrait');;
+                    compact('amm', 'image', 'agent', 'chef', 'dir', 'dg',
+                    'prescriptions', 'infos_voyage', 'produits_amm'))
+                    ->setPaper('A4', 'portrait');;
 
         $filename = "DOC_ANNEXE_AMM_".$amm->getNumDemande().".pdf";
         //return $pdf->download($filename);

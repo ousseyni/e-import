@@ -207,8 +207,8 @@ class AmcsController extends Controller
         }
 
         if($request->hasFile('pj11')) {
-            $bietc = 'bietc.'.$request->pj10->extension();
-            $request->pj10->move($usager_folder, $bietc);
+            $bietc = 'bietc.'.$request->pj11->extension();
+            $request->pj11->move($usager_folder, $bietc);
             DocumentAmcs::create([
                 'libelle' => "Bordereau d'Identification Electronique de Traçabilité des Cargaisons",
                 'idamc' => $show->id,
