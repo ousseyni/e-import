@@ -424,15 +424,25 @@
                             @endforeach
                         </div>
                         <div class="tab-pane fade" id="border-ra" role="tabpanel">
-                            Aucun rapport disponible
-                            <div class="row">
-                                <div class="col-7">
-
+                            @if($amc->haveRapport())
+                                <div class="row">
+                                    <div class="col-7">
+                                        Consulter le rapport d'inspection
+                                    </div>
+                                    <div class="col-5">
+                                        <a href="{{ route('traitement-amc.rapport', $amc->slug) }}" class="btn btn-success">Ajouter le rapport d'inspection d'un conteneur</a>
+                                    </div>
                                 </div>
-                                <div class="col-5">
-                                    <a class="btn btn-success">Ajouter le rapport d'inspection d'un conteneur</a>
+                            @else
+                                <div class="row">
+                                    <div class="col-7">
+                                        Aucun rapport disponible
+                                    </div>
+                                    <div class="col-5">
+                                        <a href="{{ route('traitement-amc.rapport', $amc->slug) }}" class="btn btn-success">Ajouter le rapport d'inspection d'un conteneur</a>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\AffectationAmm;
 use App\Amms;
+use App\CategorieProduit;
 use App\ConteneurAmm;
+use App\Contribuables;
+use App\DeviseEtrangere;
 use App\DocumentAmms;
 use App\EtatDemande;
+use App\ModeTransport;
 use App\OrdreRecetteAmm;
+use App\Pays;
 use App\PrescriptionAmm;
 use App\Prescriptions;
 use App\ProduitAmms;
+use App\Produits;
 use App\SuiviAmms;
 use App\User;
 use App\VehiculeAmm;
@@ -300,6 +306,34 @@ class TraitementAMMController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function rapport($slug)
+    {
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+
+        $pays_pr = Pays::orderBy('libelle', 'ASC')->get();
+
+        $categorie_produits = CategorieProduit::where('type', '=', 'AMC')->get();
+        $produits = Produits::where('type', '=', 'AMC')->get();
+        $pays_or = Pays::orderBy('libelle', 'ASC')->get();
+
+        $mode_t = ModeTransport::all();
+
+        $nif = $amm->getContribuable->nif;
+        $contribuable = Contribuables::where('nif', '=', $nif)->firstOrFail();
+
+        $tab_devise = DeviseEtrangere::orderBy('code', 'ASC')->get();
+
+        return view('pages.traitement-amm.rapport',
+            compact('pays_pr', 'contribuable', 'produits', 'mode_t',
+                'pays_or', 'categorie_produits', 'tab_devise', 'amm'));
     }
 
     public function dwlord($slug) {

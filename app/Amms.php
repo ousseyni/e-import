@@ -89,6 +89,15 @@ class Amms extends Model
         return $haveOrdreRecette;
     }
 
+    public function haveRapport()
+    {
+        $haveRapport = false;
+        if (InspectionAmm::where('idamm', '=', $this->id)->exists()) {
+            $haveRapport = true;
+        }
+        return $haveRapport;
+    }
+
     public function getNumDemande(): string
     {
         $id = $this->id;

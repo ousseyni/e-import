@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\AffectationAmc;
 use App\Amcs;
+use App\CategorieProduit;
 use App\ConteneurAmc;
+use App\Contribuables;
+use App\DeviseEtrangere;
 use App\EtatDemande;
+use App\ModeTransport;
 use App\OrdreRecetteAmc;
+use App\Pays;
 use App\PrescriptionAmc;
 use App\Prescriptions;
 use App\ProduitAmcs;
+use App\Produits;
 use App\SuiviAmcs;
 use App\VehiculeAmc;
 use App\VolAmc;
@@ -96,6 +102,34 @@ class TraitementAMCController extends Controller
 
         return view('pages.traitement-amc.trace',
             compact('amc', 'traces', 'tab_color'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function rapport($slug)
+    {
+        $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
+
+        $pays_pr = Pays::orderBy('libelle', 'ASC')->get();
+
+        $categorie_produits = CategorieProduit::where('type', '=', 'AMC')->get();
+        $produits = Produits::where('type', '=', 'AMC')->get();
+        $pays_or = Pays::orderBy('libelle', 'ASC')->get();
+
+        $mode_t = ModeTransport::all();
+
+        $nif = $amc->getContribuable->nif;
+        $contribuable = Contribuables::where('nif', '=', $nif)->firstOrFail();
+
+        $tab_devise = DeviseEtrangere::orderBy('code', 'ASC')->get();
+
+        return view('pages.traitement-amc.rapport',
+            compact('pays_pr', 'contribuable', 'produits', 'mode_t',
+                'pays_or', 'categorie_produits', 'tab_devise'));
     }
 
 

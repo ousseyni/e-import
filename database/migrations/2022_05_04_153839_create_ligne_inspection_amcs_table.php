@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLigneInspectionAmmsTable extends Migration
+class CreateLigneInspectionAmcsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLigneInspectionAmmsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ligne_inspection_amms', function (Blueprint $table) {
+        Schema::create('ligne_inspection_amcs', function (Blueprint $table) {
             $table->id();
 
             $table->string('marque', 100);
@@ -41,11 +41,11 @@ class CreateLigneInspectionAmmsTable extends Migration
 
             $table->string('autreobservation');
 
-            $table->integer('idinspectionamm')->unsigned()->nullable();
-            $table->integer('idproduitamm')->unsigned()->nullable();
+            $table->integer('idinspectionamc')->unsigned()->nullable();
+            $table->integer('idproduitamc')->unsigned()->nullable();
 
-            $table->foreign('idinspectionamm')->references('id')->on('inspection_amms')->nullOnDelete();
-            $table->foreign('idproduitamm')->references('id')->on('produit_amms')->nullOnDelete();
+            $table->foreign('idinspectionamc')->references('id')->on('inspection_amcs')->nullOnDelete();
+            $table->foreign('idproduitamc')->references('id')->on('produit_amcs')->nullOnDelete();
 
             $table->timestamps();
         });
@@ -58,6 +58,6 @@ class CreateLigneInspectionAmmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ligne_inspection_amms');
+        Schema::dropIfExists('ligne_inspection_amcs');
     }
 }

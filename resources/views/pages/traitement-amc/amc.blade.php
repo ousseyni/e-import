@@ -97,7 +97,7 @@
         <div class="num_amm">{{$amc->getNumDemande()}}</div>
 
         <div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
-        <div class="cont2">{{ $amc->getContribuable->getTypeContribuables->libelle }}</div>
+        <div class="cont2">{{ (is_null($amc->typecontribuableid) ? '' : $amc->getContribuable->getTypeContribuables->libelle) }}</div>
         <div class="cont3">{{ $amc->getContribuable->nif }}</div>
         <div class="cont4">{{ $amc->getContribuable->siegesocial }}</div>
 

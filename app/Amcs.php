@@ -89,6 +89,15 @@ class Amcs extends Model
         return $haveOrdreRecette;
     }
 
+    public function haveRapport()
+    {
+        $haveRapport = false;
+        if (InspectionAmc::where('idamc', '=', $this->id)->exists()) {
+            $haveRapport = true;
+        }
+        return $haveRapport;
+    }
+
     public function getNumDemande(): string
     {
         $id = $this->id;
