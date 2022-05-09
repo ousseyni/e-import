@@ -149,8 +149,10 @@ Route::match(['put', 'patch'],'demande-comptes/activate-compte/{token}', 'Demand
 
 Route::resource('demande-comptes', 'DemandeComptesController');
 
+
 Route::get('/verify/{token}', 'VerifyController@VerifyEmail');
 Route::get('/verify-compte/{token}', 'VerifyController@VerifyCompte');
+Route::get('/verify-doc/{type}/{slug}', 'VerifyDemandeController@VerifyDoc');
 
 Route::get('/pass_recovery', function() {
     // $category_name = 'auth';

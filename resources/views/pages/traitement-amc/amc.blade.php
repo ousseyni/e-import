@@ -113,7 +113,7 @@
 <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width: 99.9%;">
 <img class="qrcode" src="data:image/jpg;base64,{{ $qrcode }}">
 
-<div class="num_amm">{{$amc->getNumDemande()}}</div>
+<div class="num_amm">{{ $amc->getNumDemande() }}</div>
 
 <div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
 <div class="cont2">{{ (is_null($amc->getContribuable->typecontribuableid) ? '' : $amc->getContribuable->getTypeContribuables->libelle) }}</div>

@@ -368,7 +368,7 @@ class TraitementAMMController extends Controller
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
 
         $nif = $amm->getContribuable->nif;
-        Qrcode::size(100)->generate("https://www.akilischool.com", public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
+        Qrcode::size(100)->generate(url('/verify-doc/AMM/'.$amm->slug), public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
         $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg")));
 
         $pdf = PDF::loadView('pages.traitement-amm.amm',
