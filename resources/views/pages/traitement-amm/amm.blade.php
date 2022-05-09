@@ -24,66 +24,85 @@
                 letter-spacing: 2px;
                 font-family: "Courier New", Courier, monospace;
                 color: red;
-                top: 158px;
-                right: 370px;
+                top: 228px;
+                right: 200px;
             }
 
             .qrcode {
                 position: absolute;
-                top: 90px;
+                top: 100px;
                 left: 120px;
             }
 
             .cont1 {
                 position: absolute;
-                top: 230px;
+                top: 318px;
                 left: 210px;
             }
 
             .cont2 {
                 position: absolute;
-                top: 230px;
-                left: 800px;
-
+                top: 352px;
+                left: 180px;
             }
 
             .cont3 {
                 position: absolute;
-                top: 269px;
-                left: 250px;
+                top: 352px;
+                right: 170px;
             }
 
             .cont4 {
                 position: absolute;
-                top: 269px;
-                left: 600px;
+                top: 386px;
+                left: 185px;
+            }
+
+            .cont5 {
+                position: absolute;
+                top: 386px;
+                right: 200px;
+            }
+
+            .mentions {
+                position: absolute;
+                top: 750px;
+                left: 50px;
+                font-size: 9px;
+            }
+
+            .agent {
+                position: absolute;
+                top: 750px;
+                left: 275px;
+                font-size: 9px;
             }
 
             .date_sign {
                 position: absolute;
-                bottom: 317px;
-                right: 135px;
+                top: 674px;
+                right: 100px;
                 font-size: 16px;
             }
 
             .sign1 {
                 position: absolute;
-                bottom: 150px;
-                left: 100px;
+                bottom: 185px;
+                left: 70px;
                 width: 120px;
             }
 
             .sign2 {
                 position: absolute;
-                bottom: 150px;
-                left: 480px;
+                bottom: 185px;
+                left: 300px;
                 width: 120px;
             }
 
             .sign3 {
                 position: absolute;
-                bottom: 130px;
-                left: 850px;
+                bottom: 185px;
+                left: 520px;
                 width: 175px;
             }
 
@@ -91,15 +110,31 @@
     </head>
     <body>
 
-        <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width:100%;">
+        <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width: 99.9%;">
         <img class="qrcode" src="data:image/jpg;base64,{{ $qrcode }}">
 
         <div class="num_amm">{{$amm->getNumDemande()}}</div>
 
         <div class="cont1">{{ $amm->getContribuable->raisonsociale }}</div>
-        <div class="cont2">{{ (is_null($amm->typecontribuableid) ? '' : $amm->getContribuable->getTypeContribuables->libelle) }}</div>
+        <div class="cont2">{{ (is_null($amm->getContribuable->typecontribuableid) ? '' : $amm->getContribuable->getTypeContribuables->libelle) }}</div>
         <div class="cont3">{{ $amm->getContribuable->nif }}</div>
         <div class="cont4">{{ $amm->getContribuable->siegesocial }}</div>
+        <div class="cont5">{{ $amm->getContribuable->rccm }}</div>
+
+        <div class="mentions">
+            <ul>
+                @foreach($prescriptions as $prescription)
+                    <li>{{ $prescription->getPrescription->libelle  }}</li>
+                @endforeach
+            </ul>
+            <br><br>
+            <span style="margin-left: 30px">{{ $prescriptions[0]->comments }}</span>
+        </div>
+
+        <div class="agent">
+            Vu le : {{ date_format(new DateTime($prescriptions[0]->dateprpt), 'd/m/Y')  }} <br>
+            <img src="data:image/jpg;base64,{{ $agent }}" width="120">
+        </div>
 
         <img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
         <img class="sign2" src="data:image/jpg;base64,{{ $dir }}">

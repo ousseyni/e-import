@@ -177,7 +177,7 @@ class InitDataSeeder extends Seeder
         ]);
         Prescriptions::create([
             'code'     => 'DEP',
-            'libelle'     => 'Dépotage',
+            'libelle'     => 'Inspection',
         ]);
         Prescriptions::create([
             'code'     => 'ANA',
@@ -201,8 +201,8 @@ class InitDataSeeder extends Seeder
 
         EtatDemande::create([
             'id'     => 1,
-            'libelle_dgcc'     => "Nouvelle demande reçue - en attente de traitement",
-            'libelle_user'     => "Demande envoyée à la DGCC",
+            'libelle_dgcc'     => "Nouveau dossier reçu - en attente de traitement",
+            'libelle_user'     => "Dossier envoyé à la DGCC",
             'etat_actuel'     => 1,
             'etat_suivant'     => "3-998-999",
         ]);
@@ -251,7 +251,7 @@ class InitDataSeeder extends Seeder
         EtatDemande::create([
             'id'     => 8,
             'libelle_dgcc'     => "Paiement confirmé - en attente de signature",
-            'libelle_user'     => "Paiement confirmé _ dossier en cours de signature",
+            'libelle_user'     => "Paiement confirmé _ en cours de signature",
             'etat_actuel'     => 8,
             'etat_suivant'     => "10-998-999",
         ]);
@@ -264,23 +264,23 @@ class InitDataSeeder extends Seeder
         ]);
         EtatDemande::create([
             'id'     => 10,
-            'libelle_dgcc'     => 'Signature terminée - demande disponible',
-            'libelle_user'     => 'Demande signée - téléchargeable',
+            'libelle_dgcc'     => 'Signature terminée - documents disponibles',
+            'libelle_user'     => 'Dossier signé - documents téléchargeables',
             'etat_actuel'     => 10,
             'etat_suivant'     => '',
         ]);
         EtatDemande::create([
             'id' => 998,
-            'libelle_dgcc'     => 'Demande rejetée - Dossier incomplet',
-            'libelle_user'     => 'Demande rejetée - Dossier incomplet',
+            'libelle_dgcc'     => 'Dossier rejeté - incomplet',
+            'libelle_user'     => 'Dossier rejeté - incomplet',
             'etat_actuel'     => 998,
             'etat_suivant'     => '',
         ]);
 
         EtatDemande::create([
             'id' => 999,
-            'libelle_dgcc'     => 'Demande traitée - Dossier en infraction',
-            'libelle_user'     => 'Demande traitée - Dossier en infraction',
+            'libelle_dgcc'     => 'Dossier traité - en infraction',
+            'libelle_user'     => 'Dossier traité - en infraction',
             'etat_actuel'     => 999,
             'etat_suivant'     => 9991,
         ]);

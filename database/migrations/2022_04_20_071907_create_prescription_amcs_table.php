@@ -17,7 +17,7 @@ class CreatePrescriptionAmcsTable extends Migration
             $table->id();
             $table->date('dateprpt');
             $table->string('value', 100)->nullable();
-            $table->string('comments');
+            $table->string('comments')->nullable();
             $table->integer('iduser')->unsigned()->nullable();
             $table->integer('idamc')->unsigned()->nullable();
             $table->integer('idprescription')->unsigned()->nullable();

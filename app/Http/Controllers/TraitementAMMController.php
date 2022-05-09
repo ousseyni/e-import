@@ -358,9 +358,11 @@ class TraitementAMMController extends Controller
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
         $suivi = SuiviAmms::where('idamm', '=', $amm->id)
             ->where('etat', '=', 10)->firstOrFail();
+        $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
 
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amm.jpg')));
 
+        $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
         $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
@@ -370,8 +372,9 @@ class TraitementAMMController extends Controller
         $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg")));
 
         $pdf = PDF::loadView('pages.traitement-amm.amm',
-            compact('amm', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi'))
-            ->setPaper('A4', 'landscape');;
+            compact('amm', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi',
+                'prescriptions', 'agent'))
+            ->setPaper('A4', 'portrait');
 
         $filename = "DOC_AMM_".$amm->getNumDemande().".pdf";
         //return $pdf->download($filename);

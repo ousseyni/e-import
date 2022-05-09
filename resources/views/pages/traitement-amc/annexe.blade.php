@@ -145,7 +145,7 @@
                 @endforeach
             </ul>
             <br>
-            <div style="margin-left: 30px; word-wrap: break-word; width: 250px">{{ $prescriptions[0]->comments }}</div>
+            <div style="margin-left: 30px; word-wrap: break-word; width: 200px">{{ $prescriptions[0]->comments }}</div>
         </div>
 
         <div class="agent">

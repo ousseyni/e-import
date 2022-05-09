@@ -356,9 +356,11 @@ class TraitementAMCController extends Controller
         $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
         $suivi = SuiviAmcs::where('idamc', '=', $amc->id)
             ->where('etat', '=', 10)->firstOrFail();
+        $prescriptions = PrescriptionAmc::where('idamc', '=', $amc->id)->get();
 
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amc.jpg')));
 
+        $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
         $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
@@ -368,8 +370,9 @@ class TraitementAMCController extends Controller
         $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg")));
 
         $pdf = PDF::loadView('pages.traitement-amc.amc',
-            compact('amc', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi'))
-            ->setPaper('A4', 'landscape');;
+            compact('amc', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi',
+            'prescriptions', 'agent'))
+            ->setPaper('A4', 'portrait');;
 
         $filename = "DOC_AMC_".$amc->getNumDemande().".pdf";
         //return $pdf->download($filename);
