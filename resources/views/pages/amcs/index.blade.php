@@ -58,7 +58,7 @@
                                     </td>
                                     <td>
                                         @if($amc->etat == 1 or $amc->etat == 998)
-                                            <form id="form_del_{{ $loop->index }}" action="{{ route('amc.destroy', $amm->slug) }}" method="post">
+                                            <form id="form_del_{{ $loop->index }}" action="{{ route('amc.destroy', $amc->slug) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="#" onclick="submit_form('form_del_{{ $loop->index }}')"><i class="far fa-trash-alt"></i></a>
