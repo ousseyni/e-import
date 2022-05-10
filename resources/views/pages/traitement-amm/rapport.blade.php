@@ -202,25 +202,25 @@
                                                     <div class="col-3 input-group-sm">
                                                         <label for="possede2aire">Avec emballage II aire ?</label><br>
                                                         Oui <input type="radio" value="true" name="possede2aire" id="possede2aire" />
-                                                        &nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input type="radio" value="false" name="possede2aire" id="possede2aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="etat2aire">Emballage II aire intacte ?</label><br>
                                                         Oui <input type="radio" value="true" name="etat2aire" id="etat2aire" />
-                                                        &nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input type="radio" value="false" name="etat2aire" id="etat2aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="possede1aire">Avec emballage I aire ?</label><br>
                                                         Oui <input type="radio" value="true" name="possede1aire" id="possede1aire" />
-                                                        &nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input type="radio" value="false" name="possede1aire" id="possede1aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="etat1aire">Emballage I aire intacte ?</label> <br>
                                                         Oui <input type="radio" value="true" name="etat1aire" id="etat1aire" />
-                                                        &nbsp;&nbsp;&nbsp;
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input type="radio" value="false" name="etat1aire" id="etat1aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
@@ -248,27 +248,16 @@
                                 <h3>Conclusion finale</h3>
                                 <section>
                                     <div class="form-row mb-2">
-                                        <table class="table">
-                                            <tr class="row">
-                                                <td class="col-4">
-                                                    Le(s) produit(s) inspecté(s) est(sont) conforme(s) ?
-                                                </td>
-                                                <td class="col-8">
-                                                    Oui <input checked type="radio" id="est_conforme_y" value="true" name="conclusion">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    Non <input type="radio" id="est_conforme_n" value="false" name="conclusion">
-                                                </td>
-                                            </tr>
-                                            <tr class="row">
-                                                <td class="col-4">
-                                                    Observation générale
-                                                </td>
-                                                <td class="col-8">
-                                                    <textarea class="form-control" required name="observation" id="observation"></textarea>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        <div class="col-5 input-group-sm">
+                                            <label for="conclusion">Le(s) produit(s) inspecté(s) est(sont) conforme(s) ?</label> <br>
+                                            Oui <input checked type="radio" value="true" name="conclusion" id="conclusion" />
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            Non <input type="radio" value="false" name="conclusion" id="conclusion" />
+                                        </div>
+                                        <div class="col-7 input-group-sm">
+                                            <label for="observation">Observation générale</label>
+                                            <textarea class="form-control" required name="observation" id="observation"></textarea>
+                                        </div>
                                     </div>
                                 </section>
                             </div>
