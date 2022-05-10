@@ -84,11 +84,15 @@
                                         <div data-repeater-list="conteneurs">
                                             <div class="repeater_item_conteneurs" data-repeater-item>
                                                 <div class="form-row mb-4">
-                                                    <div class="col-7 input-group-sm">
+                                                    <div class="col-5 input-group-sm">
                                                         <label for="numconteneurm">N° conteneur</label>
                                                         <input type="text" required name="numconteneurm" id="numconteneurm" class="form-control" />
                                                     </div>
-                                                    <div class="col-3 input-group-sm" style="padding-top: 3.3%">
+                                                    <div class="col-5 input-group-sm">
+                                                        <label for="numplombm">N° plomb</label>
+                                                        <input type="text" required name="numplombm" id="numplombm" class="form-control" />
+                                                    </div>
+                                                    <div class="col-2 input-group-sm" style="padding-top: 3.3%">
                                                         <a class="btn btn-danger  btn-sm" data-repeater-delete="">x</a>
                                                     </div>
                                                 </div>
@@ -107,17 +111,21 @@
                                         <div data-repeater-list="vehicules">
                                             <div class="repeater_item_vehicules" data-repeater-item>
                                                 <div class="form-row mb-4">
-                                                    <div class="col-4 input-group-sm">
+                                                    <div class="col-3 input-group-sm">
                                                         <label for="numlvi">N° LVI</label>
                                                         <input type="text" name="numlvi" id="numlvi" class="form-control" />
                                                     </div>
-                                                    <div class="col-3 input-group-sm">
+                                                    <div class="col-2 input-group-sm">
                                                         <label for="numvehicule">N° véhicule</label>
                                                         <input type="text" name="numvehicule" id="numvehicule" class="form-control" />
                                                     </div>
-                                                    <div class="col-4 input-group-sm">
+                                                    <div class="col-3 input-group-sm">
                                                         <label for="numconteneurt">N° conteneur (si disponible)</label>
                                                         <input type="text" name="numconteneurt" id="numconteneurt" class="form-control" />
+                                                    </div>
+                                                    <div class="col-3 input-group-sm">
+                                                        <label for="numplombt">N° plomb (si disponible)</label>
+                                                        <input type="text" name="numplombt" id="numplombt" class="form-control" />
                                                     </div>
                                                     <div class="col-1 input-group-sm" style="padding-top: 3.3%">
                                                         <a class="btn btn-danger  btn-sm" data-repeater-delete="">x</a>

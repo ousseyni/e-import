@@ -264,6 +264,7 @@ class AmcsController extends Controller
             //dd($tab_conteneurs);
             foreach($tab_conteneurs as $data) {
                 $numconteneur = $data['numconteneurm'];
+                $numplomb = $data['numplombm'];
 
                 ConteneurAmc::create([
                     'idamc' => $show->id,
@@ -271,6 +272,7 @@ class AmcsController extends Controller
                     'numvoyage' => $numvoyagem,
                     'numbietc' => $numbietc,
                     'numconteneur' => $numconteneur,
+                    'numplomb' => $numplomb,
                     'numconnaissement' => $numconnaissement,
                 ]);
             }
@@ -283,13 +285,15 @@ class AmcsController extends Controller
             foreach($tab_vehicules as $data) {
                 $numlvi = $data['numlvi'];
                 $numvehicule = $data['numvehicule'];
-                $numconteneurt = $data['numconteneurt'];
+                $numconteneur = $data['numconteneurt'];
+                $numplomb = $data['numplombt'];
 
                 VehiculeAmc::create([
-                    'idamc' => $show->id,
+                    'idamm' => $show->id,
                     'numlvi' => $numlvi,
                     'numvehicule' => $numvehicule,
-                    'numconteneur' => $numconteneurt,
+                    'numconteneur' => $numconteneur,
+                    'numplomb' => $numplomb,
                 ]);
             }
         }

@@ -20,5 +20,4 @@ class LigneInspectionAmm extends Model
     {
         return $this->belongsTo(ProduitAmms::class, 'idproduitamm');
     }
-
 }

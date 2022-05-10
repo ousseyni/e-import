@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehiculeAmm extends Model
 {
-    protected $fillable = ['numlvi', 'numvehicule', 'numconteneur', 'idamm'];
+    protected $fillable = ['numlvi', 'numvehicule', 'numconteneur', 'numplomb', 'idamm'];
 
     public function getAmm()
     {

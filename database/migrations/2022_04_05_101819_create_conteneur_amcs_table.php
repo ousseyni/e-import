@@ -19,6 +19,7 @@ class CreateConteneurAmcsTable extends Migration
             $table->string('numvoyage', 200)->nullable();
             $table->string('numbietc', 200)->nullable();
             $table->string('numconteneur', 200)->nullable();
+            $table->string('numplomb', 200)->nullable();
             $table->string('numconnaissement', 200)->nullable();
             $table->integer('idamc')->unsigned()->nullable();
             $table->timestamps();

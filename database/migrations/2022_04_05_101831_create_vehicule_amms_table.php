@@ -15,9 +15,10 @@ class CreateVehiculeAmmsTable extends Migration
     {
         Schema::create('vehicule_amms', function (Blueprint $table) {
             $table->id();
-            $table->string('numlvi', 200);
-            $table->string('numvehicule', 200);
-            $table->string('numconteneurt', 200);
+            $table->string('numlvi', 200)->nullable();
+            $table->string('numvehicule', 200)->nullable();
+            $table->string('numconteneur', 200)->nullable();
+            $table->string('numplomb', 200)->nullable();
             $table->integer('idamm')->unsigned()->nullable();
             $table->timestamps();
             $table->foreign('idamm')->references('id')->on('amms')->nullOnDelete();

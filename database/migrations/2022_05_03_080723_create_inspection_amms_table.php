@@ -18,12 +18,12 @@ class CreateInspectionAmmsTable extends Migration
 
             $table->dateTime('dateinspection');
 
+            $table->string('paysprov', 50);
+            $table->string('modetransport', 100);
             $table->enum('conditiontransport', ['Ambiante', 'Refrigéré', 'Surgelé']);
             $table->string('poinentree', 150)->nullable();
             $table->string('lieuinspection', 150)->nullable();
 
-            $table->string('conteneurinspecte', 100)->nullable();
-            $table->string('numeroplomb', 100)->nullable();
             $table->string('natureproduits', 100)->nullable();
             $table->integer('totalqte')->nullable();
             $table->integer('idamm')->unsigned()->nullable();

@@ -22,8 +22,6 @@ class CreateInspectionAmcsTable extends Migration
             $table->string('poinentree', 150)->nullable();
             $table->string('lieuinspection', 150)->nullable();
 
-            $table->string('conteneurinspecte', 100)->nullable();
-            $table->string('numeroplomb', 100)->nullable();
             $table->string('natureproduits', 100)->nullable();
             $table->integer('totalqte')->nullable();
             $table->integer('idamc')->unsigned()->nullable();

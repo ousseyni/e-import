@@ -319,21 +319,27 @@ class TraitementAMMController extends Controller
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
 
         $pays_pr = Pays::orderBy('libelle', 'ASC')->get();
-
-        $categorie_produits = CategorieProduit::where('type', '=', 'AMC')->get();
-        $produits = Produits::where('type', '=', 'AMC')->get();
         $pays_or = Pays::orderBy('libelle', 'ASC')->get();
 
+        $produitsAmm = ProduitAmms::where('idamm', '=', $amm->id)->get();
+        $conteneursAmm = null;
+        if ($amm->modetransport == 'Maritime') {
+            $conteneursAmm = ConteneurAmm::where('idamm', '=', $amm->id)->get();
+        }
+        if ($amm->modetransport == 'Terrestre') {
+            $conteneursAmm = VehiculeAmm::where('idamm', '=', $amm->id)->get();
+        }
+
         $mode_t = ModeTransport::all();
+
+        $conditions_tp = array('Ambiante', 'Refrigéré', 'Surgelé');
 
         $nif = $amm->getContribuable->nif;
         $contribuable = Contribuables::where('nif', '=', $nif)->firstOrFail();
 
-        $tab_devise = DeviseEtrangere::orderBy('code', 'ASC')->get();
-
         return view('pages.traitement-amm.rapport',
-            compact('pays_pr', 'contribuable', 'produits', 'mode_t',
-                'pays_or', 'categorie_produits', 'tab_devise', 'amm'));
+            compact('pays_pr', 'contribuable', 'produitsAmm', 'mode_t',
+                'pays_or', 'conteneursAmm', 'amm', 'conditions_tp'));
     }
 
     public function dwlord($slug) {

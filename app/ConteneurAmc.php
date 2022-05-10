@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConteneurAmc extends Model
 {
-    protected $fillable = ['nomnavire', 'numvoyage', 'numbietc', 'numconnaissement', 'numconteneur', 'idamc'];
+    protected $fillable = ['nomnavire', 'numvoyage', 'numbietc', 'numconnaissement', 'numconteneur', 'numplomb', 'idamc'];
 
     public function getAmc()
     {

@@ -138,6 +138,9 @@
         font-weight: 600;
         font-size: 14px;
     }
+
+    [data-repeater-item]:first-child { display: none; }
+
 </style>
 
 {{-- Dashboard --}}
@@ -156,6 +159,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/select2/select2.min.css')}}">
 
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/bootstrap-select/bootstrap-select.min.css')}}">
+
+<link href="{{asset('assets/css/elements/miscellaneous.css')}}" rel="stylesheet" type="text/css" />
 
 @endif
 <!-- END GLOBAL MANDATORY STYLES -->
@@ -178,12 +183,10 @@
       <link href="{{asset('plugins/flatpickr/custom-flatpickr.css')}}" rel="stylesheet" type="text/css">
       <link href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}" rel="stylesheet" type="text/css" />
       <style>
-
           .widget-content-area { border-radius: 6px; margin-bottom: 10px; }
           .daterangepicker.dropdown-menu {
               z-index: 1059;
           }
-
       </style>
       @break
 
@@ -442,11 +445,6 @@
     @case('color_library')
       {{-- Elemnts Color Library --}}
       <link href="{{asset('assets/css/elements/color_library.css')}}" rel="stylesheet" type="text/css" />
-      @break
-
-    @case('dropdown')
-      {{-- Elements Dropdown --}}
-      <link href="{{asset('assets/css/elements/miscellaneous.css')}}" rel="stylesheet" type="text/css" />
       @break
 
     @case('infobox')
