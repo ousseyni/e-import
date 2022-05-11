@@ -16,6 +16,7 @@ use App\TypeContribuables;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -177,23 +178,23 @@ class InitDataSeeder extends Seeder
         ]);
         Prescriptions::create([
             'code'     => 'DEP',
-            'libelle'     => 'Inspection',
+            'libelle'     => 'A inspecter',
         ]);
         Prescriptions::create([
             'code'     => 'ANA',
-            'libelle'     => 'Analyse',
+            'libelle'     => 'A analyser',
         ]);
         Prescriptions::create([
             'code'     => 'SAI',
-            'libelle'     => 'Saisie',
+            'libelle'     => 'A saisir',
         ]);
         Prescriptions::create([
             'code'     => 'DES',
-            'libelle'     => 'Destruction',
+            'libelle'     => 'A détruire',
         ]);
         Prescriptions::create([
             'code'     => 'REX',
-            'libelle'     => 'Réexportation',
+            'libelle'     => 'A réexporter',
         ]);
 
 

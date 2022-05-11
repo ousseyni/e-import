@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class InspectionAmm extends Model
 {
-    protected $fillable = ['dateinspection', 'conditiontransport', 'poinentree', 'lieuinspection',
-        'conteneurinspecte', 'numeroplomb', 'natureproduits', 'totalqte', 'idamm', 'conclusion',
+    protected $fillable = ['dateinspection', 'paysprov', 'modetransport', 'conditiontransport',
+        'poinentree', 'lieuinspection', 'natureproduits', 'totalqte', 'idamm', 'conclusion',
         'observation', 'iduser', 'idcontribuable'];
 
     public function getAmm()

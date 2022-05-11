@@ -16,30 +16,27 @@ class CreateLigneInspectionAmcsTable extends Migration
         Schema::create('ligne_inspection_amcs', function (Blueprint $table) {
             $table->id();
 
-            $table->string('marque', 100);
-            $table->string('nom', 100);
-            $table->string('numerolot', 100);
-            $table->string('paysorig', 50);
-            $table->string('fournisseur', 200);
-            $table->string('fabricant', 200);
-            $table->string('ingredients');
-            $table->integer('qtenet');
-            $table->string('durabilite');
-            $table->string('modeemploi');
-            $table->string('allegation');
+            $table->string('marque', 100)->nullable();
+            $table->string('nom', 100)->nullable();
+            $table->string('numerolot', 100)->nullable();
+            $table->string('paysorig', 50)->nullable();
+            $table->string('fournisseur', 200)->nullable();
+            $table->string('fabricant', 200)->nullable();
+            $table->string('ingredients')->nullable();
+            $table->integer('qtenet')->nullable();
+            $table->string('durabilite')->nullable();
+            $table->string('modeemploi')->nullable();
+            $table->string('allegation')->nullable();
 
-            $table->date('datefact');
-            $table->integer('poids');
+            $table->boolean('possede2aire')->nullable();
+            $table->string('observation2aire')->nullable();
+            $table->boolean('etat2aire')->nullable();
 
-            $table->boolean('possede2aire');
-            $table->string('observation2aire');
-            $table->boolean('etat2aire');
+            $table->boolean('possede1aire')->nullable();
+            $table->string('observation1aire')->nullable();
+            $table->boolean('etat1aire')->nullable();
 
-            $table->boolean('possede1aire');
-            $table->string('observation1aire');
-            $table->boolean('etat1aire');
-
-            $table->string('autreobservation');
+            $table->string('autreobservation')->nullable();
 
             $table->integer('idinspectionamc')->unsigned()->nullable();
             $table->integer('idproduitamc')->unsigned()->nullable();

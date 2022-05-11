@@ -10,6 +10,9 @@ use App\Contribuables;
 use App\DeviseEtrangere;
 use App\DocumentAmms;
 use App\EtatDemande;
+use App\InspectionAmm;
+use App\LigneInspectionAmm;
+use App\LigneInspectionConteneurAmm;
 use App\ModeTransport;
 use App\OrdreRecetteAmm;
 use App\Pays;
@@ -264,6 +267,108 @@ class TraitementAMMController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function saverapport(Request $request)
+    {
+        $amm = Amms::where('slug', '=', $request->slugamm)->firstOrFail();
+
+        $newInspection = InspectionAmm::create([
+            'dateinspection' => date('Y-m-d H:i:s'),
+            'paysprov' => $request->paysprov,
+            'modetransport' => $request->modetransport,
+            'conditiontransport' => $request->conditiontransport,
+            'poinentree' => $request->poinentree,
+            'lieuinspection' => $request->lieuinspection,
+            'natureproduits' => $request->natureproduits,
+            'totalqte' => $request->totalqte,
+            'idamm' => $amm->id,
+            'conclusion' => $request->conclusion,
+            'observation' => $request->observation,
+            'iduser' => Auth::id(),
+            'idcontribuable' => $request->idcontribuable,
+        ]);
+
+        //Sauvegarde des produits associés à la demande
+        $tab_produits = $_POST['produits'];
+        //dd($tab_produits);
+        foreach($tab_produits as $data) {
+            if ($data['idproduitamm'] != '') {
+                $produit = Produits::where('id', '=', $data['idproduitamm'])->firstOrFail();
+                LigneInspectionAmm::create([
+                    'marque' => $data['marque'],
+                    'nom' => $produit->libelle,
+                    'numerolot' => $data['numerolot'],
+                    'paysorig' => $data['paysorig'],
+                    'fournisseur' => $data['fabricant'],
+                    'fabricant' => $data['fabricant'],
+                    'ingredients' => $data['ingredients'],
+                    'qtenet' => $data['qtenet'],
+                    'durabilite' => $data['durabilite'],
+                    'modeemploi' => $data['modeemploi'],
+                    'allegation' => $data['allegation'],
+                    'possede2aire' => $data['possede2aire'],
+                    'etat2aire' => $data['etat2aire'],
+                    'possede1aire' => $data['possede1aire'],
+                    'etat1aire' => $data['etat1aire'],
+                    'autreobservation' => $data['autreobservation'],
+                    'idinspectionamm' => $newInspection->id,
+                    'idamm' => $amm->id,
+                    'idproduitamm' => $data['idproduitamm'],
+                ]);
+            }
+        }
+
+        $nb = 0;
+        if ($amm->modetransport == 'Maritime') {
+            $nb = ConteneurAmm::where('idamm', '=', $amm->id)->count();
+        }
+        if ($amm->modetransport == 'Terrestre') {
+            $nb = VehiculeAmm::where('idamm', '=', $amm->id)->count();
+        }
+
+        for($i=0; $i<$nb; $i++) {
+            LigneInspectionConteneurAmm::create([
+                'conteneurinspecte' => $_POST['conteneurinspecte_'.$i],
+                'numeroplomb' => $_POST['numeroplomb_'.$i],
+                'idinspectionamm' => $newInspection->id,
+            ]);
+        }
+
+        //Sauvegarde des produits associés à la demande
+        $tab_conteneurs = $_POST['conteneurs'];
+        foreach($tab_conteneurs as $data) {
+            if ($data['conteneurinspecte'] != '') {
+                LigneInspectionConteneurAmm::create([
+                    'conteneurinspecte' => $data['conteneurinspecte'],
+                    'numeroplomb' => $data['numeroplomb'],
+                    'idinspectionamm' => $newInspection->id,
+                ]);
+            }
+        }
+
+        SuiviAmms::create([
+            'idamm' => $amm->id,
+            'etat' => $amm->etat,
+            'iduser' => Auth::id(),
+            'comments' => "Création du rapport d'inspection",
+        ]);
+
+        $link = 'etude';
+        if ($amm->etat >= 5 && $amm->etat <= 9) {
+            $link = 'valide';
+        }
+        elseif ($amm->etat == 10) {
+            $link = 'traite';
+        }
+
+        return redirect('/traitement-amm/'.$link)->with('success', "Traitement de la demande d'AMM enregistré avec succès");
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -322,7 +427,12 @@ class TraitementAMMController extends Controller
         $pays_or = Pays::orderBy('libelle', 'ASC')->get();
 
         $produitsAmm = ProduitAmms::where('idamm', '=', $amm->id)->get();
+        $tab_pamm = array();
+        foreach ($produitsAmm as $produit) {
+            $tab_pamm[] = $produit->idproduit;
+        }
         $conteneursAmm = null;
+        $categorie_produits = CategorieProduit::where('type', '=', 'AMM')->get();
         if ($amm->modetransport == 'Maritime') {
             $conteneursAmm = ConteneurAmm::where('idamm', '=', $amm->id)->get();
         }
@@ -339,7 +449,8 @@ class TraitementAMMController extends Controller
 
         return view('pages.traitement-amm.rapport',
             compact('pays_pr', 'contribuable', 'produitsAmm', 'mode_t',
-                'pays_or', 'conteneursAmm', 'amm', 'conditions_tp'));
+                'pays_or', 'conteneursAmm', 'amm', 'conditions_tp', 'categorie_produits',
+                'tab_pamm'));
     }
 
     public function dwlord($slug) {

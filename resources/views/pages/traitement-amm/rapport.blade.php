@@ -24,7 +24,7 @@
 
                     <div class="-content widget-content-area">
                         <h5>Rapport d'inspection - AMM N° : {{ $amm->getNumDemande() }}</h5><br>
-                        <form method="post" id="form-amm-amc" action="{{ route('amc.store') }}" enctype="multipart/form-data">
+                        <form method="post" id="form-amm-amc" action="{{ route('traitement-amm.saverapport', $amm) }}" enctype="multipart/form-data">
                             @csrf
                             <div id="example-basic">
                                 <h3>Informations importation</h3>
@@ -33,6 +33,8 @@
                                         <div class="col-6 input-group-sm">
                                             <label for="imp">Importateur</label>
                                             <input readonly id="imp" type="text" value="{{ $contribuable->raisonsociale }}" class="form-control" />
+                                            <input type="hidden" name="slugamm" value="{{ $amm->slug }}" />
+                                            <input type="hidden" name="idcontribuable" value="{{ $contribuable->id }}" />
                                         </div>
                                         <div class="col-6 input-group-sm">
                                             <label for="acti">Activité</label>
@@ -55,24 +57,23 @@
                                     <div class="form-row mb-2">
                                         <div class="col-4 input-group-sm">
                                             <label for="paysprov">Pays de provenance</label>
-                                            <select class="form-control" id="paysprov" name="paysprov">
+                                            <select required class="form-control" id="paysprov" name="paysprov">
                                                 @foreach($pays_pr as $pays)
-                                                    <option value="{{$pays->libelle}}" <?= ($pays->libelle == $amm->paysprov ? 'selected' : '')  ?> >{{$pays->libelle}}</option>
+                                                    <option value="{{$pays->libelle}}" {{ ($pays->libelle == $amm->paysprov ? 'selected' : '') }} >{{$pays->libelle}}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="hidden" name="idcontribuable" id="idcontribuable" value="{{ $contribuable->id }}" />
                                         </div>
                                         <div class="col-4 input-group-sm">
-                                            <label for="conditiontransport">Mode de transport</label>
-                                            <select class="form-control" id="conditiontransport" name="conditiontransport">
+                                            <label for="modetransport">Mode de transport</label>
+                                            <select required class="form-control" id="modetransport" name="modetransport">
                                                 @foreach($mode_t as $mode)
-                                                    <option value="{{$mode->libelle}}" <?= ($mode->libelle == $amm->modetransport ? 'selected' : '')  ?> >{{$mode->libelle}}</option>
+                                                    <option value="{{$mode->libelle}}" {{ ($mode->libelle == $amm->modetransport ? 'selected' : '') }} >{{$mode->libelle}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-4 input-group-sm">
-                                            <label for="conditiontransport">Condition de transport d'entreposage</label>
-                                            <select class="form-control" id="conditiontransport" name="conditiontransport">
+                                            <label for="conditiontransport">Condition de transport et/ou d'entreposage</label>
+                                            <select required class="form-control" id="conditiontransport" name="conditiontransport">
                                                 @foreach($conditions_tp as $condition)
                                                     <option value="{{$condition}}">{{$condition}}</option>
                                                 @endforeach
@@ -104,12 +105,12 @@
                                         <div class="form-row mb-1">
                                             @foreach($conteneursAmm as $conteneur)
                                                 <div class="col-5 input-group-sm">
-                                                    <label for="conteneurinspecte">N° conteneur</label>
-                                                    <input type="text" value="{{$conteneur->numconteneur}}" name="conteneurinspecte" id="conteneurinspecte" class="form-control" />
+                                                    <label for="conteneurinspecte_{{$loop->index}}">N° conteneur</label>
+                                                    <input type="text" value="{{$conteneur->numconteneur}}" name="conteneurinspecte_{{$loop->index}}" id="conteneurinspecte_{{$loop->index}}" class="form-control" />
                                                 </div>
                                                 <div class="col-5 input-group-sm">
-                                                    <label for="numeroplomb">N° Plomb</label>
-                                                    <input type="text" value="{{$conteneur->numplomb}}" name="numeroplomb" id="numeroplomb" class="form-control" />
+                                                    <label for="numeroplomb_{{$loop->index}}">N° Plomb</label>
+                                                    <input type="text" value="{{$conteneur->numplomb}}" name="numeroplomb_{{$loop->index}}" id="numeroplomb_{{$loop->index}}" class="form-control" />
                                                 </div>
                                             @endforeach
                                         </div>
@@ -151,11 +152,19 @@
                                             <div class="input-group repeater_item_produits" data-repeater-item>
                                                 <div class="form-row mb-4">
                                                     <div class="col-4 input-group-sm">
-                                                        <label for="nom">Produit à inspecter</label>
-                                                        <select class="form-control" required="" id="nom" name="nom">
+                                                        <label for="idproduit">Produits à inspecter</label>
+                                                        <select class="form-control" required id="idproduitamm" name="idproduitamm" onblur="getProduit(this.name, this.value)">
                                                             <option value="">-- Sélectionner --</option>
-                                                            @foreach($produitsAmm as $produitAmm)
-                                                                <option value="{{$produitAmm->getProduit->id}}">{{str_replace("\\","", $produitAmm->getProduit->libelle)}}</option>
+                                                            @foreach($categorie_produits as $categorie)
+                                                                <optgroup label="{{str_replace("\\","", $categorie->libelle)}}">
+                                                                    @foreach($categorie->getProduits as $produit)
+                                                                        @if(in_array($produit->id, $tab_pamm))
+                                                                            <option value="{{$produit->id}}"><strong>{{str_replace("\\","", $produit->libelle)}}</strong></option>
+                                                                        @else
+                                                                            <option value="{{$produit->id}}">{{str_replace("\\","", $produit->libelle)}}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </optgroup>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -189,7 +198,7 @@
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="durabilite">Durabilité (DLC/DLUO)</label>
-                                                        <input type="text" name="durabilite" id="durabilite" class="form-control" />
+                                                        <input required type="text" name="durabilite" id="durabilite" class="form-control" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="modeemploi">Mode d'emploi</label>
@@ -201,27 +210,27 @@
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="possede2aire">Avec emballage II aire ?</label><br>
-                                                        Oui <input type="radio" value="true" name="possede2aire" id="possede2aire" />
+                                                        Oui <input required type="radio" value="1" name="possede2aire" id="possede2aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        Non <input type="radio" value="false" name="possede2aire" id="possede2aire" />
+                                                        Non <input required type="radio" value="0" name="possede2aire" id="possede2aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="etat2aire">Emballage II aire intacte ?</label><br>
-                                                        Oui <input type="radio" value="true" name="etat2aire" id="etat2aire" />
+                                                        Oui <input required type="radio" value="1" name="etat2aire" id="etat2aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        Non <input type="radio" value="false" name="etat2aire" id="etat2aire" />
+                                                        Non <input required type="radio" value="0" name="etat2aire" id="etat2aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="possede1aire">Avec emballage I aire ?</label><br>
-                                                        Oui <input type="radio" value="true" name="possede1aire" id="possede1aire" />
+                                                        Oui <input required type="radio" value="0" name="possede1aire" id="possede1aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        Non <input type="radio" value="false" name="possede1aire" id="possede1aire" />
+                                                        Non <input required type="radio" value="1" name="possede1aire" id="possede1aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="etat1aire">Emballage I aire intacte ?</label> <br>
-                                                        Oui <input type="radio" value="true" name="etat1aire" id="etat1aire" />
+                                                        Oui <input required type="radio" value="1" name="etat1aire" id="etat1aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        Non <input type="radio" value="false" name="etat1aire" id="etat1aire" />
+                                                        Non <input required type="radio" value="0" name="etat1aire" id="etat1aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="autreobservation">Autres observations</label>
@@ -250,9 +259,9 @@
                                     <div class="form-row mb-2">
                                         <div class="col-5 input-group-sm">
                                             <label for="conclusion">Le(s) produit(s) inspecté(s) est(sont) conforme(s) ?</label> <br>
-                                            Oui <input checked type="radio" value="true" name="conclusion" id="conclusion" />
+                                            Oui <input checked type="radio" value="1" name="conclusion" id="conclusion" />
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            Non <input type="radio" value="false" name="conclusion" id="conclusion" />
+                                            Non <input type="radio" value="0" name="conclusion" id="conclusion" />
                                         </div>
                                         <div class="col-7 input-group-sm">
                                             <label for="observation">Observation générale</label>
