@@ -96,10 +96,10 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-12 input-group-sm traiter_demande" style="display: none">
+                                                <!--div class="col-12 input-group-sm traiter_demande" style="display: none">
                                                     <label for="comments_traitement">Commentaire sur le traitement</label>
                                                     <textarea class="form-control" name="comments_traitement" id="comments_traitement"></textarea>
-                                                </div>
+                                                </div-->
                                             </td>
                                         </tr>
                                     </table>
@@ -116,10 +116,10 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-12 input-group-sm etude">
+                                                <!--div class="col-12 input-group-sm etude">
                                                     <label for="comments_avis">Commentaire sur l'avis</label>
                                                     <textarea class="form-control" name="comments_avis" id="comments_avis"></textarea>
-                                                </div>
+                                                </div-->
                                             </div>
                                             <div class="col-1"></div>
                                             <div class="col-6 input-group-sm row">
@@ -204,6 +204,10 @@
                                                 <div class="col-12 input-group-sm row">
                                                     <label for="quittance">
                                                         Numéro de la quittance : <b>{{ $odr->quittance }}</b>
+                                                    </label>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <label for="datequittance">
+                                                        Date de paiement : <b>{{ date_format(new DateTime($odr->datequittance), 'd/m/Y') }}</b>
                                                     </label>
 
                                                     <a style="margin-left: 5%" href="{{ url('/uploads/'.$amm->getContribuable->nif.'/amm_'.$amm->id.'/pj_quittance.pdf')}}" target="_blank">

@@ -216,7 +216,15 @@ class TraitementAMCController extends Controller
             //Eregistrement des prescriptions ou avis effectuées
             if ($new_etat == 3) {
                 $prescriptions = $request->prescriptions;
-                $comments = $request->comments_avis;
+                if (count($prescriptions) == 1 && $prescriptions[0] == 1) {
+                    $comments = "Rien à signaler";
+                }
+                else {
+                    $comments = "Visite de la DGCC pour inspection Contacts : 061 000 196 / 061 000 202";
+                }
+                //echo $comments;
+                //dd($prescriptions);
+                //$comments = $request->comments_avis;
                 foreach ($prescriptions as $prescription) {
                     PrescriptionAmc::create([
                         'dateprpt' => date('Y-m-d'),

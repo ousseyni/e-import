@@ -96,10 +96,10 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-12 input-group-sm traiter_demande" style="display: none">
+                                                <!--div class="col-12 input-group-sm traiter_demande" style="display: none">
                                                     <label for="comments_traitement">Commentaire sur le traitement</label>
                                                     <textarea class="form-control" name="comments_traitement" id="comments_traitement"></textarea>
-                                                </div>
+                                                </div-->
                                             </td>
                                         </tr>
                                     </table>
@@ -116,10 +116,10 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-12 input-group-sm etude">
+                                                <!--div class="col-12 input-group-sm etude">
                                                     <label for="comments_avis">Commentaire sur l'avis</label>
                                                     <textarea class="form-control" name="comments_avis" id="comments_avis"></textarea>
-                                                </div>
+                                                </div-->
                                             </div>
                                             <div class="col-1"></div>
                                             <div class="col-6 input-group-sm row">

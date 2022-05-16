@@ -59,14 +59,14 @@
             .cont3 {
                 position: absolute;
                 top: 332px;
-                left: 240px;
+                left: 225px;
                 font-weight: bold;
             }
 
             .cont4 {
                 position: absolute;
                 top: 349px;
-                left: 245px;
+                left: 225px;
                 font-weight: bold;
             }
 
@@ -79,21 +79,24 @@
 
             .cont6 {
                 position: absolute;
-                top: 382px;
-                left: 225px;
+                top: 373px;
+                left: 250px;
                 font-weight: bold;
             }
 
             .sign1 {
+                /* Chef */
                 position: absolute;
-                bottom: 50px;
-                left: 70px;
+                top: 170px;
+                left: 300px;
+                width: 65px;
             }
 
             .sign2 {
                 position: absolute;
-                bottom: 50px;
-                left: 350px;
+                top: 130px;
+                left: 300px;
+                width: 65px;
             }
 
             .sign3 {
@@ -104,16 +107,18 @@
 
             .agent {
                 position: absolute;
-                top: 305px;
-                left: 600px;
+                top: 280px;
+                right: 50px;
             }
 
             .mentions {
                 position: absolute;
-                top: 295px;
-                left: 440px;
+                top: 285px;
+                left: 460px;
                 font-size: 12px;
                 font-family: Helvetica, Arial, sans-serif;
+                word-wrap: break-word;
+                width: 220px;
             }
 
             .table {
@@ -144,8 +149,8 @@
                     <li>{{ $prescription->getPrescription->libelle  }}</li>
                 @endforeach
             </ul>
-            <br><br>
-            <span style="margin-left: 30px">{{ $prescriptions[0]->comments }}</span>
+            <br>
+            <span>{{ $prescriptions[0]->comments }}</span>
         </div>
 
         <div class="agent">
@@ -218,13 +223,23 @@
                         Date d'embarquement : <br><b>{{ date_format(new DateTime($amm->dateembarque), 'd/m/Y')  }} </b>
                     </td>
                     <td width="150px">
-                        Port d’embarquement : <br><b>{{ $amm->lieuembarque }}</b>
+                        @if($amm->modetransport == 'Maritime')
+                            Port
+                        @else
+                            Lieu
+                        @endif
+                        d’embarquement : <br><b>{{ $amm->lieuembarque }}</b>
                     </td>
                     <td width="150px">
                         Date de débarquement :<br><b>{{ date_format(new DateTime($amm->datedebarque), 'd/m/Y') }}</b>
                     </td>
                     <td width="150px">
-                        Port de débarquement :<br><b>{{ $amm->lieudebarque }} </b>
+                        @if($amm->modetransport == 'Maritime')
+                            Port
+                        @else
+                            Lieu
+                        @endif
+                         de débarquement :<br><b>{{ $amm->lieudebarque }} </b>
                     </td>
                 </tr>
                 <tr>
@@ -268,18 +283,11 @@
             </table>
         </div>
 
-        <div class="sign1">
-            Chef de service <br>
-            <img src="data:image/jpg;base64,{{ $chef }}" style="width: 100px; height: 100px">
-        </div>
-
-        <div class="sign2">
-            Directeur <br>
-            <img src="data:image/jpg;base64,{{ $dir }}" style="width: 100px; height: 100px">
-        </div>
+        <img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
+        <img class="sign2" src="data:image/jpg;base64,{{ $dir }}">
 
         <div class="sign3">
-            Directeur Général <br>
+            Le Directeur Général <br>
             <img src="data:image/jpg;base64,{{ $dg }}" style="width: 100px; height: 100px">
         </div>
 

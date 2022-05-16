@@ -193,7 +193,15 @@ class TraitementAMMController extends Controller
             //Eregistrement des prescriptions ou avis effectuées
             if ($new_etat == 3) {
                 $prescriptions = $request->prescriptions;
-                $comments = $request->comments_avis;
+                if (count($prescriptions) == 1 && $prescriptions[0] == 1) {
+                    $comments = "Rien à signaler";
+                }
+                else {
+                    $comments = "Visite de la DGCC pour inspection Contacts : 061 000 196 / 061 000 202";
+                }
+                //echo $comments;
+                //dd($prescriptions);
+                //$comments = $request->comments_avis;
                 foreach ($prescriptions as $prescription) {
                     PrescriptionAmm::create([
                         'dateprpt' => date('Y-m-d'),
@@ -477,7 +485,7 @@ class TraitementAMMController extends Controller
             ->where('etat', '=', 10)->firstOrFail();
         $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
 
-        $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amm.jpg')));
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amm.png')));
 
         $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
@@ -503,12 +511,13 @@ class TraitementAMMController extends Controller
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
         $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
 
-        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_anx_amm.jpg')));
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_anx_amm.png')));
 
         $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
         $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
+        $filigrane = base64_encode(file_get_contents(public_path('/storage/pdf/filigrane.png')));
 
         if ($amm->modetransport == 'Aérien') {
             $infos_voyage = VolAmm::where('idamm', '=', $amm->id)->get();
@@ -524,7 +533,7 @@ class TraitementAMMController extends Controller
 
         $pdf = PDF::loadView('pages.traitement-amm.annexe',
                     compact('amm', 'image', 'agent', 'chef', 'dir', 'dg',
-                    'prescriptions', 'infos_voyage', 'produits_amm'))
+                    'prescriptions', 'infos_voyage', 'produits_amm', 'filigrane'))
                     ->setPaper('A4', 'portrait');;
 
         $filename = "DOC_ANNEXE_AMM_".$amm->getNumDemande().".pdf";
