@@ -63,7 +63,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-4 input-group-sm">
+                                        <div class="col-3 input-group-sm">
                                             <label for="modetransport">Mode de transport</label>
                                             <select required class="form-control" id="modetransport" name="modetransport">
                                                 @foreach($mode_t as $mode)
@@ -71,7 +71,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-4 input-group-sm">
+                                        <div class="col-5 input-group-sm">
                                             <label for="conditiontransport">Condition de transport et/ou d'entreposage</label>
                                             <select required class="form-control" id="conditiontransport" name="conditiontransport">
                                                 @foreach($conditions_tp as $condition)
@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="form-row mb-2">
                                         <div class="col-6 input-group-sm">
-                                            <label for="natureproduits">Nature des produits</label>
+                                            <label for="natureproduits">Nature des produits à inspecter</label>
                                             <input type="text" required name="natureproduits" id="natureproduits" class="form-control" />
                                         </div>
                                         <div class="col-6 input-group-sm">
@@ -198,7 +198,7 @@
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="durabilite">Durabilité (DLC/DLUO)</label>
-                                                        <input required type="text" name="durabilite" id="durabilite" class="form-control" />
+                                                        <input required type="date" name="durabilite" id="durabilite" class="form-control" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
                                                         <label for="modeemploi">Mode d'emploi</label>
@@ -209,25 +209,25 @@
                                                         <input type="text" name="allegation" id="allegation" class="form-control" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
-                                                        <label for="possede2aire">Avec emballage II aire ?</label><br>
+                                                        <label for="possede2aire">Avec emballage secondaire ?</label><br>
                                                         Oui <input required type="radio" value="1" name="possede2aire" id="possede2aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input required type="radio" value="0" name="possede2aire" id="possede2aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
-                                                        <label for="etat2aire">Emballage II aire intacte ?</label><br>
+                                                        <label for="etat2aire">Emballage secondaire intacte ?</label><br>
                                                         Oui <input required type="radio" value="1" name="etat2aire" id="etat2aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input required type="radio" value="0" name="etat2aire" id="etat2aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
-                                                        <label for="possede1aire">Avec emballage I aire ?</label><br>
+                                                        <label for="possede1aire">Avec emballage primaire ?</label><br>
                                                         Oui <input required type="radio" value="0" name="possede1aire" id="possede1aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input required type="radio" value="1" name="possede1aire" id="possede1aire" />
                                                     </div>
                                                     <div class="col-3 input-group-sm">
-                                                        <label for="etat1aire">Emballage I aire intacte ?</label> <br>
+                                                        <label for="etat1aire">Emballage primaire intacte ?</label> <br>
                                                         Oui <input required type="radio" value="1" name="etat1aire" id="etat1aire" />
                                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         Non <input required type="radio" value="0" name="etat1aire" id="etat1aire" />

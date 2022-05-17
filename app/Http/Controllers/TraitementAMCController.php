@@ -9,6 +9,9 @@ use App\ConteneurAmc;
 use App\Contribuables;
 use App\DeviseEtrangere;
 use App\EtatDemande;
+use App\InspectionAmc;
+use App\LigneInspectionAmc;
+use App\LigneInspectionConteneurAmc;
 use App\ModeTransport;
 use App\OrdreRecetteAmc;
 use App\Pays;
@@ -115,21 +118,33 @@ class TraitementAMCController extends Controller
         $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
 
         $pays_pr = Pays::orderBy('libelle', 'ASC')->get();
-
-        $categorie_produits = CategorieProduit::where('type', '=', 'AMC')->get();
-        $produits = Produits::where('type', '=', 'AMC')->get();
         $pays_or = Pays::orderBy('libelle', 'ASC')->get();
 
+        $produitsAmc = ProduitAmcs::where('idamc', '=', $amc->id)->get();
+        $tab_pamc = array();
+        foreach ($produitsAmc as $produit) {
+            $tab_pamc[] = $produit->idproduit;
+        }
+        $conteneursAmc = null;
+        $categorie_produits = CategorieProduit::where('type', '=', 'AMC')->get();
+        if ($amc->modetransport == 'Maritime') {
+            $conteneursAmc = ConteneurAmc::where('idamc', '=', $amc->id)->get();
+        }
+        if ($amc->modetransport == 'Terrestre') {
+            $conteneursAmc = VehiculeAmc::where('idamc', '=', $amc->id)->get();
+        }
+
         $mode_t = ModeTransport::all();
+
+        $conditions_tp = array('Ambiante', 'Refrigéré', 'Surgelé');
 
         $nif = $amc->getContribuable->nif;
         $contribuable = Contribuables::where('nif', '=', $nif)->firstOrFail();
 
-        $tab_devise = DeviseEtrangere::orderBy('code', 'ASC')->get();
-
         return view('pages.traitement-amc.rapport',
-            compact('pays_pr', 'contribuable', 'produits', 'mode_t',
-                'pays_or', 'categorie_produits', 'tab_devise'));
+            compact('pays_pr', 'contribuable', 'produitsAmc', 'mode_t',
+                'pays_or', 'conteneursAmc', 'amc', 'conditions_tp', 'categorie_produits',
+                'tab_pamc'));
     }
 
 
@@ -298,6 +313,108 @@ class TraitementAMCController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function saverapport(Request $request)
+    {
+        $amc = Amcs::where('slug', '=', $request->slugamc)->firstOrFail();
+
+        $newInspection = InspectionAmc::create([
+            'dateinspection' => date('Y-m-d H:i:s'),
+            'paysprov' => $request->paysprov,
+            'modetransport' => $request->modetransport,
+            'conditiontransport' => $request->conditiontransport,
+            'poinentree' => $request->poinentree,
+            'lieuinspection' => $request->lieuinspection,
+            'natureproduits' => $request->natureproduits,
+            'totalqte' => $request->totalqte,
+            'idamc' => $amc->id,
+            'conclusion' => $request->conclusion,
+            'observation' => $request->observation,
+            'iduser' => Auth::id(),
+            'idcontribuable' => $request->idcontribuable,
+        ]);
+
+        //Sauvegarde des produits associés à la demande
+        $tab_produits = $_POST['produits'];
+        //dd($tab_produits);
+        foreach($tab_produits as $data) {
+            if ($data['idproduitamc'] != '') {
+                $produit = Produits::where('id', '=', $data['idproduitamc'])->firstOrFail();
+                LigneInspectionAmc::create([
+                    'marque' => $data['marque'],
+                    'nom' => $produit->libelle,
+                    'numerolot' => $data['numerolot'],
+                    'paysorig' => $data['paysorig'],
+                    'fournisseur' => $data['fabricant'],
+                    'fabricant' => $data['fabricant'],
+                    'ingredients' => $data['ingredients'],
+                    'qtenet' => $data['qtenet'],
+                    'durabilite' => $data['durabilite'],
+                    'modeemploi' => $data['modeemploi'],
+                    'allegation' => $data['allegation'],
+                    'possede2aire' => $data['possede2aire'],
+                    'etat2aire' => $data['etat2aire'],
+                    'possede1aire' => $data['possede1aire'],
+                    'etat1aire' => $data['etat1aire'],
+                    'autreobservation' => $data['autreobservation'],
+                    'idinspectionamc' => $newInspection->id,
+                    'idamc' => $amc->id,
+                    'idproduitamc' => $data['idproduitamc'],
+                ]);
+            }
+        }
+
+        $nb = 0;
+        if ($amc->modetransport == 'Maritime') {
+            $nb = ConteneurAmc::where('idamc', '=', $amc->id)->count();
+        }
+        if ($amc->modetransport == 'Terrestre') {
+            $nb = VehiculeAmc::where('idamc', '=', $amc->id)->count();
+        }
+
+        for($i=0; $i<$nb; $i++) {
+            LigneInspectionConteneurAmc::create([
+                'conteneurinspecte' => $_POST['conteneurinspecte_'.$i],
+                'numeroplomb' => $_POST['numeroplomb_'.$i],
+                'idinspectionamc' => $newInspection->id,
+            ]);
+        }
+
+        //Sauvegarde des produits associés à la demande
+        $tab_conteneurs = $_POST['conteneurs'];
+        foreach($tab_conteneurs as $data) {
+            if ($data['conteneurinspecte'] != '') {
+                LigneInspectionConteneurAmc::create([
+                    'conteneurinspecte' => $data['conteneurinspecte'],
+                    'numeroplomb' => $data['numeroplomb'],
+                    'idinspectionamc' => $newInspection->id,
+                ]);
+            }
+        }
+
+        SuiviAmcs::create([
+            'idamc' => $amc->id,
+            'etat' => $amc->etat,
+            'iduser' => Auth::id(),
+            'comments' => "Création du rapport d'inspection",
+        ]);
+
+        $link = 'etude';
+        if ($amc->etat >= 5 && $amc->etat <= 9) {
+            $link = 'valide';
+        }
+        elseif ($amc->etat == 10) {
+            $link = 'traite';
+        }
+
+        return redirect('/traitement-amc/'.$link)->with('success', "Traitement de la demande d'AMC enregistré avec succès");
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -374,7 +491,7 @@ class TraitementAMCController extends Controller
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
 
         $nif = $amc->getContribuable->nif;
-        Qrcode::size(100)->generate(url('/verify-doc/AMM/'.$amc->slug), public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg"));
+        Qrcode::size(100)->generate(url('/verify-doc/AMC/'.$amc->slug), public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg"));
         $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg")));
 
         $pdf = PDF::loadView('pages.traitement-amc.amc',

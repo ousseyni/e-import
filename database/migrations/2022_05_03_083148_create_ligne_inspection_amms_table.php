@@ -24,7 +24,7 @@ class CreateLigneInspectionAmmsTable extends Migration
             $table->string('fabricant', 200)->nullable();
             $table->string('ingredients')->nullable();
             $table->integer('qtenet')->nullable();
-            $table->string('durabilite')->nullable();
+            $table->date('durabilite')->nullable();
             $table->string('modeemploi')->nullable();
             $table->string('allegation')->nullable();
 
