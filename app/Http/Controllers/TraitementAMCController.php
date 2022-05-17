@@ -366,7 +366,7 @@ class TraitementAMCController extends Controller
             ->where('etat', '=', 10)->firstOrFail();
         $prescriptions = PrescriptionAmc::where('idamc', '=', $amc->id)->get();
 
-        $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amc.jpg')));
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amc.png')));
 
         $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
@@ -392,7 +392,7 @@ class TraitementAMCController extends Controller
         $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
         $prescriptions = PrescriptionAmc::where('idamc', '=', $amc->id)->get();
 
-        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_anx_amc.jpg')));
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_anx_amc.png')));
 
         $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));

@@ -16,92 +16,92 @@
             margin: 0px;
             font-family: "Courier New", Courier, monospace;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .num_amm {
             position: absolute;
-            letter-spacing: 2px;
+            letter-spacing: 0.5px;
             font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
             color: red;
-            top: 243px;
-            right: 200px;
+            top: 276px;
+            left: 97px;
         }
 
         .qrcode {
             position: absolute;
-            top: 100px;
+            bottom: 100px;
             left: 120px;
         }
 
         .cont1 {
             position: absolute;
-            top: 318px;
+            top: 333px;
             left: 210px;
         }
 
         .cont2 {
             position: absolute;
-            top: 352px;
+            top: 364px;
             left: 180px;
         }
 
         .cont3 {
             position: absolute;
-            top: 352px;
-            right: 170px;
+            top: 364px;
+            right: 200px;
         }
 
         .cont4 {
             position: absolute;
-            top: 386px;
-            left: 185px;
+            top: 395px;
+            left: 210px;
         }
 
         .cont5 {
             position: absolute;
-            top: 386px;
-            right: 200px;
+            top: 395px;
+            right: 250px;
         }
 
-        .mentions {
+        .cont6 {
             position: absolute;
-            top: 775px;
-            left: 50px;
-            font-size: 9px;
+            top: 428px;
+            left: 150px;
         }
 
-        .agent {
+        .cont7 {
             position: absolute;
-            top: 775px;
-            left: 275px;
-            font-size: 9px;
+            top: 428px;
+            right: 300px;
         }
 
         .date_sign {
             position: absolute;
-            top: 694px;
+            top: 676px;
             right: 100px;
             font-size: 16px;
         }
 
         .sign1 {
+            /* Chef */
             position: absolute;
-            bottom: 155px;
-            left: 70px;
-            width: 120px;
+            top: 185px;
+            left: 300px;
+            width: 65px;
         }
 
         .sign2 {
             position: absolute;
-            bottom: 155px;
+            top: 145px;
             left: 300px;
-            width: 120px;
+            width: 65px;
         }
 
         .sign3 {
             position: absolute;
-            bottom: 155px;
+            bottom: 185px;
             left: 520px;
             width: 175px;
         }
@@ -117,24 +117,11 @@
 
 <div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
 <div class="cont2">{{ (is_null($amc->getContribuable->typecontribuableid) ? '' : $amc->getContribuable->getTypeContribuables->libelle) }}</div>
-<div class="cont3">{{ $amc->getContribuable->nif }}</div>
-<div class="cont4">{{ $amc->getContribuable->siegesocial }}</div>
+<div class="cont3">{{ $amc->getContribuable->siegesocial }}</div>
+<div class="cont4">{{ $amc->getContribuable->nif }}</div>
 <div class="cont5">{{ $amc->getContribuable->rccm }}</div>
-
-<div class="mentions">
-    <ul>
-        @foreach($prescriptions as $prescription)
-            <li>{{ $prescription->getPrescription->libelle  }}</li>
-        @endforeach
-    </ul>
-    <br><br>
-    <div style="margin-left: 30px; word-wrap: break-word; width: 150px">{{ $prescriptions[0]->comments }}</div>ù
-</div>
-
-<div class="agent">
-    Vu le : {{ date_format(new DateTime($prescriptions[0]->dateprpt), 'd/m/Y')  }} <br>
-    <img src="data:image/jpg;base64,{{ $agent }}" width="120">
-</div>
+<div class="cont6">{{ $amc->getContribuable->bp }}</div>
+<div class="cont7">{{ $amc->getContribuable->tel }}</div>
 
 <img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
 <img class="sign2" src="data:image/jpg;base64,{{ $dir }}">

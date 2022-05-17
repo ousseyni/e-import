@@ -269,14 +269,17 @@
                         <td width="150px">
                             Pays d’origine :<br> <b>{{ $produit->paysorig }}</b>
                         </td>
-                        <td width="150px">
+                        <td width="70px">
+                            Poids :<br> <b>{{ number_format($produit->poids, 0, '.', ' ') }}Kg</b>
+                        </td>
+                        <td width="100px">
                             Marque :<br> <b>{{ $produit->marque }}</b>
                         </td>
                     </tr>
                 @endforeach
                 <tr>
                     <td colspan="3"></td>
-                    <td>
+                    <td colspan="2">
                         Valeur CAF :<br><b> {{ number_format($amm->valeurcaf_cfa, 0, '.', ' ')  }} F CFA</b>
                     </td>
                 </tr>

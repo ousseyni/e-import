@@ -206,8 +206,12 @@
                                                     <label for="quittance">
                                                         Numéro de la quittance : <b>{{ $odr->quittance }}</b>
                                                     </label>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <label for="datequittance">
+                                                        Date de paiement : <b>{{ date_format(new DateTime($odr->datequittance), 'd/m/Y') }}</b>
+                                                    </label>
 
-                                                    <a style="margin-left: 5%" href="{{ url('/uploads/'.$amc->getContribuable->nif.'/amc_'.$amc->id.'/pj_quittance.pdf')}}" target="_blank">
+                                                    <a style="margin-left: 5%" href="{{ url('/uploads/'.$amc->getContribuable->nif.'/amm_'.$amc->id.'/pj_quittance.pdf')}}" target="_blank">
                                                         Voir la quittance
                                                     </a>
                                                 </div>
