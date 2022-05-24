@@ -12,7 +12,7 @@ class InspectionAmc extends Model
 
     public function getAmc()
     {
-        return $this->belongsTo(Amms::class, 'idamc');
+        return $this->belongsTo(Amcs::class, 'idamc');
     }
 
     public function getUser()

@@ -83,7 +83,7 @@ class Amcs extends Model
     public function haveOrdreRecette()
     {
         $haveOrdreRecette = false;
-        if (OrdreRecetteAmc::where('idamc', '=', $this->id)->exists()) {
+        if (OrdreRecette::where('idamc', '=', $this->id)->exists()) {
             $haveOrdreRecette = true;
         }
         return $haveOrdreRecette;

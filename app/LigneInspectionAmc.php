@@ -9,15 +9,15 @@ class LigneInspectionAmc extends Model
     protected $fillable = ['marque', 'nom', 'numerolot', 'paysorig', 'fournisseur', 'fabricant',
         'ingredients', 'qtenet', 'durabilite', 'modeemploi', 'allegation', 'datefact', 'poids',
         'possede2aire', 'observation2aire', 'etat2aire', 'possede1aire', 'observation1aire', 'etat1aire',
-        'autreobservation', 'idinspectionamc', 'idproduitamc'];
+        'autreobservation', 'idinspectionamc', 'idproduit'];
 
     public function getInspectionAmc()
     {
-        return $this->belongsTo(InspectionAmm::class, 'idinspectionamc');
+        return $this->belongsTo(InspectionAmc::class, 'idinspectionamc');
     }
 
-    public function getProduitAmc()
+    public function getProduit()
     {
-        return $this->belongsTo(ProduitAmcs::class, 'idproduitamc');
+        return $this->belongsTo(Produits::class, 'idproduit');
     }
 }

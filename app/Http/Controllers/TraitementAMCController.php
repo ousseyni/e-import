@@ -13,7 +13,7 @@ use App\InspectionAmc;
 use App\LigneInspectionAmc;
 use App\LigneInspectionConteneurAmc;
 use App\ModeTransport;
-use App\OrdreRecetteAmc;
+use App\OrdreRecette;
 use App\Pays;
 use App\PrescriptionAmc;
 use App\Prescriptions;
@@ -174,7 +174,7 @@ class TraitementAMCController extends Controller
 
         $odr = "";
         if ($amc->etat >= 6 && $amc->etat != 998 && $amc->etat != 999) {
-            $odr = OrdreRecetteAmc::where('idamc', '=', $amc->id)->firstOrFail();
+            $odr = OrdreRecette::where('idamc', '=', $amc->id)->firstOrFail();
         }
 
         return view('pages.traitement-amc.traitement',
@@ -254,7 +254,7 @@ class TraitementAMCController extends Controller
             //Génération d'un ODR
             if ($new_etat == 6) {
 
-                OrdreRecetteAmc::create([
+                OrdreRecette::create([
                     'exercice' => date('Y'),
                     'date_emission' => date('Y-m-d'),
                     'quittance' => "",
@@ -462,11 +462,11 @@ class TraitementAMCController extends Controller
     public function dwlord($slug) {
 
         $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
-        $odr = OrdreRecetteAmc::where('idamc', '=', $amc->id)->firstOrFail();
+        $odr = OrdreRecette::where('idamc', '=', $amc->id)->firstOrFail();
 
         $image = base64_encode(file_get_contents(public_path('/storage/img/gabon.jpg')));
         $filigrane = base64_encode(file_get_contents(public_path('/storage/img/filigrane.png')));
-        $sign_odr = base64_encode(file_get_contents(public_path('/storage/img/sign_odr.png')));
+        $sign_odr = base64_encode(file_get_contents(public_path('/storage/pdf/sign_odr.png')));
 
         $pdf = PDF::loadView('pages.traitement-amc.odr',
             compact('amc', 'image', 'filigrane', 'odr', 'sign_odr'));

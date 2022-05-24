@@ -83,7 +83,7 @@ class Amms extends Model
     public function haveOrdreRecette()
     {
         $haveOrdreRecette = false;
-        if (OrdreRecetteAmm::where('idamm', '=', $this->id)->exists()) {
+        if (OrdreRecette::where('idamm', '=', $this->id)->exists()) {
             $haveOrdreRecette = true;
         }
         return $haveOrdreRecette;

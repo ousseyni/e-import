@@ -39,10 +39,10 @@ class CreateLigneInspectionAmcsTable extends Migration
             $table->string('autreobservation')->nullable();
 
             $table->integer('idinspectionamc')->unsigned()->nullable();
-            $table->integer('idproduitamc')->unsigned()->nullable();
+            $table->integer('idproduit')->unsigned()->nullable();
 
             $table->foreign('idinspectionamc')->references('id')->on('inspection_amcs')->nullOnDelete();
-            $table->foreign('idproduitamc')->references('id')->on('produit_amcs')->nullOnDelete();
+            $table->foreign('idproduit')->references('id')->on('produits')->nullOnDelete();
 
             $table->timestamps();
         });

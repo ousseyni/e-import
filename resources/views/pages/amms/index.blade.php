@@ -17,11 +17,11 @@
                         </div><br />
                     @endif
 
-                        @if(session()->get('error'))
-                            <div class="alert alert-danger">
-                                {{ session()->get('error') }}
-                            </div><br />
-                        @endif
+                    @if(session()->get('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div><br />
+                    @endif
 
                     <div class="table-responsive mb-4 mt-4">
                         <a href="{{ route('amm.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouvelle demande</a>

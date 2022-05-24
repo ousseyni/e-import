@@ -430,7 +430,12 @@
                             <div class="row">
                                 @if($amm->haveRapport())
                                     <div class="col-7">
-                                        Consulter le rapport d'inspection
+                                        <span>Rapport d'inspection disponible</span><br><br>
+                                        <div class="row">
+                                            <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlrpt', $amm->slug) }}">
+                                                Voir le rapport d'inspection
+                                            </a>
+                                        </div>
                                     </div>
                                 @else
                                     <div class="col-8">

@@ -10,9 +10,9 @@
 
         <style>
             /**
-                Set the margins of the page to 0, so the footer and the header
-                can be of the full height and width !
-             **/
+               Set the margins of the page to 0, so the footer and the header
+               can be of the full height and width !
+            **/
             @page {
                 margin: 100px 25px;
             }
@@ -45,6 +45,7 @@
 
             .header1 {
                 text-align: center;
+                margin-top: 30px;
                 width: 300px;
                 font-size: 10px;
                 float: left;
@@ -118,10 +119,10 @@
         </div>
         <div class="header3"></div>
         <div class="header2">
-            <div style="border-top: solid 2px gray; border-bottom: solid 10px gray; width: 80px; padding: 10px 0px; float: right">
+            <div style="border-top: solid 2px gray; border-bottom: solid 5px gray; width: 80px; padding: 5px 0px; float: right">
                 N° {{ $odr->getNumOdr() }}
             </div>
-            <br><br><br><br><br>
+            <br><br><br>
             <img src="data:image/jpg;base64,{{ $image }}" width="120" style="float: right" />
         </div>
     </header>

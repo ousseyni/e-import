@@ -23,6 +23,7 @@ class CreateInspectionAmmsTable extends Migration
             $table->enum('conditiontransport', ['Ambiante', 'Refrigéré', 'Surgelé']);
             $table->string('poinentree', 150)->nullable();
             $table->string('lieuinspection', 150)->nullable();
+            $table->string('comment_transport')->nullable();
 
             $table->string('natureproduits', 100)->nullable();
             $table->integer('totalqte')->nullable();

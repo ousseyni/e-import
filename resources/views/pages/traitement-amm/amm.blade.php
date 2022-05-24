@@ -23,10 +23,9 @@
                 position: absolute;
                 letter-spacing: 0.5px;
                 font-family: "Courier New", Courier, monospace;
-                font-size: 13px;
                 color: red;
-                top: 276px;
-                left: 97px;
+                top: 230px;
+                right: 160px;
             }
 
             .qrcode {
@@ -87,14 +86,14 @@
             .sign1 {
                 /* Chef */
                 position: absolute;
-                top: 185px;
+                top: 175px;
                 left: 300px;
                 width: 65px;
             }
 
             .sign2 {
                 position: absolute;
-                top: 145px;
+                top: 135px;
                 left: 300px;
                 width: 65px;
             }

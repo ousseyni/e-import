@@ -4,13 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrdreRecetteAmc extends Model
+class OrdreRecette extends Model
 {
-    protected $fillable = ['exercice', 'date_emission', 'est_paye', 'date_paye', 'idamc', 'quittance'];
+    protected $fillable = ['exercice', 'date_emission', 'est_paye', 'date_paye', 'type',
+        'idamc', 'idamm', 'quittance'];
 
     public function getAmc()
     {
         return $this->belongsTo(Amcs::class, 'idamc');
+    }
+
+    public function getAmm()
+    {
+        return $this->belongsTo(Amms::class, 'idamm');
     }
 
     public function getNumOdr(): string

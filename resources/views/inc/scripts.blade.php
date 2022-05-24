@@ -106,6 +106,13 @@
             getModeTransport();
         });
 
+        $("#btn_conclusion1").click(function() {
+            $(".comment_conclusion").hide();
+        });
+        $("#btn_conclusion2").click(function() {
+            $(".comment_conclusion").show();
+        });
+
         $("#affecter_demande").click(function() {
             $(".affecter_demande").show();
             $(".traiter_demande").hide();

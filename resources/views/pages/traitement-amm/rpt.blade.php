@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ANNEXE DE L'AMM N° {{ $amm->getNumDemande() }} </title>
+        <title>RAPPORT D'INSPECTION DE L'AMM N° {{ $amm->getNumDemande() }} </title>
 
         <style>
 
@@ -151,21 +151,6 @@
         <div class="cont5">{{ $amm->getContribuable->nif }}</div>
         <div class="cont6">{{ $amm->getContribuable->rccm }}</div>
 
-        <div class="mentions">
-            <ul>
-                @foreach($prescriptions as $prescription)
-                    <li>{{ $prescription->getPrescription->libelle  }}</li>
-                @endforeach
-            </ul>
-            <br>
-            <span>{{ $prescriptions[0]->comments }}</span>
-        </div>
-
-        <div class="agent">
-            Vu le : {{ date_format(new DateTime($prescriptions[0]->dateprpt), 'd/m/Y')  }} <br>
-            <img src="data:image/jpg;base64,{{ $agent }}" width="120">
-        </div>
-
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="5" width="100%">
                 <tr>
@@ -173,87 +158,32 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        Pays de provenance : <b>{{ $amm->paysprov }}</b>
+                        Pays de provenance : <b>{{ $inspection->paysprov }}</b>
                     </td>
                     <td colspan="2">
-                        Mode de transport : <b>{{ $amm->modetransport }}</b>
-                    </td>
-                </tr>
-                @if($amm->modetransport == 'Aérien')
-                    @foreach($infos_voyage as $infos)
-                    <tr>
-                        <td colspan="2">
-                            N° LTA : <b>{{ $infos->numlta }}</b>
-                        </td>
-                        <td>
-                            Compagnie aérienne : <b>{{ $infos->cieaerien }}</b>
-                        </td>
-                        <td>
-                            N° Vol : <b>{{ $infos->numvol }}</b>
-                        </td>
-                    </tr>
-                    @endforeach
-                @elseif($amm->modetransport == 'Terrestre')
-                    @foreach($infos_voyage as $infos)
-                        <tr>
-                            <td colspan="2">
-                                N° LVI : <b>{{ $infos->numlvi }}</b>
-                            </td>
-                            <td>
-                                N° Véhicule : <b>{{ $infos->numvehicule }}</b>
-                            </td>
-                            <td>
-                                N° Conteneur : <b>{{ $infos->numconteneurt }}</b>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    @foreach($infos_voyage as $infos)
-                        <tr>
-                            <td>
-                                Nom du navire : <b>{{ $infos->nomnavire }}</b> <br>
-                                    N° voyage : <b>{{ $infos->numvoyage }}</b>
-                            </td>
-                            <td>
-                                N° BIETC : <b>{{ $infos->numbietc }}</b>
-                            </td>
-                            <td>
-                                N° Connaissement : <b>{{ $infos->numconnaissement }}</b>
-                            </td>
-                            <td>
-                                N° Conteneur {{ 1 + $loop->index  }} : <b>{{ $infos->numconteneur }}</b>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-                <tr>
-                    <td width="150px">
-                        Date d'embarquement : <br><b>{{ date_format(new DateTime($amm->dateembarque), 'd/m/Y')  }} </b>
-                    </td>
-                    <td width="150px">
-                        @if($amm->modetransport == 'Maritime')
-                            Port
-                        @else
-                            Lieu
-                        @endif
-                        d’embarquement : <br><b>{{ $amm->lieuembarque }}</b>
-                    </td>
-                    <td width="150px">
-                        Date de débarquement :<br><b>{{ date_format(new DateTime($amm->datedebarque), 'd/m/Y') }}</b>
-                    </td>
-                    <td width="150px">
-                        @if($amm->modetransport == 'Maritime')
-                            Port
-                        @else
-                            Lieu
-                        @endif
-                         de débarquement :<br><b>{{ $amm->lieudebarque }} </b>
+                        Mode de transport : <b>{{ $inspection->modetransport }}</b>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3"></td>
                     <td>
-                        Poids net : <br><b> {{ number_format($amm->totalpoids, 0, '.', ' ') }} Kg</b>
+                        Conditions de transport : <b>{{ $inspection->conditiontransport }}</b>
+                    </td>
+                    <td>
+                        Point d'entrée : <b>{{ $inspection->poinentree }}</b>
+                    </td>
+                    <td colspan="2">
+                        Lieu de l'inspection : <b>{{ $inspection->lieuinspection }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Nature des produits inspectés  : <b>{{ $inspection->natureproduits }}</b>
+                    </td>
+                    <td colspan="2">
+                        Commentaires : <b>{{ $inspection->comment_transport }}</b>
+                    </td>
+                    <td>
+                        Quantité totale : <br><b> {{ number_format($inspection->totalqte, 0, '.', ' ') }} Kg</b>
                     </td>
                 </tr>
             </table>
@@ -268,43 +198,82 @@
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="5" width="100%">
                 <tr>
-                    <th colspan="4"> Informations de produits</th>
+                    <th colspan="2"> Informations sur les conteneurs inspectés</th>
                 </tr>
-                @foreach($produits_amm as $produit)
+                @foreach($lignes_inspections_conteneurs as $conteneur)
                     <tr>
-                        <td width="150px">
-                            Produit {{ 1 + $loop->index  }} :<br> <b>{{ $produit->getProduit->libelle }}</b>
+                        <td>
+                            Conteneur N° {{ 1 + $loop->index  }} :<br> <b>{{ $conteneur->conteneurinspecte }}</b>
                         </td>
-                        <td width="150px">
-                            Fournisseur :<br> <b>{{ $produit->fournisseur }}</b>
-                        </td>
-                        <td width="150px">
-                            Pays d’origine :<br> <b>{{ $produit->paysorig }}</b>
-                        </td>
-                        <td width="70px">
-                            Poids :<br> <b>{{ number_format($produit->poids, 0, '.', ' ') }}Kg</b>
-                        </td>
-                        <td width="100px">
-                            Marque :<br> <b>{{ $produit->marque }}</b>
+                        <td>
+                            Numéro de plomb :<br> <b>{{ $conteneur->numeroplomb }}</b>
                         </td>
                     </tr>
                 @endforeach
+            </table>
+        </div>
+        <br><br>
+        <div class="table">
+            <table border="1" cellspacing="0" cellpadding="5" width="100%">
                 <tr>
-                    <td colspan="3"></td>
-                    <td colspan="2">
-                        Valeur CAF :<br><b> {{ number_format($amm->valeurcaf_cfa, 0, '.', ' ')  }} F CFA</b>
-                    </td>
+                    <th colspan="4"> Informations sur les produits inspectés</th>
                 </tr>
+                @foreach($lignes_inspections_produits as $produit)
+                    <tr>
+                        <td>
+                            Produit {{ 1 + $loop->index  }} :<br> <b>{{ $produit->nom }}</b>
+                        </td>
+                        <td>
+                            Marque :<br> <b>{{ $produit->marque }}</b>
+                        </td>
+                        <td>
+                            N° Lot :<br> <b>{{ $produit->numerolot }}</b>
+                        </td>
+                        <td>
+                            Pays d’origine :<br> <b>{{ $produit->paysorig }}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Fournisseur :<br> <b>{{ $produit->fournisseur }}</b>
+                        </td>
+                        <td>
+                            Ingrédient :<br> <b>{{ $produit->ingredients }}</b>
+                        </td>
+                        <td>
+                            Poids/Volume :<br> <b>{{ number_format($produit->qtenet, 0, '.', ' ') }}Kg</b>
+                        </td>
+                        <td>
+                            DLUO :<br> <b>{{ date_format(new DateTime($produit->durabilite), 'd/m/Y') }}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mode emploi :<br> <b>{{ $produit->modeemploi }}</b>
+                        </td>
+                        <td>
+                            Allégation :<br> <b>{{ $produit->allegation }}</b>
+                        </td>
+                        <td>
+                            Avec emballage secondaire ? <br> <b>{{ $produit->fournisseur }}</b>
+                        </td>
+                        <td>
+                            Emballage secondaire intacte ? <br> <b>{{ $produit->fournisseur }}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="150px">
+                            Avec emballage primaire ? <br> <b>{{ $produit->fournisseur }}</b>
+                        </td>
+                        <td width="150px">
+                            Emballage secondaire primaire ? <br> <b>{{ $produit->fournisseur }}</b>
+                        </td>
+                        <td colspan="2"></td>
+                    </tr>
+                @endforeach
             </table>
         </div>
 
-        <img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
-        <img class="sign2" src="data:image/jpg;base64,{{ $dir }}">
-
-        <div class="sign3">
-            Le Directeur Général <br>
-            <img src="data:image/jpg;base64,{{ $dg }}" style="width: 100px; height: 100px">
-        </div>
 
         <footer>
             Direction Générale de la Concurrence et de la Consommation <br>

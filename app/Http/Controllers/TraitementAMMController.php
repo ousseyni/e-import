@@ -14,6 +14,7 @@ use App\InspectionAmm;
 use App\LigneInspectionAmm;
 use App\LigneInspectionConteneurAmm;
 use App\ModeTransport;
+use App\OrdreRecette;
 use App\OrdreRecetteAmm;
 use App\Pays;
 use App\PrescriptionAmm;
@@ -136,7 +137,7 @@ class TraitementAMMController extends Controller
 
         $odr = "";
         if ($amm->etat >= 6 && $amm->etat != 998 && $amm->etat != 999) {
-            $odr = OrdreRecetteAmm::where('idamm', '=', $amm->id)->firstOrFail();
+            $odr = OrdreRecette::where('idamm', '=', $amm->id)->firstOrFail();
         }
 
         return view('pages.traitement-amm.traitement',
@@ -215,11 +216,11 @@ class TraitementAMMController extends Controller
 
             //Génération d'un ODR
             if ($new_etat == 6) {
-
-                OrdreRecetteAmm::create([
+                OrdreRecette::create([
                     'exercice' => date('Y'),
                     'date_emission' => date('Y-m-d'),
                     'quittance' => "",
+                    'type' => "AMM",
                     'est_paye' => false,
                     'idamm' => $amm->id
                 ]);
@@ -291,6 +292,7 @@ class TraitementAMMController extends Controller
             'conditiontransport' => $request->conditiontransport,
             'poinentree' => $request->poinentree,
             'lieuinspection' => $request->lieuinspection,
+            'comment_transport' => $request->comment_transport,
             'natureproduits' => $request->natureproduits,
             'totalqte' => $request->totalqte,
             'idamm' => $amm->id,
@@ -464,11 +466,11 @@ class TraitementAMMController extends Controller
     public function dwlord($slug) {
 
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
-        $odr = OrdreRecetteAmm::where('idamm', '=', $amm->id)->firstOrFail();
+        $odr = OrdreRecette::where('idamm', '=', $amm->id)->firstOrFail();
 
         $image = base64_encode(file_get_contents(public_path('/storage/img/gabon.jpg')));
         $filigrane = base64_encode(file_get_contents(public_path('/storage/img/filigrane.png')));
-        $sign_odr = base64_encode(file_get_contents(public_path('/storage/img/sign_odr.png')));
+        $sign_odr = base64_encode(file_get_contents(public_path('/storage/pdf/sign_odr.png')));
 
         $pdf = PDF::loadView('pages.traitement-amm.odr',
             compact('amm', 'image', 'filigrane', 'odr', 'sign_odr'));
@@ -491,6 +493,7 @@ class TraitementAMMController extends Controller
         $chef = base64_encode(file_get_contents(public_path('/storage/pdf/chef.png')));
         $dir = base64_encode(file_get_contents(public_path('/storage/pdf/dir.png')));
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
+        $filigrane = base64_encode(file_get_contents(public_path('/storage/img/filigrane.png')));
 
         $nif = $amm->getContribuable->nif;
         Qrcode::size(100)->generate(url('/verify-doc/AMM/'.$amm->slug), public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
@@ -498,7 +501,7 @@ class TraitementAMMController extends Controller
 
         $pdf = PDF::loadView('pages.traitement-amm.amm',
             compact('amm', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi',
-                'prescriptions', 'agent'))
+                'prescriptions', 'agent', 'filigrane'))
             ->setPaper('A4', 'portrait');
 
         $filename = "DOC_AMM_".$amm->getNumDemande().".pdf";
@@ -532,9 +535,35 @@ class TraitementAMMController extends Controller
         $produits_amm = ProduitAmms::where('idamm', '=', $amm->id)->get();
 
         $pdf = PDF::loadView('pages.traitement-amm.annexe',
-                    compact('amm', 'image', 'agent', 'chef', 'dir', 'dg',
-                    'prescriptions', 'infos_voyage', 'produits_amm', 'filigrane'))
-                    ->setPaper('A4', 'portrait');;
+            compact('amm', 'image', 'agent', 'chef', 'dir', 'dg',
+                'prescriptions', 'infos_voyage', 'produits_amm', 'filigrane'))
+            ->setPaper('A4', 'portrait');;
+
+        $filename = "DOC_ANNEXE_AMM_".$amm->getNumDemande().".pdf";
+        //return $pdf->download($filename);
+        return $pdf->stream($filename, array("Attachment" => false));
+    }
+
+    public function dwlrpt($slug) {
+
+        $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+
+        $inspection = InspectionAmm::where('idamm', '=', $amm->id)->firstOrFail();
+        $lignes_inspections_produits = LigneInspectionAmm::where('idinspectionamm', '=', $inspection->id)->get();
+        $lignes_inspections_conteneurs = LigneInspectionConteneurAmm::where('idinspectionamm', '=', $inspection->id)->get();
+
+        $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
+
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_rpt_amm.png')));
+
+        $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
+        $filigrane = base64_encode(file_get_contents(public_path('/storage/pdf/filigrane.png')));
+
+        $pdf = PDF::loadView('pages.traitement-amm.rpt',
+                    compact('amm', 'image', 'agent', 'inspection',
+                        'lignes_inspections_produits', 'lignes_inspections_conteneurs',
+                        'prescriptions', 'filigrane'))
+            ->setPaper('A4', 'portrait');;
 
         $filename = "DOC_ANNEXE_AMM_".$amm->getNumDemande().".pdf";
         //return $pdf->download($filename);

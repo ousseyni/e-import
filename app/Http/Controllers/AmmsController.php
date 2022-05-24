@@ -10,7 +10,7 @@ use App\DemandeComptes;
 use App\DeviseEtrangere;
 use App\DocumentAmms;
 use App\ModeTransport;
-use App\OrdreRecetteAmm;
+use App\OrdreRecette;
 use App\Pays;
 use App\ProduitAmms;
 use App\Produits;
@@ -341,7 +341,7 @@ class AmmsController extends Controller
     public function paiementodr($slug)
     {
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
-        $odr = OrdreRecetteAmm::where('idamm', '=', $amm->id)->firstOrFail();
+        $odr = OrdreRecette::where('idamm', '=', $amm->id)->firstOrFail();
         return view('pages.amms.paiementodr', compact('amm', 'odr'));
     }
 
@@ -360,7 +360,7 @@ class AmmsController extends Controller
         ]);
         $numero_quittance = $request->numero_quittance;
 
-        if (OrdreRecetteAmm::where('quittance', '=', $numero_quittance)->exists()) {
+        if (OrdreRecette::where('quittance', '=', $numero_quittance)->exists()) {
             return redirect('/amm')->with('error', "Numéro de quittance non valide ou déjà utilisé ");
         }
         else {
@@ -373,7 +373,7 @@ class AmmsController extends Controller
             $amm->save();
 
             //Mettre à jour le paiement
-            $odr = OrdreRecetteAmm::where('idamm', '=', $idamm)->firstOrFail();
+            $odr = OrdreRecette::where('idamm', '=', $idamm)->firstOrFail();
             $odr->quittance = $request->numero_quittance;
             $odr->date_paye = $request->date_paye;
             $odr->est_paye = true;

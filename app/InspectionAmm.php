@@ -24,5 +24,4 @@ class InspectionAmm extends Model
     {
         return $this->belongsTo(Contribuables::class, 'idcontribuable');
     }
-
 }
