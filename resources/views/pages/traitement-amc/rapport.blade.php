@@ -143,6 +143,12 @@
                                         </div>
                                         <hr>
                                     @endif
+                                    <div class="form-row mb-2">
+                                        <div class="col-12 input-group-sm">
+                                            <label for="comment_transport">Commentaires sur les informations de voyage</label>
+                                            <textarea name="comment_transport" class="form-control" id="comment_transport"></textarea>
+                                        </div>
+                                    </div>
                                 </section>
                                 <h3>Eléments à inspecter</h3>
                                 <section>
@@ -250,20 +256,18 @@
                                                 </button>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </section>
                                 <h3>Conclusion finale</h3>
                                 <section>
                                     <div class="form-row mb-2">
                                         <div class="col-5 input-group-sm">
                                             <label for="conclusion">Le(s) produit(s) inspecté(s) est(sont) conforme(s) ?</label> <br>
-                                            Oui <input checked type="radio" value="1" name="conclusion" id="conclusion" />
+                                            Oui <input checked type="radio" value="1" name="conclusion" id="btn_conclusion1" />
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            Non <input type="radio" value="0" name="conclusion" id="conclusion" />
+                                            Non <input type="radio" value="0" name="conclusion" id="btn_conclusion2" />
                                         </div>
-                                        <div class="col-7 input-group-sm">
+                                        <div class="col-7 input-group-sm comment_conclusion" style="display: none">
                                             <label for="observation">Observation générale</label>
                                             <textarea class="form-control" required name="observation" id="observation"></textarea>
                                         </div>

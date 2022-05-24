@@ -87,7 +87,9 @@
 <script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
 <script src="{{asset('assets/js/dashboard/dash_2.js')}}"></script>
 
-
+{{-- Dashboard 2 --}}
+<script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
+<script src="{{asset('assets/js/dashboard/dash_1.js')}}"></script>
 
 <script src="{{asset('assets/js/forms/jquery.repeater.min.js')}}"></script>
 <script src="{{asset('assets/js/forms/form-repeater.js')}}"></script>
@@ -143,22 +145,12 @@
 
 <script src="{{asset('plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 
+
 @endif
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 @switch($page_name)
-    @case('analytics')
-      {{-- Dashboard --}}
-      <script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
-      <script src="{{asset('assets/js/dashboard/dash_2.js')}}"></script>
-      @break
-
-    @case('sales')
-      {{-- Dashboard 2 --}}
-      <script src="{{asset('plugins/apex/apexcharts.min.js')}}"></script>
-      <script src="{{asset('assets/js/dashboard/dash_1.js')}}"></script>
-      @break
 
     @case('calendar')
       {{-- App Calendar --}}

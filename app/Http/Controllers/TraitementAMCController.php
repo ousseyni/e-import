@@ -329,6 +329,7 @@ class TraitementAMCController extends Controller
             'conditiontransport' => $request->conditiontransport,
             'poinentree' => $request->poinentree,
             'lieuinspection' => $request->lieuinspection,
+            'comment_transport' => $request->comment_transport,
             'natureproduits' => $request->natureproduits,
             'totalqte' => $request->totalqte,
             'idamc' => $amc->id,
@@ -531,6 +532,32 @@ class TraitementAMCController extends Controller
         $pdf = PDF::loadView('pages.traitement-amc.annexe',
             compact('amc', 'image', 'agent', 'chef', 'dir', 'dg',
                 'prescriptions', 'infos_voyage', 'produits_amc'))
+            ->setPaper('A4', 'portrait');;
+
+        $filename = "DOC_ANNEXE_AMC_".$amc->getNumDemande().".pdf";
+        //return $pdf->download($filename);
+        return $pdf->stream($filename, array("Attachment" => false));
+    }
+
+    public function dwlrpt($slug) {
+
+        $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
+
+        $inspection = InspectionAmc::where('idamc', '=', $amc->id)->firstOrFail();
+        $lignes_inspections_produits = LigneInspectionAmc::where('idinspectionamc', '=', $inspection->id)->get();
+        $lignes_inspections_conteneurs = LigneInspectionConteneurAmc::where('idinspectionamc', '=', $inspection->id)->get();
+
+        $prescriptions = PrescriptionAmc::where('idamc', '=', $amc->id)->get();
+
+        $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_rpt_amc.png')));
+
+        $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
+        $filigrane = base64_encode(file_get_contents(public_path('/storage/pdf/filigrane.png')));
+
+        $pdf = PDF::loadView('pages.traitement-amc.rpt',
+            compact('amc', 'image', 'agent', 'inspection',
+                'lignes_inspections_produits', 'lignes_inspections_conteneurs',
+                'prescriptions', 'filigrane'))
             ->setPaper('A4', 'portrait');;
 
         $filename = "DOC_ANNEXE_AMC_".$amc->getNumDemande().".pdf";

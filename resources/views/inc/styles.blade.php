@@ -147,6 +147,8 @@
 <link href="{{asset('plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('assets/css/dashboard/dash_2.css')}}" rel="stylesheet" type="text/css" />
 
+<link href="{{asset('plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('assets/css/dashboard/dash_1.css')}}" rel="stylesheet" type="text/css" />
 
 {{-- Forms Wizards --}}
 <link rel="stylesheet" type="text/css" href="{{asset('plugins/jquery-step/jquery.steps.css')}}">
@@ -162,18 +164,12 @@
 
 <link href="{{asset('assets/css/elements/miscellaneous.css')}}" rel="stylesheet" type="text/css" />
 
+
 @endif
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 @switch($page_name)
-
-
-    @case('sales')
-      {{-- Dashboard 2 --}}
-<link href="{{asset('plugins/apex/apexcharts.css')}}" rel="stylesheet" type="text/css">
-<link href="{{asset('assets/css/dashboard/dash_1.css')}}" rel="stylesheet" type="text/css" />
-      @break
 
     @case('calendar')
       {{-- App Calendar --}}

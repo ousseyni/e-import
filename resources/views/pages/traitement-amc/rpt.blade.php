@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>RAPPORT D'INSPECTION DE L'AMM N° {{ $amm->getNumDemande() }} </title>
+        <title>RAPPORT D'INSPECTION DE L'AMC N° {{ $amc->getNumDemande() }} </title>
 
         <style>
 
@@ -34,7 +34,7 @@
                 letter-spacing: 2px;
                 font-family: "Courier New", Courier, monospace;
                 color: red;
-                top: 217px;
+                top: 235px;
                 right: 165px;
                 font-weight: bold;
                 font-size: 14px;
@@ -142,14 +142,14 @@
 
         <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width:100%;">
 
-        <div class="num_amm">{{$amm->getNumDemande()}}</div>
+        <div class="num_amm">{{$amc->getNumDemande()}}</div>
 
-        <div class="cont1">{{ $amm->getContribuable->raisonsociale }}</div>
-        <div class="cont2">{{ $amm->getContribuable->siegesocial }}</div>
-        <div class="cont3">{{ $amm->getContribuable->tel }}</div>
-        <div class="cont4">{{ $amm->getContribuable->email }}</div>
-        <div class="cont5">{{ $amm->getContribuable->nif }}</div>
-        <div class="cont6">{{ $amm->getContribuable->rccm }}</div>
+        <div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
+        <div class="cont2">{{ $amc->getContribuable->siegesocial }}</div>
+        <div class="cont3">{{ $amc->getContribuable->tel }}</div>
+        <div class="cont4">{{ $amc->getContribuable->email }}</div>
+        <div class="cont5">{{ $amc->getContribuable->nif }}</div>
+        <div class="cont6">{{ $amc->getContribuable->rccm }}</div>
 
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="5" width="100%">
@@ -244,7 +244,7 @@
                             Poids/Volume :<br> <b>{{ number_format($produit->qtenet, 0, '.', ' ') }}Kg</b>
                         </td>
                         <td>
-                            DLUO :<br> <b>{{ date_format(new DateTime($produit->durabilite), 'd/m/Y') }}</b>
+                            DLC/DLUO :<br> <b>{{ date_format(new DateTime($produit->durabilite), 'd/m/Y') }}</b>
                         </td>
                     </tr>
                     <tr>
