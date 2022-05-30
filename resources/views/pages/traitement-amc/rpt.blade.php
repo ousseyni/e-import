@@ -31,11 +31,11 @@
 
             .num_amm {
                 position: absolute;
-                letter-spacing: 2px;
+                letter-spacing: 0px;
                 font-family: "Courier New", Courier, monospace;
                 color: red;
-                top: 235px;
-                right: 165px;
+                top: 239px;
+                right: 215px;
                 font-weight: bold;
                 font-size: 14px;
             }
@@ -72,15 +72,22 @@
 
             .cont5 {
                 position: absolute;
-                top: 382px;
-                left: 70px;
+                top: 366px;
+                left: 270px;
                 font-weight: bold;
             }
 
             .cont6 {
                 position: absolute;
-                top: 373px;
-                left: 250px;
+                top: 382px;
+                left: 270px;
+                font-weight: bold;
+            }
+
+            .cont7 {
+                position: absolute;
+                top: 382px;
+                left: 70px;
                 font-weight: bold;
             }
 
@@ -111,16 +118,6 @@
                 right: 50px;
             }
 
-            .mentions {
-                position: absolute;
-                top: 285px;
-                left: 460px;
-                font-size: 12px;
-                font-family: Helvetica, Arial, sans-serif;
-                word-wrap: break-word;
-                width: 220px;
-            }
-
             .table {
                 width: 692px;
                 margin-left: 57px;
@@ -136,6 +133,12 @@
                 height:   8cm;
                 z-index:  -1000;
             }
+
+            .qrcode {
+                position: absolute;
+                top: 280px;
+                right: 250px;
+            }
         </style>
     </head>
     <body>
@@ -150,6 +153,14 @@
         <div class="cont4">{{ $amc->getContribuable->email }}</div>
         <div class="cont5">{{ $amc->getContribuable->nif }}</div>
         <div class="cont6">{{ $amc->getContribuable->rccm }}</div>
+        <div class="cont7">{{ $amc->getContribuable->bp }}</div>
+
+        <div class="agent">
+            Effectué le : {{ date_format(new DateTime($inspection->dateinspection), 'd/m/Y')  }}
+            <br>
+            par {{ $user->name  }} <br><br>
+            <img src="data:image/jpg;base64,{{ $agent }}" width="120">
+        </div>
 
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="5" width="100%">
@@ -194,6 +205,7 @@
         <div id="watermark">
             <img src="data:image/jpg;base64,{{ $filigrane }}" height="400" width="400" />
         </div>
+        <img class="qrcode" src="data:image/jpg;base64,{{ $qrcode }}">
 
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="5" width="100%">
@@ -273,7 +285,31 @@
                 @endforeach
             </table>
         </div>
-
+        <br>
+        <div class="table">
+            <table border="1" cellspacing="0" cellpadding="5" width="100%">
+                <tr>
+                    <th> Conclusion finale </th>
+                </tr>
+                <tr>
+                    <td>
+                        @if($inspection->conclusion == 1)
+                            <strong style="color: green">Le(s) produit(s) inspecté(s) est(sont) conforme(s)</strong>
+                        @else
+                            <strong style="color: red">Le(s) produit(s) inspecté(s) n'est(ne sont) pas conforme(s)</strong>
+                        @endif
+                    </td>
+                </tr>
+                @if($inspection->conclusion == 0)
+                    <tr>
+                        <td>
+                            Observations : <br>
+                            {{ $inspection->observation }}
+                        </td>
+                    </tr>
+                @endif
+            </table>
+        </div>
 
         <footer>
             Direction Générale de la Concurrence et de la Consommation <br>

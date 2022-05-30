@@ -31,11 +31,11 @@
 
         .num_amm {
             position: absolute;
-            letter-spacing: 2px;
+            letter-spacing: 0px;
             font-family: "Courier New", Courier, monospace;
             color: red;
-            top: 235px;
-            right: 165px;
+            top: 239px;
+            right: 215px;
             font-weight: bold;
             font-size: 14px;
         }
@@ -72,15 +72,22 @@
 
         .cont5 {
             position: absolute;
-            top: 382px;
-            left: 70px;
+            top: 366px;
+            left: 270px;
             font-weight: bold;
         }
 
         .cont6 {
             position: absolute;
-            top: 373px;
-            left: 250px;
+            top: 382px;
+            left: 270px;
+            font-weight: bold;
+        }
+
+        .cont7 {
+            position: absolute;
+            top: 382px;
+            left: 70px;
             font-weight: bold;
         }
 
@@ -142,6 +149,7 @@
 <div class="cont4">{{ $amc->getContribuable->email }}</div>
 <div class="cont5">{{ $amc->getContribuable->nif }}</div>
 <div class="cont6">{{ $amc->getContribuable->rccm }}</div>
+<div class="cont7">{{ $amc->getContribuable->bp }}</div>
 
 <div class="mentions">
     <ul>
@@ -154,7 +162,7 @@
 </div>
 
 <div class="agent">
-    Vu le : {{ date_format(new DateTime($prescriptions[0]->dateprpt), 'd/m/Y')  }} <br>
+    Traité le : {{ date_format(new DateTime($prescriptions[0]->dateprpt), 'd/m/Y')  }} <br>
     <img src="data:image/jpg;base64,{{ $agent }}" width="120">
 </div>
 
@@ -290,7 +298,7 @@
 <img class="sign2" src="data:image/jpg;base64,{{ $dir }}">
 
 <div class="sign3">
-    Le Directeur Général <br>
+    Visa DGCC <br>
     <img src="data:image/jpg;base64,{{ $dg }}" style="width: 100px; height: 100px">
 </div>
 

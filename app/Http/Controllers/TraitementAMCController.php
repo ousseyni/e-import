@@ -494,6 +494,7 @@ class TraitementAMCController extends Controller
         $nif = $amc->getContribuable->nif;
         Qrcode::size(100)->generate(url('/verify-doc/AMC/'.$amc->slug), public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg"));
         $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg")));
+        ini_set("memory_limit", "2048M");
 
         $pdf = PDF::loadView('pages.traitement-amc.amc',
             compact('amc', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi',
@@ -528,6 +529,7 @@ class TraitementAMCController extends Controller
         }
 
         $produits_amc = ProduitAmcs::where('idamc', '=', $amc->id)->get();
+        ini_set("memory_limit", "2048M");
 
         $pdf = PDF::loadView('pages.traitement-amc.annexe',
             compact('amc', 'image', 'agent', 'chef', 'dir', 'dg',
@@ -548,15 +550,20 @@ class TraitementAMCController extends Controller
         $lignes_inspections_conteneurs = LigneInspectionConteneurAmc::where('idinspectionamc', '=', $inspection->id)->get();
 
         $prescriptions = PrescriptionAmc::where('idamc', '=', $amc->id)->get();
-
+        $user = User::find($inspection->iduser);
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_rpt_amc.png')));
+
+        $nif = $amc->getContribuable->nif;
+        Qrcode::size(100)->generate(url('/verify-doc/AMC/'.$amc->slug), public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg"));
+        $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amc_".$amc->id."/qrcode.svg")));
 
         $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $filigrane = base64_encode(file_get_contents(public_path('/storage/pdf/filigrane.png')));
+        ini_set("memory_limit", "2048M");
 
         $pdf = PDF::loadView('pages.traitement-amc.rpt',
-            compact('amc', 'image', 'agent', 'inspection',
-                'lignes_inspections_produits', 'lignes_inspections_conteneurs',
+            compact('amc', 'image', 'agent', 'inspection', 'qrcode',
+                'lignes_inspections_produits', 'lignes_inspections_conteneurs', 'user',
                 'prescriptions', 'filigrane'))
             ->setPaper('A4', 'portrait');;
 

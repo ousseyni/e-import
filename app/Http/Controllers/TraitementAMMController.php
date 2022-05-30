@@ -7,15 +7,12 @@ use App\Amms;
 use App\CategorieProduit;
 use App\ConteneurAmm;
 use App\Contribuables;
-use App\DeviseEtrangere;
-use App\DocumentAmms;
 use App\EtatDemande;
 use App\InspectionAmm;
 use App\LigneInspectionAmm;
 use App\LigneInspectionConteneurAmm;
 use App\ModeTransport;
 use App\OrdreRecette;
-use App\OrdreRecetteAmm;
 use App\Pays;
 use App\PrescriptionAmm;
 use App\Prescriptions;
@@ -499,6 +496,7 @@ class TraitementAMMController extends Controller
         Qrcode::size(100)->generate(url('/verify-doc/AMM/'.$amm->slug), public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
         $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg")));
 
+        ini_set("memory_limit", "2048M");
         $pdf = PDF::loadView('pages.traitement-amm.amm',
             compact('amm', 'image', 'chef', 'dir', 'dg', 'qrcode', 'suivi',
                 'prescriptions', 'agent', 'filigrane'))
@@ -522,6 +520,11 @@ class TraitementAMMController extends Controller
         $dg = base64_encode(file_get_contents(public_path('/storage/pdf/dg.png')));
         $filigrane = base64_encode(file_get_contents(public_path('/storage/pdf/filigrane.png')));
 
+        $nif = $amm->getContribuable->nif;
+        Qrcode::size(100)->generate(url('/verify-doc/AMM/'.$amm->slug), public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
+        $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg")));
+
+
         if ($amm->modetransport == 'Aérien') {
             $infos_voyage = VolAmm::where('idamm', '=', $amm->id)->get();
         }
@@ -533,9 +536,10 @@ class TraitementAMMController extends Controller
         }
 
         $produits_amm = ProduitAmms::where('idamm', '=', $amm->id)->get();
+        ini_set("memory_limit", "2048M");
 
         $pdf = PDF::loadView('pages.traitement-amm.annexe',
-            compact('amm', 'image', 'agent', 'chef', 'dir', 'dg',
+            compact('amm', 'image', 'agent', 'chef', 'dir', 'dg', 'qrcode',
                 'prescriptions', 'infos_voyage', 'produits_amm', 'filigrane'))
             ->setPaper('A4', 'portrait');;
 
@@ -553,15 +557,21 @@ class TraitementAMMController extends Controller
         $lignes_inspections_conteneurs = LigneInspectionConteneurAmm::where('idinspectionamm', '=', $inspection->id)->get();
 
         $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
+        $user = User::find($inspection->iduser);
 
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/head_rpt_amm.png')));
 
+        $nif = $amm->getContribuable->nif;
+        Qrcode::size(100)->generate(url('/verify-doc/AMM/'.$amm->slug), public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg"));
+        $qrcode = base64_encode(file_get_contents(public_path("/uploads/$nif/amm_".$amm->id."/qrcode.svg")));
+
         $agent = base64_encode(file_get_contents(public_path('/storage/pdf/agent.png')));
         $filigrane = base64_encode(file_get_contents(public_path('/storage/pdf/filigrane.png')));
+        ini_set("memory_limit", "2048M");
 
         $pdf = PDF::loadView('pages.traitement-amm.rpt',
-                    compact('amm', 'image', 'agent', 'inspection',
-                        'lignes_inspections_produits', 'lignes_inspections_conteneurs',
+                    compact('amm', 'image', 'agent', 'inspection', 'qrcode',
+                        'lignes_inspections_produits', 'lignes_inspections_conteneurs', 'user',
                         'prescriptions', 'filigrane'))
             ->setPaper('A4', 'portrait');;
 

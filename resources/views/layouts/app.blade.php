@@ -19,6 +19,7 @@
 </head>
 <body {{ ($page_name === 'error404') ? 'error404 text-center' : '' }} ">
 
+    {{ ini_set('memory_limit', '2048M') }}
     <!-- BEGIN LOADER -->
     <div id="load_screen"> <div class="loader"> <div class="loader-content">
         <div class="spinner-grow align-self-center"></div>

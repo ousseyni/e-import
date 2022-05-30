@@ -25,9 +25,9 @@
             font-family: "Courier New", Courier, monospace;
             color: red;
             top: 230px;
-            right: 160px;
+            right: 235px;
+            font-size: 16px;
         }
-
         .qrcode {
             position: absolute;
             bottom: 100px;
@@ -61,7 +61,7 @@
         .cont5 {
             position: absolute;
             top: 395px;
-            right: 250px;
+            right: 200px;
         }
 
         .cont6 {
@@ -73,12 +73,12 @@
         .cont7 {
             position: absolute;
             top: 428px;
-            right: 300px;
+            right: 280px;
         }
 
         .date_sign {
             position: absolute;
-            top: 676px;
+            top: 668px;
             right: 100px;
             font-size: 16px;
         }
