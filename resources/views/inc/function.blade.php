@@ -694,6 +694,15 @@
         return $ipaddress;
     }
 
+    function get_droit_profil($idprofil) {
+        $profil = \App\Profils::find($idprofil);
+        $tab_droit = array();
+        foreach($profil->getHabilitations as $droit) {
+            $tab_droit[] = $droit->id;
+        }
+        return $tab_droit;
+    }
+
     function scrollspy($offset) {
         echo 'data-target="#navSection" data-spy="scroll" data-offset="'. $offset . '"';
     }

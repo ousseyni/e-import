@@ -16,6 +16,7 @@ use App\ProduitAmms;
 use App\Produits;
 use App\SuiviAmms;
 use App\TypeContribuables;
+use App\User;
 use App\VehiculeAmm;
 use App\VolAmm;
 use Illuminate\Http\Request;
@@ -30,9 +31,11 @@ class AmmsController extends Controller
      */
     public function index()
     {
-        $amms = Amms::all();
-        return view('pages.amms.index', compact('amms'));
+        $user = User::find(Auth::id());
+        $usager = Contribuables::where('nif', '=', $user->login)->firstOrFail();
 
+        $amms = Amms::where('idcontribuable', '=', $usager->id)->get();
+        return view('pages.amms.index', compact('amms'));
     }
 
     /**
@@ -231,28 +234,30 @@ class AmmsController extends Controller
 
         //Sauvegarde des produits associés à la demande
         $tab_produits = $_POST['produits'];
-        //dd($request->$tab_produits);
+        //dd($tab_produits);
         foreach($tab_produits as $data) {
-            $numfact = $data['numfact'];
-            $datefact = $data['datefact'];
-            $fournisseur = $data['fournisseur'];
-            $pays_or = $data['pays_or'];
-            $produit = $data['idproduit'];
-            $marque = $data['marque'];
-            $poids = $data['poids'];
-            $total = $data['total'];
+            if ($data['numfact'] != "") {
+                $numfact = $data['numfact'];
+                $datefact = $data['datefact'];
+                $fournisseur = $data['fournisseur'];
+                $pays_or = $data['pays_or'];
+                $produit = $data['idproduit'];
+                $marque = $data['marque'];
+                $poids = $data['poids'];
+                $total = $data['total'];
 
-            ProduitAmms::create([
-                'idamm' => $show->id,
-                'idproduit' => $produit,
-                'numfact' => $numfact,
-                'datefact' => $datefact,
-                'fournisseur' => $fournisseur,
-                'marque' => $marque,
-                'paysorig' => $pays_or,
-                'poids' => $poids,
-                'total' => $total,
-            ]);
+                ProduitAmms::create([
+                    'idamm' => $show->id,
+                    'idproduit' => $produit,
+                    'numfact' => $numfact,
+                    'datefact' => $datefact,
+                    'fournisseur' => $fournisseur,
+                    'marque' => $marque,
+                    'paysorig' => $pays_or,
+                    'poids' => $poids,
+                    'total' => $total,
+                ]);
+            }
         }
 
         //Sauvegarde des vols associés à la demande (Aérienne)
@@ -274,18 +279,20 @@ class AmmsController extends Controller
             $numconnaissement = $_POST['numconnaissement'];
             //dd($tab_conteneurs);
             foreach($tab_conteneurs as $data) {
-                $numconteneur = $data['numconteneurm'];
-                $numplomb = $data['numplombm'];
+                if ($data['numconteneurm'] != "") {
+                    $numconteneur = $data['numconteneurm'];
+                    $numplomb = $data['numplombm'];
 
-                ConteneurAmm::create([
-                    'idamc' => $show->id,
-                    'nomnavire' => $nomnavire,
-                    'numvoyage' => $numvoyagem,
-                    'numbietc' => $numbietc,
-                    'numconteneur' => $numconteneur,
-                    'numplomb' => $numplomb,
-                    'numconnaissement' => $numconnaissement,
-                ]);
+                    ConteneurAmm::create([
+                        'idamc' => $show->id,
+                        'nomnavire' => $nomnavire,
+                        'numvoyage' => $numvoyagem,
+                        'numbietc' => $numbietc,
+                        'numconteneur' => $numconteneur,
+                        'numplomb' => $numplomb,
+                        'numconnaissement' => $numconnaissement,
+                    ]);
+                }
             }
         }
 
@@ -294,18 +301,20 @@ class AmmsController extends Controller
             $tab_vehicules = $_POST['vehicules'];
             //dd($tab_vehicules);
             foreach($tab_vehicules as $data) {
-                $numlvi = $data['numlvi'];
-                $numvehicule = $data['numvehicule'];
-                $numconteneur = $data['numconteneurt'];
-                $numplomb = $data['numplombt'];
+                if ($data['numlvi'] != "") {
+                    $numlvi = $data['numlvi'];
+                    $numvehicule = $data['numvehicule'];
+                    $numconteneur = $data['numconteneurt'];
+                    $numplomb = $data['numplombt'];
 
-                VehiculeAmm::create([
-                    'idamm' => $show->id,
-                    'numlvi' => $numlvi,
-                    'numvehicule' => $numvehicule,
-                    'numconteneur' => $numconteneur,
-                    'numplomb' => $numplomb,
-                ]);
+                    VehiculeAmm::create([
+                        'idamm' => $show->id,
+                        'numlvi' => $numlvi,
+                        'numvehicule' => $numvehicule,
+                        'numconteneur' => $numconteneur,
+                        'numplomb' => $numplomb,
+                    ]);
+                }
             }
         }
 
@@ -467,6 +476,34 @@ class AmmsController extends Controller
     public function destroy($slug)
     {
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
+
+        $lignes_amms = SuiviAmms::where('idamm', '=', $amm->id)->get();
+        foreach ($lignes_amms as $ligne) {
+            $ligne->delete();
+        }
+
+        $lignes_amms = VehiculeAmm::where('idamm', '=', $amm->id)->get();
+        foreach ($lignes_amms as $ligne) {
+            $ligne->delete();
+        }
+
+        $lignes_amms = ProduitAmms::where('idamm', '=', $amm->id)->get();
+        foreach ($lignes_amms as $ligne) {
+            $ligne->delete();
+        }
+
+        $lignes_amms = DocumentAmms::where('idamm', '=', $amm->id)->get();
+        foreach ($lignes_amms as $ligne) {
+            $ligne->delete();
+        }
+
+        $lignes_amms = ConteneurAmm::where('idamm', '=', $amm->id)->get();
+        foreach ($lignes_amms as $ligne) {
+            $ligne->delete();
+        }
+
+
+
         $amm->delete();
 
         return redirect('/amm')->with('success', 'Demande de AMM supprimée avec succès');

@@ -44,10 +44,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form onclick="return confirm('Voulez vous suppriemr cette ligne ?')" action="{{ route('demande-comptes.destroy', $contribuable->slug)}}" method="post">
+                                        <form id="form_del_{{ $loop->index }}" action="{{ route('demande-comptes.destroy', $contribuable->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                                            <a href="#" onclick="submit_form('form_del_{{ $loop->index }}')"><i class="far fa-trash-alt"></i></a>
                                         </form>
                                     </td>
                                 </tr>

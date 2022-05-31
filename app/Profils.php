@@ -17,8 +17,13 @@ class Profils extends Model
         });
     }
 
-    public function getUsers()
+    public function getUsers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function getHabilitations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Habilitation::class);
     }
 }

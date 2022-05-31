@@ -6,6 +6,7 @@ use App\Contribuables;
 use App\DeviseEtrangere;
 use App\EtatDemande;
 use App\FraisDossier;
+use App\Habilitation;
 use App\ModeTransport;
 use App\Pays;
 use App\Prescriptions;
@@ -319,6 +320,26 @@ class InitDataSeeder extends Seeder
                     $contribuable_new->nomprenom = $data[2];
                     $contribuable_new->save();
                 }
+            }
+        }
+        fclose($handle);
+
+
+        $file = public_path('init_files/all_habilitations.csv');
+        $row = 0;
+        $handle = fopen($file, "r");
+        if ($handle !== FALSE) {
+
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+
+                $row++;
+                if($row == 1) continue;
+                $data = array_map("utf8_encode", $data); //added
+
+                $droit = new Habilitation();
+                $droit->libelle = $data[0];
+                $droit->categorie = $data[1];
+                $droit->save();
             }
         }
         fclose($handle);

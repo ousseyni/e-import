@@ -68,6 +68,8 @@ class DemandeComptesController extends Controller
             'pj' => 'required|mimes:pdf,jpg,jpeg,png|max:512000',
         ]);
 
+        //dd($validatedData);
+
         $fileName = $validatedData['nif'].'.'.$request->pj->extension();
         $usager_folder = public_path('uploads/'.$validatedData['nif']);
 
