@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Habilitation;
 use App\Profils;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,8 @@ class ProfilsController extends Controller
      */
     public function create()
     {
-        return view('pages.profils.create');
+        $droits = Habilitation::all();
+        return view('pages.profils.create', compact('droits'));
     }
 
     /**
@@ -39,7 +41,13 @@ class ProfilsController extends Controller
         $validatedData = $request->validate([
             'libelle' => 'required|max:100'
         ]);
-        $show = Profils::create($validatedData);
+        $profil = Profils::create($validatedData);
+
+        $tab_droit = $request->droits;
+        //dd($tab_droit);
+
+        $droits = Habilitation::find($tab_droit);
+        $profil->getHabilitations()->attach($droits);
 
         return redirect('/profils')->with('success', 'Profil enregistrée avec succès');
     }
@@ -64,7 +72,9 @@ class ProfilsController extends Controller
     public function edit($slug)
     {
         $profil = Profils::where('slug', '=', $slug)->firstOrFail();
-        return view('pages.profils.edit', compact('profil'));
+        $droits = Habilitation::all();
+        $tab_habilitaion = $profil->get_droit_profil();
+        return view('pages.profils.edit', compact('profil', 'droits', 'tab_habilitaion'));
     }
 
     /**
@@ -80,6 +90,16 @@ class ProfilsController extends Controller
             'libelle' => 'required|max:100'
         ]);
         Profils::where('slug', '=', $slug)->update($validatedData);
+        $profil = Profils::where('slug', '=', $slug)->firstOrFail();
+
+        $old_habilitations = Habilitation::where('profils_id', '=', $profil->id)->firstOrFail();
+        foreach ($old_habilitations as $old) {
+            $old->delete();
+        }
+        $tab_droit = $request->droits;
+        //dd($tab_droit);
+        $droits = Habilitation::find($tab_droit);
+        $profil->getHabilitations()->attach($droits);
 
         return redirect('/profils')->with('success', 'Profil modifié avec succès');
     }

@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'] , function() {
     // $this->middleware
     Route::resource('type-contribuables', 'TypeContribuablesController');
     Route::resource('categorie-produits', 'CategorieProduitsController');
+    Route::resource('habilitation', 'HabilitationController');
 
     Route::any('contribuables/info', 'ContribuablesController@getcontribuable');
     Route::resource('contribuables', 'ContribuablesController');

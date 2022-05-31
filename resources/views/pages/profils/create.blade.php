@@ -5,10 +5,6 @@
 
 @section('content')
 
-    <div class="container">
-
-        <div class="container">
-
             <div class="row layout-top-spacing">
 
                 <div class="col-lg-12 col-12  layout-spacing">
@@ -40,6 +36,22 @@
                                         <input type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
                                     </div>
                                 </div>
+
+                                <hr>
+                                <strong>Sélectionner les habilitations de ce profil</strong>
+                                <table class="table table-bordered">
+                                    @foreach($droits as $droit)
+                                        <tr>
+                                            <td>
+                                                {{ $droit->libelle }}
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" name="droits[]" value="{{ $droit->id }}"  />
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+
                                 <button type="submit" class="btn btn-primary">Enregistrer</button>
                             </form>
 
@@ -48,6 +60,5 @@
                 </div>
 
             </div>
-        </div>
-    </div>
+
 @endsection

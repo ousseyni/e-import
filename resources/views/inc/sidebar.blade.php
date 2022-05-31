@@ -1,7 +1,6 @@
 @php
     $idprofil = Auth::user()->profilid;
     $tab_droit = get_droit_profil($idprofil);
-    //dd($tab_droit);
 @endphp
 
 
@@ -228,16 +227,11 @@
                                 <a href="{{ route('users.index')  }}"> Utilisateurs </a>
                             </li>
                             @endif
-                            @if(in_array(34, $tab_droit))
+
                             <li class="{{ ($page_name === 'Profils') ? 'active' : '' }}">
                                 <a href="{{ route('profils.index')  }}"> Profils </a>
                             </li>
-                            @endif
-                            @if(in_array(35, $tab_droit))
-                            <li class="{{ ($page_name === 'Habilitations') ? 'active' : '' }}">
-                                <a href="#"> Habilitations </a>
-                            </li>
-                            @endif
+
                             @if(in_array(36, $tab_droit))
                             <li class="{{ ($page_name === 'Mouchard') ? 'active' : '' }}">
                                 <a href="#"> Mouchard </a>

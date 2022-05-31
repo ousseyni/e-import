@@ -26,4 +26,12 @@ class Profils extends Model
     {
         return $this->belongsToMany(Habilitation::class);
     }
+
+    public function get_droit_profil() {
+        $tab_droit = array();
+        foreach($this->getHabilitations as $droit) {
+            $tab_droit[] = $droit->id;
+        }
+        return $tab_droit;
+    }
 }
