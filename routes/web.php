@@ -91,7 +91,10 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::resource('frais-dossiers', 'FraisDossierController');
     Route::resource('prescriptions', 'PrescriptionController');
 
+
+    Route::any('profil/details/{prf}', 'ProfilsController@details')->name('profils.details');
     Route::resource('profils', 'ProfilsController');
+
     Route::resource('users', 'UsersController');
 
     Route::get('logout', 'Auth\LoginController@logout');

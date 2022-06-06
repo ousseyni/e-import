@@ -20,6 +20,19 @@ class ProfilsController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function details($slug)
+    {
+        $profil = Profils::where('slug', '=', $slug)->firstOrFail();
+        $droits = Habilitation::all();
+        $tab_habilitaion = $profil->get_droit_profil();
+        return view('pages.profils.infos', compact('profil', 'droits', 'tab_habilitaion'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View

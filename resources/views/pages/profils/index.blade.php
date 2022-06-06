@@ -23,6 +23,7 @@
                             <thead>
                             <tr>
                                 <th>Libelle</th>
+                                <th>Habilitations</th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
                             </tr>
@@ -32,10 +33,15 @@
                                 <tr>
                                     <td>{{ $profil->libelle }}</td>
                                     <td>
-                                        @if($profil->id != 2)
-                                        <a href="{{ route('profils.edit', $profil->slug) }}">
-                                            <i class="far fa-edit"></i>
+                                        <a href="{{ route('profils.details', $profil->slug) }}">
+                                            Consulter
                                         </a>
+                                    </td>
+                                    <td>
+                                        @if($profil->id != 2)
+                                            <a href="{{ route('profils.edit', $profil->slug) }}">
+                                                <i class="far fa-edit"></i>
+                                            </a>
                                         @endif
                                     </td>
                                     <td>
