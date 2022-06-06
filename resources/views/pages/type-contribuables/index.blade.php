@@ -32,16 +32,20 @@
                                 <tr>
                                     <td>{{$typecontribuable->libelle}}</td>
                                     <td>
+                                        @if(!in_array($typecontribuable->id, array(1, 2, 3)))
                                         <a href="{{ route('type-contribuables.edit', $typecontribuable->slug)}}">
                                             <i class="far fa-edit"></i>
                                         </a>
+                                        @endif
                                     </td>
                                     <td>
+                                        @if(!in_array($typecontribuable->id, array(1, 2, 3)))
                                         <form id="form_del_{{ $loop->index }}" action="{{ route('type-contribuables.destroy', $typecontribuable->slug) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <a href="#" onclick="submit_form('form_del_{{ $loop->index }}')"><i class="far fa-trash-alt"></i></a>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

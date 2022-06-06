@@ -1,7 +1,7 @@
-@extends('layouts.app', ['page_name' => 'Liste des contribuables',
+@extends('layouts.app', ['page_name' => 'Prescriptions particulières',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Gestion des contribuables'])
+                         'category_name' => 'Parametrage'])
 
 @section('content')
     <div class="layout-px-spacing">
@@ -18,38 +18,28 @@
                     @endif
 
                     <div class="table-responsive mb-4 mt-4">
-                        <a href="{{ route('contribuables.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouveau compte contribuable</a>
-                        <table id="contribuable" class="table table-hover" style="width:100%">
+                        <a href="{{ route('prescriptions.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouvelle prescription</a>
+                        <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>
-                                <th>NIF</th>
-                                <th>Raison Sociale</th>
-                                <th>Type</th>
-                                <th>RCCM</th>
-                                <th>BP</th>
-                                <th>Téléphone</th>
-                                <th>Email</th>
+                                <th width="3%">Code</th>
+                                <th>Libelle</th>
                                 <th width="3%"></th>
                                 <th width="3%"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($contribuables as $contribuable)
+                            @foreach($prescriptions as $prescription)
                                 <tr>
-                                    <td>{{$contribuable->nif}}</td>
-                                    <td>{{$contribuable->raisonsociale}}</td>
-                                    <td>{{$contribuable->getTypeContribuables == null ? '' : $contribuable->getTypeContribuables->libelle}}</td>
-                                    <td>{{$contribuable->rccm}}</td>
-                                    <td>{{$contribuable->bp}}</td>
-                                    <td>{{$contribuable->tel}}</td>
-                                    <td>{{$contribuable->email}}</td>
+                                    <td>{{ $prescription->code }}</td>
+                                    <td>{{ $prescription->libelle }}</td>
                                     <td>
-                                        <a href="{{ route('contribuables.edit', $contribuable->slug)}}">
+                                        <a href="{{ route('prescriptions.edit', $prescription->id) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form id="form_del_{{ $loop->index }}" action="{{ route('contribuables.destroy', $contribuable->slug) }}" method="post">
+                                        <form id="form_del_{{ $loop->index }}" action="{{ route('prescriptions.destroy', $prescription->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <a href="#" onclick="submit_form('form_del_{{ $loop->index }}')"><i class="far fa-trash-alt"></i></a>
@@ -59,8 +49,6 @@
                             @endforeach
                             </tbody>
                         </table>
-
-                        {{ $contribuables->links() }}
                     </div>
                 </div>
             </div>

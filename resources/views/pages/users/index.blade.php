@@ -36,14 +36,14 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->login }}</td>
-                                    <td>{{ $user->getProfil->libelle }}</td>
+                                    <td>{{ (is_null($user->profilid) ? 'ND' : $user->getProfil->libelle) }}</td>
                                     <td>
                                         <a href="{{ route('users.edit', $user->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        @if($user->id != 1 && $user->getProfil->id != 2)
+                                        @if($user->id != 1 && $user->profilid != 2)
                                             <form id="form_del_{{ $loop->index }}" action="{{ route('users.destroy', $user->slug) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')

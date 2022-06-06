@@ -32,7 +32,7 @@
                                 <tr>
                                     <td>{{ $profil->libelle }}</td>
                                     <td>
-                                        @if($profil->id != 1 && $profil->id != 2)
+                                        @if($profil->id != 2)
                                         <a href="{{ route('profils.edit', $profil->slug) }}">
                                             <i class="far fa-edit"></i>
                                         </a>

@@ -222,26 +222,28 @@ class AmcsController extends Controller
         $tab_produits = $_POST['produits'];
         //dd($request->$tab_produits);
         foreach($tab_produits as $data) {
-            $numfact = $data['numfact'];
-            $datefact = $data['datefact'];
-            $fournisseur = $data['fournisseur'];
-            $pays_or = $data['pays_or'];
-            $produit = $data['idproduit'];
-            $marque = $data['marque'];
-            $poids = $data['poids'];
-            $total = $data['total'];
+            if ($data['numfact'] != "") {
+                $numfact = $data['numfact'];
+                $datefact = $data['datefact'];
+                $fournisseur = $data['fournisseur'];
+                $pays_or = $data['pays_or'];
+                $produit = $data['idproduit'];
+                $marque = $data['marque'];
+                $poids = $data['poids'];
+                $total = $data['total'];
 
-            ProduitAmcs::create([
-                'idamc' => $show->id,
-                'idproduit' => $produit,
-                'numfact' => $numfact,
-                'datefact' => $datefact,
-                'fournisseur' => $fournisseur,
-                'marque' => $marque,
-                'paysorig' => $pays_or,
-                'poids' => $poids,
-                'total' => $total,
-            ]);
+                ProduitAmcs::create([
+                    'idamc' => $show->id,
+                    'idproduit' => $produit,
+                    'numfact' => $numfact,
+                    'datefact' => $datefact,
+                    'fournisseur' => $fournisseur,
+                    'marque' => $marque,
+                    'paysorig' => $pays_or,
+                    'poids' => $poids,
+                    'total' => $total,
+                ]);
+            }
         }
 
         //Sauvegarde des vols associés à la demande (Aérienne)
@@ -263,18 +265,20 @@ class AmcsController extends Controller
             $numconnaissement = $_POST['numconnaissement'];
             //dd($tab_conteneurs);
             foreach($tab_conteneurs as $data) {
-                $numconteneur = $data['numconteneurm'];
-                $numplomb = $data['numplombm'];
+                if ($data['numconteneurm'] != "") {
+                    $numconteneur = $data['numconteneurm'];
+                    $numplomb = $data['numplombm'];
 
-                ConteneurAmc::create([
-                    'idamc' => $show->id,
-                    'nomnavire' => $nomnavire,
-                    'numvoyage' => $numvoyagem,
-                    'numbietc' => $numbietc,
-                    'numconteneur' => $numconteneur,
-                    'numplomb' => $numplomb,
-                    'numconnaissement' => $numconnaissement,
-                ]);
+                    ConteneurAmc::create([
+                        'idamc' => $show->id,
+                        'nomnavire' => $nomnavire,
+                        'numvoyage' => $numvoyagem,
+                        'numbietc' => $numbietc,
+                        'numconteneur' => $numconteneur,
+                        'numplomb' => $numplomb,
+                        'numconnaissement' => $numconnaissement,
+                    ]);
+                }
             }
         }
 
@@ -283,18 +287,20 @@ class AmcsController extends Controller
             $tab_vehicules = $_POST['vehicules'];
             //dd($tab_vehicules);
             foreach($tab_vehicules as $data) {
-                $numlvi = $data['numlvi'];
-                $numvehicule = $data['numvehicule'];
-                $numconteneur = $data['numconteneurt'];
-                $numplomb = $data['numplombt'];
+                if ($data['numlvi'] != "") {
+                    $numlvi = $data['numlvi'];
+                    $numvehicule = $data['numvehicule'];
+                    $numconteneur = $data['numconteneurt'];
+                    $numplomb = $data['numplombt'];
 
-                VehiculeAmc::create([
-                    'idamm' => $show->id,
-                    'numlvi' => $numlvi,
-                    'numvehicule' => $numvehicule,
-                    'numconteneur' => $numconteneur,
-                    'numplomb' => $numplomb,
-                ]);
+                    VehiculeAmc::create([
+                        'idamc' => $show->id,
+                        'numlvi' => $numlvi,
+                        'numvehicule' => $numvehicule,
+                        'numconteneur' => $numconteneur,
+                        'numplomb' => $numplomb,
+                    ]);
+                }
             }
         }
 

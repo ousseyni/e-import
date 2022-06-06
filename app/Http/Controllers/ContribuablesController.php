@@ -156,10 +156,11 @@ class ContribuablesController extends Controller
 
         $where = array('nif' => $request->nif);
         $contribuable  = Contribuables::where($where)->first();
+        $type = ($contribuable && !is_null($contribuable->typecontribuableid)  ? $contribuable->getTypeContribuables->libelle : "Non défini");
         $nb  = Contribuables::where($where)->count();
 
         return response()->json(
-            ['nb'=>$nb, 'data'=>$contribuable]
+            ['nb'=>$nb, 'data'=>$contribuable, 'type'=>$type]
         );
     }
 }

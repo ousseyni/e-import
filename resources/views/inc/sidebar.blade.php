@@ -90,7 +90,7 @@
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Traitement des A.M.M.') ? 'show' : '' }}" id="amm" data-parent="#accordionExample">
                             @if(in_array(2, $tab_droit))
                                 <li class="{{ ($page_name === 'Nouvelle AMM') ? 'active' : '' }}">
-                                    <a href="#"> Nouvelle demande </a>
+                                    <a href="{{ route('traitement-amm.new')  }}"> Nouvelle demande </a>
                                 </li>
                             @endif
                             @if(in_array(3, $tab_droit))
@@ -128,7 +128,7 @@
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Traitement des A.M.C.') ? 'show' : '' }}" id="amc" data-parent="#accordionExample">
                             @if(in_array(7, $tab_droit))
                                 <li class="{{ ($page_name === 'Nouvelle AMC') ? 'active' : '' }}">
-                                    <a href="#"> Nouvelle demande </a>
+                                    <a href="{{ route('traitement-amc.new')  }}"> Nouvelle demande </a>
                                 </li>
                             @endif
                             @if(in_array(8, $tab_droit))
@@ -227,11 +227,11 @@
                                 <a href="{{ route('users.index')  }}"> Utilisateurs </a>
                             </li>
                             @endif
-
+                            @if(in_array(34, $tab_droit))
                             <li class="{{ ($page_name === 'Profils') ? 'active' : '' }}">
                                 <a href="{{ route('profils.index')  }}"> Profils </a>
                             </li>
-
+                            @endif
                             @if(in_array(36, $tab_droit))
                             <li class="{{ ($page_name === 'Mouchard') ? 'active' : '' }}">
                                 <a href="#"> Mouchard </a>
@@ -251,9 +251,19 @@
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Parametrage') ? 'show' : '' }}" id="param" data-parent="#accordionExample">
                             @if(in_array(37, $tab_droit))
-                            <li class="{{ ($page_name === 'Grille des Prescription') ? 'active' : '' }}">
-                                <a href="#"> Grille des Prescriptions </a>
+                            <li class="{{ ($page_name === 'Devises étrangères') ? 'active' : '' }}">
+                                <a href="{{ route('devises.index')  }}"> Devises étrangères </a>
                             </li>
+                            @endif
+                            @if(in_array(37, $tab_droit))
+                                <li class="{{ ($page_name === 'Prescriptions particulières') ? 'active' : '' }}">
+                                    <a href="{{ route('prescriptions.index') }}"> Grille des Prescriptions </a>
+                                </li>
+                            @endif
+                            @if(in_array(37, $tab_droit))
+                                <li class="{{ ($page_name === 'Frais de dossiers') ? 'active' : '' }}">
+                                    <a href="{{ route('frais-dossiers.index') }}"> Frais de dossiers </a>
+                                </li>
                             @endif
                         </ul>
                     </li>

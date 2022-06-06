@@ -203,7 +203,7 @@
                         N° Véhicule : <b>{{ $infos->numvehicule }}</b>
                     </td>
                     <td>
-                        N° Conteneur : <b>{{ $infos->numconteneurt }}</b>
+                        N° Conteneur : <b>{{ $infos->numconteneur }}</b>
                     </td>
                 </tr>
             @endforeach

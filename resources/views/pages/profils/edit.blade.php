@@ -34,18 +34,26 @@
                                 <div class="form-group row input-group-sm mb-4">
                                     <label for="libelle" class="col-sm-2 col-form-label col-form-label-sm">Libellé</label>
                                     <div class="col-sm-10">
-                                        <input value="{{ $profil->libelle }}" type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
+                                        @if($profil->id != 1 && $profil->id != 2)
+                                            <input value="{{ $profil->libelle }}" type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
+                                        @else
+                                            <input readonly value="{{ $profil->libelle }}" type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
+                                        @endif
                                     </div>
                                 </div>
 
                                 <hr>
                                 <strong>Sélectionner les habilitations de ce profil</strong>
-                                <table class="table table-bordered">
+                                <table class="table">
+                                    <tr>
+                                        <td><b>Libellé</b></td>
+                                        <td><b>Catégorie</b></td>
+                                        <td></td>
+                                    </tr>
                                     @foreach($droits as $droit)
                                         <tr>
-                                            <td>
-                                                {{ $droit->libelle }}
-                                            </td>
+                                            <td>{{ $droit->libelle }}</td>
+                                            <td>{{ $droit->categorie }}</td>
                                             <td>
                                                 <input type="checkbox" {{ in_array($droit->id, $tab_habilitaion) ? 'checked' : ''}} name="droits[]" value="{{ $droit->id }}"  />
                                             </td>

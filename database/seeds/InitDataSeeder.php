@@ -47,7 +47,7 @@ class InitDataSeeder extends Seeder
         $this->purge_uploads_folder($dossier);
         mkdir($dossier, 0777, true);
 
-        Profils::create([
+        $admin = Profils::create([
             'libelle'     => 'Administrateur',
         ]);
         Profils::create([
@@ -328,6 +328,7 @@ class InitDataSeeder extends Seeder
         $file = public_path('init_files/all_habilitations.csv');
         $row = 0;
         $handle = fopen($file, "r");
+        $tab_droit = array();
         if ($handle !== FALSE) {
 
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
@@ -340,9 +341,14 @@ class InitDataSeeder extends Seeder
                 $droit->libelle = $data[0];
                 $droit->categorie = $data[1];
                 $droit->save();
+
+                $tab_droit[] = $droit->id;
             }
         }
         fclose($handle);
+
+        $droits = Habilitation::find($tab_droit);
+        $admin->getHabilitations()->attach($droits);
 
 
         $file = public_path('init_files/pays.csv');

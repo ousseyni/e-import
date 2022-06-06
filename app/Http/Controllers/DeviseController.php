@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Habilitation;
-use App\Profils;
+use App\DeviseEtrangere;
 use Illuminate\Http\Request;
 
-class ProfilsController extends Controller
+class DeviseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class ProfilsController extends Controller
      */
     public function index()
     {
-        $profils = Profils::all();
-        return view('pages.profils.index', compact('profils'));
+        $devises = DeviseEtrangere::all();
+        return view('pages.devises.index', compact('devises'));
     }
 
     /**
@@ -26,8 +25,7 @@ class ProfilsController extends Controller
      */
     public function create()
     {
-        $droits = Habilitation::all();
-        return view('pages.profils.create', compact('droits'));
+        return view('pages.devises.create');
     }
 
     /**
@@ -39,17 +37,16 @@ class ProfilsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'code' => 'required|max:10',
             'libelle' => 'required|max:100'
         ]);
-        $profil = Profils::create($validatedData);
+        $show = DeviseEtrangere::create([
+            'code' => $request->code,
+            'libelle' => $request->libelle,
+            'taux' => 0
+        ]);
 
-        $tab_droit = $request->droits;
-        //dd($tab_droit);
-
-        $droits = Habilitation::find($tab_droit);
-        $profil->getHabilitations()->attach($droits);
-
-        return redirect('/profils')->with('success', 'Profil enregistrée avec succès');
+        return redirect('/devises')->with('success', 'Devise enregistrée avec succès');
     }
 
     /**
@@ -66,59 +63,44 @@ class ProfilsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string  $slug
+     * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit($id)
     {
-        $profil = Profils::where('slug', '=', $slug)->firstOrFail();
-        $droits = Habilitation::all();
-        $tab_habilitaion = $profil->get_droit_profil();
-        return view('pages.profils.edit', compact('profil', 'droits', 'tab_habilitaion'));
+        $devise = DeviseEtrangere::where('id', '=', $id)->firstOrFail();
+        return view('pages.devises.edit', compact('devise'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $slug
+     * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
+            'code' => 'required|max:10',
             'libelle' => 'required|max:100'
         ]);
-        Profils::where('slug', '=', $slug)->update($validatedData);
-        $profil = Profils::where('slug', '=', $slug)->firstOrFail();
+        DeviseEtrangere::where('id', '=', $id)->update($validatedData);
 
-        $old_habilitations = $profil->getHabilitations;
-        //dd($old_habilitations);
-        $tab_old = array();
-        foreach ($old_habilitations as $old) {
-            $tab_old[] = $old->id;
-        }
-        //dd($tab_old);
-        $profil->getHabilitations()->detach($tab_old);
-
-        $tab_droit = $request->droits;
-        $droits = Habilitation::find($tab_droit);
-        $profil->getHabilitations()->attach($droits);
-
-        return redirect('/profils')->with('success', 'Profil modifié avec succès');
+        return redirect('/devises')->with('success', 'Devise modifiée avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $slug
+     * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $profil = Profils::where('slug', '=', $slug)->firstOrFail();
-        $profil->delete();
+        $devise = DeviseEtrangere::where('id', '=', $id)->firstOrFail();
+        $devise->delete();
 
-        return redirect('/profils')->with('success', 'Profil supprimé avec succès');
+        return redirect('/devises')->with('success', 'Devise supprimée avec succès');
     }
 }

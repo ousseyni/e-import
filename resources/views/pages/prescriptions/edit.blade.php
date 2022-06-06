@@ -1,9 +1,13 @@
-@extends('layouts.app', ['page_name' => 'Profils',
+@extends('layouts.app', ['page_name' => 'Prescriptions particulières',
                          'has_scrollspy' => 'Your Title Goes Here',
                          'scrollspy_offset' => 'Your Title Goes Here',
-                         'category_name' => 'Administration'])
+                         'category_name' => 'Parametrage'])
 
 @section('content')
+
+    <div class="container">
+
+        <div class="container">
 
             <div class="row layout-top-spacing">
 
@@ -12,7 +16,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Nouveau profil</h4>
+                                    <h4>Modification de prescriptions particulière</h4>
                                 </div>
                             </div>
                         </div>
@@ -28,35 +32,22 @@
                                 </div><br />
                             @endif
 
-                            <form method="post" action="{{ route('profils.store') }}">
+                            <form method="post" action="{{ route('prescriptions.update', $prescription->id) }}">
                                 @csrf
+                                @method('PATCH')
+                                <div class="form-group row input-group-sm mb-4">
+                                    <label for="code" class="col-sm-2 col-form-label col-form-label-sm">Code</label>
+                                    <div class="col-sm-10">
+                                        <input value="{{ $prescription->code }}" type="text" name="code" class="form-control form-control-sm" id="code" placeholder="Code">
+                                    </div>
+                                </div>
                                 <div class="form-group row input-group-sm mb-4">
                                     <label for="libelle" class="col-sm-2 col-form-label col-form-label-sm">Libellé</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
+                                        <input value="{{ $prescription->libelle }}" type="text" name="libelle" class="form-control form-control-sm" id="libelle" placeholder="Libellé">
                                     </div>
                                 </div>
-
-                                <hr>
-                                <strong>Sélectionner les habilitations de ce profil</strong>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <td><b>Libellé</b></td>
-                                        <td><b>Catégorie</b></td>
-                                        <td></td>
-                                    </tr>
-                                    @foreach($droits as $droit)
-                                        <tr>
-                                            <td>{{ $droit->libelle }}</td>
-                                            <td>{{ $droit->categorie }}</td>
-                                            <td>
-                                                <input type="checkbox" name="droits[]" value="{{ $droit->id }}"  />
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-
-                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                <button type="submit" class="btn btn-primary">Mettre à jour</button>
                             </form>
 
                         </div>
@@ -64,5 +55,6 @@
                 </div>
 
             </div>
-
+        </div>
+    </div>
 @endsection

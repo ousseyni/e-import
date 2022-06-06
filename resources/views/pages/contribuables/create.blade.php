@@ -7,9 +7,7 @@
 
     <div class="container">
 
-        <div class="container">
-
-            <div class="row layout-top-spacing">
+            <div class="row">
 
                 <div class="col-lg-12 col-12  layout-spacing">
                     <div class="statbox widget box box-shadow">
@@ -20,7 +18,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="widget-content widget-content-area">
+                        <div class="widget-content">
 
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -88,11 +86,11 @@
                                 </div>
 
                                 <div class="form-row mb-2">
-                                    <div class="col-8 input-group-sm">
+                                    <div class="col-7 input-group-sm">
                                         <label for="nomprenom">Nom et Prénom Représentant Légal</label>
                                         <input required="" type="text" class="form-control" id="nomprenom" name="nomprenom"  />
                                     </div>
-                                    <div class="col-4 input-group-sm">
+                                    <div class="col-5 input-group-sm">
                                         <label for="email">Email</label>
                                         <input required="" type="email" class="form-control" id="email" name="email" />
                                     </div>
@@ -115,7 +113,7 @@
                 </div>
 
             </div>
-        </div>
+
     </div>
 
 @endsection

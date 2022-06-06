@@ -7,6 +7,8 @@ use App\Amms;
 use App\CategorieProduit;
 use App\ConteneurAmm;
 use App\Contribuables;
+use App\DeviseEtrangere;
+use App\DocumentAmms;
 use App\EtatDemande;
 use App\InspectionAmm;
 use App\LigneInspectionAmm;
@@ -38,6 +40,271 @@ class TraitementAMMController extends Controller
     public function index()
     {
 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     */
+    public function new()
+    {
+        $pays_pr = Pays::orderBy('libelle', 'ASC')->get();
+
+        $categorie_produits = CategorieProduit::where('type', '=', 'AMM')->get();
+        $produits = Produits::where('type', '=', 'AMM')->get();
+        $pays_or = Pays::orderBy('libelle', 'ASC')->get();
+
+        $mode_t = ModeTransport::all();
+
+        $tab_devise = DeviseEtrangere::orderBy('code', 'ASC')->get();
+
+        return view('pages.traitement-amm.new',
+            compact('pays_pr', 'produits', 'mode_t',
+                'pays_or', 'categorie_produits', 'tab_devise'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function saveamm(Request $request)
+    {
+        $validatedData = $request->validate([
+            'paysprov' => 'max:200',
+            'modetransport' => 'max:150',
+
+            'dateembarque' => 'date',
+            'lieuembarque' => 'max:100',
+            'datedebarque' => 'date',
+            'lieudebarque' => 'max:100',
+
+            'totalpoids' =>'numeric',
+            'totalfrais' =>'numeric',
+            'totalenr' =>'numeric',
+            'totalglobal' =>'numeric',
+
+            'valeurcaf_cfa' =>'numeric',
+            'valeurcaf_ext' =>'numeric',
+            'valeurcaf_dev' =>'max:10',
+
+            'nif' =>'required',
+            'idcontribuable' =>'numeric',
+        ]);
+
+        $show = Amms::create($validatedData);
+        $contribuable = Contribuables::where('nif', '=', $validatedData['nif'])->firstOrFail();
+
+        $usager_folder = public_path('uploads/'.$contribuable->nif.'/amm_'.$show->id);
+        if (!is_dir($usager_folder)) {
+            mkdir($usager_folder, 0777, true);
+        }
+
+        //Sauvegarde des PJ
+        $i = 0;
+        $factures = $request->file('pj1');
+        foreach($factures as $fact)
+        {
+            $i++;
+            $name = "facture_fournisseur_$i.".$fact->extension();
+            $fact->move($usager_folder, $name);
+
+            DocumentAmms::create([
+                'libelle' => 'Facture Fournisseur '.$i,
+                'idamm' => $show->id,
+                'pj' => $name
+            ]);
+        }
+
+        $fiche_securite = 'fiche_securite.'.$request->pj2->extension();
+        $request->pj2->move($usager_folder, $fiche_securite);
+        DocumentAmms::create([
+            'libelle' => 'Fiche Sécurité',
+            'idamm' => $show->id,
+            'pj' => $fiche_securite
+        ]);
+
+        $certificat_conformite = 'certificat_conformite.'.$request->pj3->extension();
+        $request->pj3->move($usager_folder, $certificat_conformite);
+        DocumentAmms::create([
+            'libelle' => 'Certificat Conformité',
+            'idamm' => $show->id,
+            'pj' => $certificat_conformite
+        ]);
+
+        $cnt = 'cnt_lta_lv.'.$request->pj4->extension();
+        $request->pj4->move($usager_folder, $cnt);
+        DocumentAmms::create([
+            'libelle' => 'CNT/LTA/LV',
+            'idamm' => $show->id,
+            'pj' => $cnt
+        ]);
+
+        $certificat_origine = 'certificat_origine.'.$request->pj5->extension();
+        $request->pj5->move($usager_folder, $certificat_origine);
+        DocumentAmms::create([
+            'libelle' => "Certificat d'origine",
+            'idamm' => $show->id,
+            'pj' => $certificat_origine
+        ]);
+
+        if($request->hasFile('pj6')) {
+            $ail = 'ail.'.$request->pj6->extension();
+            $request->pj6->move($usager_folder, $ail);
+            DocumentAmms::create([
+                'libelle' => "Autorisation Spéciale des Lubrifiants",
+                'idamm' => $show->id,
+                'pj' => $ail
+            ]);
+        }
+
+        if($request->hasFile('pj7')) {
+            $asi = 'asi.'.$request->pj7->extension();
+            $request->pj7->move($usager_folder, $asi);
+            DocumentAmms::create([
+                'libelle' => "Autorisation Spéciale d'Importation",
+                'idamm' => $show->id,
+                'pj' => $asi
+            ]);
+        }
+
+        if($request->hasFile('pj8')) {
+            $asipr = 'asipr.'.$request->pj8->extension();
+            $request->pj8->move($usager_folder, $asipr);
+            DocumentAmms::create([
+                'libelle' => "Autorisation Spéciale d'Importation des produits réglementés (SAO & GES)",
+                'idamm' => $show->id,
+                'pj' => $asipr
+            ]);
+        }
+
+        if($request->hasFile('pj9')) {
+            $ldusr = 'ldusr.'.$request->pj9->extension();
+            $request->pj9->move($usager_folder, $ldusr);
+            DocumentAmms::create([
+                'libelle' => "licence de détention/utilisation des substances réglementées",
+                'idamm' => $show->id,
+                'pj' => $ldusr
+            ]);
+        }
+
+        if($request->hasFile('pj10')) {
+            $cf = 'ldusr.'.$request->pj10->extension();
+            $request->pj10->move($usager_folder, $cf);
+            DocumentAmms::create([
+                'libelle' => "Certificat de fumigation (riz & friperie)",
+                'idamm' => $show->id,
+                'pj' => $cf
+            ]);
+        }
+
+        if($request->hasFile('pj11')) {
+            $bietc = 'bietc.'.$request->pj10->extension();
+            $request->pj10->move($usager_folder, $bietc);
+            DocumentAmms::create([
+                'libelle' => "Bordereau d'Identification Electronique de Traçabilité des Cargaisons",
+                'idamm' => $show->id,
+                'pj' => $bietc
+            ]);
+        }
+
+
+        //Sauvegarde des produits associés à la demande
+        $tab_produits = $_POST['produits'];
+        //dd($tab_produits);
+        foreach($tab_produits as $data) {
+            if ($data['numfact'] != "") {
+                $numfact = $data['numfact'];
+                $datefact = $data['datefact'];
+                $fournisseur = $data['fournisseur'];
+                $pays_or = $data['pays_or'];
+                $produit = $data['idproduit'];
+                $marque = $data['marque'];
+                $poids = $data['poids'];
+                $total = $data['total'];
+
+                ProduitAmms::create([
+                    'idamm' => $show->id,
+                    'idproduit' => $produit,
+                    'numfact' => $numfact,
+                    'datefact' => $datefact,
+                    'fournisseur' => $fournisseur,
+                    'marque' => $marque,
+                    'paysorig' => $pays_or,
+                    'poids' => $poids,
+                    'total' => $total,
+                ]);
+            }
+        }
+
+        //Sauvegarde des vols associés à la demande (Aérienne)
+        if ($_POST['modetransport'] == 'Aérien') {
+            VolAmm::create([
+                'idamm' => $show->id,
+                'numlta' => $_POST['numlta'],
+                'cieaerien' => $_POST['cieaerien'],
+                'numvol' => $_POST['numvol'],
+            ]);
+        }
+
+        //Sauvegarde des conteneurs associés à la demande (Maritime)
+        if ($_POST['modetransport'] == 'Maritime') {
+            $tab_conteneurs = $_POST['conteneurs'];
+            $nomnavire = $_POST['nomnavire'];
+            $numvoyagem = $_POST['numvoyagem'];
+            $numbietc = $_POST['numbietc'];
+            $numconnaissement = $_POST['numconnaissement'];
+            //dd($tab_conteneurs);
+            foreach($tab_conteneurs as $data) {
+                if ($data['numconteneurm'] != "") {
+                    $numconteneur = $data['numconteneurm'];
+                    $numplomb = $data['numplombm'];
+
+                    ConteneurAmm::create([
+                        'idamc' => $show->id,
+                        'nomnavire' => $nomnavire,
+                        'numvoyage' => $numvoyagem,
+                        'numbietc' => $numbietc,
+                        'numconteneur' => $numconteneur,
+                        'numplomb' => $numplomb,
+                        'numconnaissement' => $numconnaissement,
+                    ]);
+                }
+            }
+        }
+
+        //Sauvegarde des vehicules associés à la demande (Terrestre)
+        if ($_POST['modetransport'] == 'Terrestre') {
+            $tab_vehicules = $_POST['vehicules'];
+            //dd($tab_vehicules);
+            foreach($tab_vehicules as $data) {
+                if ($data['numlvi'] != "") {
+                    $numlvi = $data['numlvi'];
+                    $numvehicule = $data['numvehicule'];
+                    $numconteneur = $data['numconteneurt'];
+                    $numplomb = $data['numplombt'];
+
+                    VehiculeAmm::create([
+                        'idamm' => $show->id,
+                        'numlvi' => $numlvi,
+                        'numvehicule' => $numvehicule,
+                        'numconteneur' => $numconteneur,
+                        'numplomb' => $numplomb,
+                    ]);
+                }
+            }
+        }
+
+        SuiviAmms::create([
+            'idamm' => $show->id,
+            'etat' => 1,
+            'iduser' => Auth::id(),
+            'comments' => "Nouvelle demande soumise à la DGCC",
+        ]);
+
+        return redirect('/traitement-amm/new')->with('success', "Demande d'Autorisation de Mise sur le Marché enregistrée avec succès");
     }
 
     /**
