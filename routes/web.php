@@ -95,22 +95,17 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::any('profil/details/{prf}', 'ProfilsController@details')->name('profils.details');
     Route::resource('profils', 'ProfilsController');
 
+    Route::any('dashboard/admin', 'DashboardController@admin')->name('dashboard.admin');
+    Route::any('dashboard/admin/{debut}/{fin}', 'DashboardController@adminrange')->name('dashboard.adminrange');
+    Route::any('dashboard/user', 'DashboardController@user')->name('dashboard.user');
+    Route::resource('dashboard', 'DashboardController');
+
     Route::resource('users', 'UsersController');
 
     Route::get('logout', 'Auth\LoginController@logout');
 
     Route::get('demande-comptes/list', 'DemandeComptesController@list');
 
-    Route::get('/dashboard', function() {
-        // $category_name = '';
-        $data = [
-            'category_name' => 'Accueil',
-            'page_name' => 'Tableau de bord',
-            'has_scrollspy' => 0,
-            'scrollspy_offset' => '',
-        ];
-        return view('dashboard')->with($data);
-    });
 
     Route::get('/accueil', function() {
         $data = [

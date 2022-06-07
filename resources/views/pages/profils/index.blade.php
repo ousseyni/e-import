@@ -18,7 +18,7 @@
                     @endif
 
                     <div class="table-responsive mb-4 mt-4">
-                        <a href="{{ route('profils.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouvelle catégorie</a>
+                        <a href="{{ route('profils.create')  }}" class="btn btn-outline-info btn-sm text-right mb-1">Nouveau profil</a>
                         <table id="zero-config" class="table table-hover" style="width:100%">
                             <thead>
                             <tr>

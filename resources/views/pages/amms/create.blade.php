@@ -210,7 +210,7 @@
                                                                 @foreach($categorie_produits as $categorie)
                                                                     <optgroup label="{{str_replace("\\","", $categorie->libelle)}}">
                                                                         @foreach($categorie->getProduits as $produit)
-                                                                            <option value="{{$produit->id}}">{{str_replace("\\","", $produit->libelle)}}</option>
+                                                                            <option value="{{$produit->id}}">{{str_replace("\\","", $categorie->libelle)}} > {{str_replace("\\","", $produit->libelle)}}</option>
                                                                         @endforeach
                                                                     </optgroup>
                                                                 @endforeach

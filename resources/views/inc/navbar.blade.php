@@ -5,7 +5,7 @@
 
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="/analytics">
+                    <a href="/dashboard">
                         <img src="{{asset('storage/img/logo-dgcc.png')}}" class="navbar-logo" alt="logo">
                     </a>
                 </li>

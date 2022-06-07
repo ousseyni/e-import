@@ -30,6 +30,13 @@
 
 <style>
 
+    caption {
+        caption-side:top;
+    }
+
+    .table td, .table th {
+        font-size: 12px !important;
+    }
     .form-group label, label {
         color: #263544 !important;
     }
