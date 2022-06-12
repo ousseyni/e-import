@@ -9,6 +9,10 @@
 
     <p>{{ $details['body'] }}</p>
 
-    <p>La DGCC vous remercie pour votre confiance.</p>
+    <p>
+        La DGCC vous remercie pour votre confiance. <br><br>
+        Pour plus d'informations, contacter le <strong>011 79 53 14 </strong>
+        ou le <strong>8085</strong>(appel gratuit)
+    </p>
 </body>
 </html>

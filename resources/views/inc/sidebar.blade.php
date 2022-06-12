@@ -159,34 +159,29 @@
                     @endif
 
                     @if(in_array(12, $tab_droit) or in_array(13, $tab_droit) or in_array(14, $tab_droit) or in_array(18, $tab_droit))
-                    <li class="menu {{ ($category_name === 'Gestion des contribuables') ? 'active' : '' }}">
-                        <a href="#contribuables" data-active="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" class="dropdown-toggle">
+                    <li class="menu {{ ($category_name === 'Gestion des comptes') ? 'active' : '' }}">
+                        <a href="#contribuables" data-active="{{ ($category_name === 'Gestion des comptes') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des contribuables') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="icon-container">
-                                <i data-feather="shopping-bag"></i><span>Base Contribuables</span>
+                                <i data-feather="shopping-bag"></i><span>Gestion des comptes</span>
                             </div>
                             <div>
                                 <i data-feather="chevron-right"></i>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des contribuables') ? 'show' : '' }}" id="contribuables" data-parent="#accordionExample">
+                        <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des comptes') ? 'show' : '' }}" id="contribuables" data-parent="#accordionExample">
                             @if(in_array(12, $tab_droit))
-                            <li class="{{ ($page_name === 'Nouveau contribuable') ? 'active' : '' }}">
-                                <a href="{{ route('contribuables.create')  }}"> Nouveau contribuable </a>
-                            </li>
-                            @endif
-                            @if(in_array(13, $tab_droit))
-                            <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
-                                <a href="{{ route('contribuables.index')  }}"> Liste contribuables</a>
+                            <li class="{{ ($page_name === 'Nouveau compte') ? 'active' : '' }}">
+                                <a href="{{ route('contribuables.create')  }}"> Nouveau compte </a>
                             </li>
                             @endif
                             @if(in_array(14, $tab_droit))
-                            <li class="{{ ($page_name === "Comptes en attente d'activation") ? 'active' : '' }}">
-                                <a href="{{ url('demande-comptes/list')  }}"> En attente de validation</a>
-                            </li>
+                                <li class="{{ ($page_name === "Comptes en attente d'activation") ? 'active' : '' }}">
+                                    <a href="{{ url('demande-comptes/list')  }}"> En attente de validation</a>
+                                </li>
                             @endif
-                            @if(in_array(18, $tab_droit))
-                            <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
-                                <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
+                            @if(in_array(13, $tab_droit))
+                            <li class="{{ ($page_name === 'Liste des contribuables') ? 'active' : '' }}">
+                                <a href="{{ route('contribuables.index')  }}"> Liste des comptes</a>
                             </li>
                             @endif
                         </ul>
@@ -197,22 +192,33 @@
                     <li class="menu {{ ($category_name === 'Gestion des Produits') ? 'active' : '' }}">
                         <a href="#produits" data-active="{{ ($category_name === 'Gestion des Produits') ? 'true' : 'false' }}" data-toggle="collapse" aria-expanded="{{ ($category_name === 'Gestion des Produits') ? 'true' : 'false' }}" class="dropdown-toggle">
                             <div class="icon-container">
-                                <i data-feather="grid"></i><span>Base Produits</span>
+                                <i data-feather="grid"></i><span>Gestion des produits</span>
                             </div>
                             <div>
                                 <i data-feather="chevron-right"></i>
                             </div>
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Gestion des Produits') ? 'show' : '' }}" id="produits" data-parent="#accordionExample">
-                            @if(in_array(22, $tab_droit))
-                            <li class="{{ ($page_name === 'Catégorie des Produits') ? 'active' : '' }}">
-                                <a href="{{ route('categorie-produits.index')  }}"> Catégorie de produits </a>
+                            @if(in_array(19, $tab_droit))
+                            <li class="{{ ($page_name === 'Nouveau produit') ? 'active' : '' }}">
+                                <a href="{{ route('produits.create')  }}"> Nouveau produit</a>
                             </li>
                             @endif
                             @if(in_array(26, $tab_droit))
                             <li class="{{ ($page_name === 'Liste des Produits') ? 'active' : '' }}">
                                 <a href="{{ route('produits.index')  }}"> Liste de produits</a>
                             </li>
+                            @endif
+                            <li class="divider"></li>
+                            @if(in_array(23, $tab_droit))
+                            <li class="{{ ($page_name === 'Nouvelle catégorie de produit') ? 'active' : '' }}">
+                                <a href="{{ route('categorie-produits.create')  }}"> Nouvelle catégorie </a>
+                            </li>
+                            @endif
+                            @if(in_array(22, $tab_droit))
+                                <li class="{{ ($page_name === 'Liste des catégories de produits') ? 'active' : '' }}">
+                                    <a href="{{ route('categorie-produits.index')  }}"> Liste des catégorie </a>
+                                </li>
                             @endif
                         </ul>
                     </li>
@@ -261,6 +267,11 @@
                             </div>
                         </a>
                         <ul class="collapse submenu list-unstyled {{ ($category_name === 'Parametrage') ? 'show' : '' }}" id="param" data-parent="#accordionExample">
+                            @if(in_array(18, $tab_droit))
+                            <li class="{{ ($page_name === 'Type de contribuables') ? 'active' : '' }}">
+                                <a href="{{ route('type-contribuables.index')  }}"> Types contribuables</a>
+                            </li>
+                            @endif
                             @if(in_array(37, $tab_droit))
                             <li class="{{ ($page_name === 'Devises étrangères') ? 'active' : '' }}">
                                 <a href="{{ route('devises.index')  }}"> Devises étrangères </a>

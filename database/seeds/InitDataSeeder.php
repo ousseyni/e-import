@@ -78,9 +78,9 @@ class InitDataSeeder extends Seeder
         TypeContribuables::create([
             'libelle'     => 'Importateur',
         ]);
-        TypeContribuables::create([
+        /*TypeContribuables::create([
             'libelle'     => 'Exportateur',
-        ]);
+        ]);*/
         TypeContribuables::create([
             'libelle'     => 'Producteur local',
         ]);

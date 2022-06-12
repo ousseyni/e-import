@@ -54,7 +54,7 @@
                         <div class="form-row mb-2">
                             <div class="col-12 input-group-sm">
                                 <label for="login">Votre identifiant : </label>
-                                <input readonly="" type="text" value="{{$user->login}}" class="form-control" />
+                                <input id="login" placeholder="Identifiant" name="login" readonly="" type="text" value="{{$user->login}}" class="form-control" />
                             </div>
                         </div>
                         <hr/>
@@ -73,7 +73,7 @@
                         <button type="submit" class="btn btn-primary mb-3">Valider</button>
                     </form>
 
-                    <p class="terms-conditions">© 2022 Tous droits reservé. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
+                    <p class="terms-conditions">© 2022 Tous droits reservés. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
 
                 </div>
             </div>
