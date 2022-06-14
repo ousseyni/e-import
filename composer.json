@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "ext-json": "*",
+        "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-dompdf": "^1.0",
         "barryvdh/laravel-snappy": "^1.0",
         "elibyy/tcpdf-laravel": "^9.0",

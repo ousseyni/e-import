@@ -14,6 +14,7 @@ use App\Pays;
 use App\ProduitAmcs;
 use App\Produits;
 use App\SuiviAmcs;
+use App\User;
 use App\VehiculeAmc;
 use App\VolAmc;
 use Illuminate\Http\Request;
@@ -28,7 +29,10 @@ class AmcsController extends Controller
      */
     public function index()
     {
-        $amcs = Amcs::all();
+        $user = User::find(Auth::id());
+        $usager = Contribuables::where('nif', '=', $user->login)->firstOrFail();
+
+        $amcs = Amcs::where('idcontribuable', '=', $usager->id)->get();
         return view('pages.amcs.index', compact('amcs'));
 
     }

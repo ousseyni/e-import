@@ -53,7 +53,7 @@
 
                         <div class="form-row mb-2">
                             <div class="col-12 input-group-sm">
-                                <label for="login">Votre identifiant : </label>
+                                <label for="login">Identifiant : </label>
                                 <input id="login" placeholder="Identifiant" name="login" readonly="" type="text" value="{{$user->login}}" class="form-control" />
                             </div>
                         </div>

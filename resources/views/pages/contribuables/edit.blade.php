@@ -59,6 +59,27 @@
                                 </div>
 
                                 <div class="form-row mb-2">
+                                    <div class="col-6 input-group-sm">
+                                        <label for="activiteid">Activité</label>
+                                        <select class="form-control" id="activiteid" name="activiteid">
+                                            <option value="">--- Choisir une activité ---</option>
+                                            @foreach($activite as $act)
+                                                <option {{ ($act->id == $contribuable->activiteid ? 'selected' : '')  }} value="{{$act->id}}">{{$act->libelle}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-6 input-group-sm">
+                                        <label for="sousactiviteid">Sous Activité</label>
+                                        <select class="form-control" id="sousactiviteid" name="sousactiviteid">
+                                            @foreach($sousactivite as $sact)
+                                                <option {{ ($sact->id == $contribuable->sousactiviteid ? 'selected' : '')  }} value="{{$sact->id}}" class="{{$sact->activiteid}}">{{$sact->libelle}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row mb-2">
                                     <div class="col-7 input-group-sm">
                                         <label for="siegesocial">Siège sociale</label>
                                         <input required="" type="text" class="form-control" id="siegesocial" value="{{ $contribuable->siegesocial }}" name="siegesocial" />

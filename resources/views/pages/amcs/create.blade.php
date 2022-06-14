@@ -68,7 +68,7 @@
                                             <input type="text" required name="nomnavire" id="nomnavire" class="form-control" />
                                         </div>
                                         <div class="col-3 input-group-sm">
-                                            <label for="numvoyagem">N° voyage</label>
+                                            <label for="numvoyagem">Compagnie maritime</label>
                                             <input type="text" name="numvoyagem" id="numvoyagem" class="form-control" />
                                         </div>
                                         <div class="col-3 input-group-sm">
@@ -325,7 +325,7 @@
                                     <hr>
                                     <div class="form-row mb-2">
                                         <div class="col-6 input-group-sm">
-                                            Joindre l'Autorisation Spéciale des Lubrifiants (AIL)
+                                            Joindre l'Autorisation d'Importation des Lubrifiants (AIL)
                                         </div>
                                         <div class="col-6 input-group-sm">
                                             <input type="file" accept=".pdf, .jpg, .png, .jpeg" id="pj6" name="pj6" />

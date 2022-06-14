@@ -37,6 +37,9 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::resource('habilitation', 'HabilitationController');
 
     Route::any('contribuables/info', 'ContribuablesController@getcontribuable');
+    Route::any('contribuables/user', 'ContribuablesController@getuser');
+    Route::get('contribuables/info','ContribuablesController@getcontribuable')->name('contribuables.info');
+    Route::get('contribuables/user','ContribuablesController@getuser')->name('contribuables.user');
     Route::resource('contribuables', 'ContribuablesController');
 
     Route::any('produits/info', 'ProduitsController@getcategorie');
@@ -98,6 +101,7 @@ Route::group(['middleware' => 'auth'] , function() {
     Route::any('dashboard/admin', 'DashboardController@admin')->name('dashboard.admin');
     Route::any('dashboard/admin/{debut}/{fin}', 'DashboardController@adminrange')->name('dashboard.adminrange');
     Route::any('dashboard/user', 'DashboardController@user')->name('dashboard.user');
+    Route::any('dashboard/user/{debut}/{fin}', 'DashboardController@userrange')->name('dashboard.userrange');
     Route::resource('dashboard', 'DashboardController');
 
     Route::resource('users', 'UsersController');

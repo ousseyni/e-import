@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Activite;
 use App\Contribuables;
+use App\SousActivite;
 use App\TypeContribuables;
+use App\User;
 use Illuminate\Http\Request;
 
 class ContribuablesController extends Controller
@@ -29,7 +32,10 @@ class ContribuablesController extends Controller
     public function create()
     {
         $typeContribuables = TypeContribuables::all(['id', 'libelle']);
-        return view('pages.contribuables.create', compact('typeContribuables'));
+        $activite = Activite::all();
+        $sousactivite = SousActivite::all();
+        return view('pages.contribuables.create',
+            compact('typeContribuables', 'activite', 'sousactivite'));
     }
 
     /**
@@ -51,7 +57,9 @@ class ContribuablesController extends Controller
             'numagrement' => 'max:50',
             'numcartecomm' => 'max:50',
             'nomprenom' => 'required|max:200',
-            'email' => 'required|max:100'
+            'email' => 'required|max:100',
+            'activiteid' => 'required',
+            'sousactiviteid' => 'required',
         ]);
 
         //dd($validatedData);
@@ -68,6 +76,8 @@ class ContribuablesController extends Controller
                 'numcartecomm' => $validatedData['numcartecomm'],
                 'nomprenom' => $validatedData['nomprenom'],
                 'email' => $validatedData['email'],
+                'activiteid' => $validatedData['activiteid'],
+                'sousactiviteid' => $validatedData['sousactiviteid'],
             ]
         );
 
@@ -98,7 +108,11 @@ class ContribuablesController extends Controller
         $contribuable = Contribuables::where('slug', '=', $slug)->firstOrFail();
         $typeContribuables = TypeContribuables::all(['id', 'libelle']);
 
-        return view('pages.contribuables.edit', compact('contribuable', 'typeContribuables'));
+        $activite = Activite::all();
+        $sousactivite = SousActivite::all();
+
+        return view('pages.contribuables.edit',
+            compact('contribuable', 'typeContribuables', 'activite', 'sousactivite'));
     }
 
     /**
@@ -121,7 +135,9 @@ class ContribuablesController extends Controller
             'numagrement' => 'max:50',
             'numcartecomm' => 'max:50',
             'nomprenom' => 'required|max:200',
-            'email' => 'required|max:100'
+            'email' => 'required|max:100',
+            'activiteid' => 'required',
+            'sousactiviteid' => 'required',
         ]);
 
         //dd($validatedData);
@@ -153,6 +169,45 @@ class ContribuablesController extends Controller
      */
     public function getcontribuable(Request $request)
     {
+        $where = array('nif' => $request->nif);
+        $contribuable  = Contribuables::where($where)->first();
+        $type = ($contribuable && !is_null($contribuable->typecontribuableid)  ? $contribuable->getTypeContribuables->libelle : "Non défini");
+        $nb  = Contribuables::where($where)->count();
+
+        return response()->json(
+            ['nb'=>$nb, 'data'=>$contribuable, 'type'=>$type]
+        );
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getuser(Request $request)
+    {
+        /*$user  = User::where('login', '=', $request->nif)->first();
+
+        //dd($user);
+
+        $contribuable = null;
+        $isuser = false;
+        $where = array('nif' => $request->nif);
+        if ($user) {
+            $isuser = true;
+            $contribuable  = Contribuables::where($where)->first();
+        }
+        $type = ($contribuable && !is_null($contribuable->typecontribuableid)  ? $contribuable->getTypeContribuables->libelle : "Non défini");
+        $nb  = Contribuables::where($where)->count();
+        return response()->json(
+            ['nb'=>0,
+             'data'=>$user,
+             'type'=>null,
+             'isuser'=>0,
+             'user'=>0,
+            ]
+        );*/
 
         $where = array('nif' => $request->nif);
         $contribuable  = Contribuables::where($where)->first();
@@ -162,5 +217,6 @@ class ContribuablesController extends Controller
         return response()->json(
             ['nb'=>$nb, 'data'=>$contribuable, 'type'=>$type]
         );
+
     }
 }

@@ -69,41 +69,47 @@ class DemandeComptesController extends Controller
         ]);
 
         //dd($validatedData);
-
-        $fileName = $validatedData['nif'].'.'.$request->pj->extension();
-        $usager_folder = public_path('uploads/'.$validatedData['nif']);
-
-        if (!is_dir($usager_folder)) {
-            mkdir($usager_folder, 0777, true);
+        $userExist = User::where('login', '=', $validatedData['nif'])->exists();
+        if ($userExist) {
+            return redirect('/demande-comptes')->with('error', 'Echec de création de compte car un compte utilisateur existe déjà avec ce numéro NIF.');
         }
+        else {
+            $fileName = $validatedData['nif'].'.'.$request->pj->extension();
+            $usager_folder = public_path('uploads/'.$validatedData['nif']);
 
-        $request->pj->move($usager_folder, $fileName);
-        $etat = false;
+            if (!is_dir($usager_folder)) {
+                mkdir($usager_folder, 0777, true);
+            }
 
-        //dd($validatedData);
+            $request->pj->move($usager_folder, $fileName);
+            $etat = false;
 
-        DemandeComptes::updateOrCreate(
-            ['nif' => $validatedData['nif']],
-            [
-                'typecontribuableid' => $validatedData['typecontribuableid'],
-                'raisonsociale' => $validatedData['raisonsociale'],
-                'tel' => $validatedData['tel'],
-                'email' => $validatedData['email'],
-                'pj' => $fileName,
-                'etat' => $etat
-            ]
-        );
+            //dd($validatedData);
 
-        $details = [
-            'title' => "Cher " .$validatedData['raisonsociale'],
-            'body' => "Votre demande de création de compte avec le N.I.F. {$validatedData['nif']} a
+            DemandeComptes::updateOrCreate(
+                ['nif' => $validatedData['nif']],
+                [
+                    'typecontribuableid' => $validatedData['typecontribuableid'],
+                    'raisonsociale' => $validatedData['raisonsociale'],
+                    'tel' => $validatedData['tel'],
+                    'email' => $validatedData['email'],
+                    'pj' => $fileName,
+                    'etat' => $etat
+                ]
+            );
+
+            $details = [
+                'title' => "Cher " .$validatedData['raisonsociale'],
+                'body' => "Votre demande de création de compte avec le N.I.F. {$validatedData['nif']} a
                         été enregistrée avec succès. Vous recevrez par mail, très prochainement, le lien
                         d'activation de votre compte."
-        ];
+            ];
 
-        Mail::to($validatedData['email'])->send(new MailTemplates($details));
+            Mail::to($validatedData['email'])->send(new MailTemplates($details));
 
-        return redirect('/demande-comptes')->with('success', 'Votre demande de création de compte a été envoyée avec succès');
+            return redirect('/demande-comptes')->with('success', 'Votre demande de création de compte a été envoyée avec succès');
+        }
+
     }
 
     /**

@@ -14,7 +14,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Nouveau contribuable</h4>
+                                    <h4>Nouveau compte société</h4>
                                 </div>
                             </div>
                         </div>
@@ -52,6 +52,27 @@
                                     <div class="col-12 input-group-sm">
                                         <label for="raisonsociale">Dénomination sociale</label>
                                         <input required="" type="text" id="raisonsociale" name="raisonsociale" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row mb-2">
+                                    <div class="col-6 input-group-sm">
+                                        <label for="activiteid">Activité</label>
+                                        <select class="form-control" id="activiteid" name="activiteid">
+                                            <option value="">--- Choisir une activité ---</option>
+                                            @foreach($activite as $act)
+                                                <option value="{{$act->id}}">{{$act->libelle}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-6 input-group-sm">
+                                        <label for="sousactiviteid">Sous Activité</label>
+                                        <select class="form-control" id="sousactiviteid" name="sousactiviteid">
+                                            @foreach($sousactivite as $sact)
+                                                <option value="{{$sact->id}}" class="{{$sact->activiteid}}">{{$sact->libelle}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -140,7 +161,7 @@
                 success: function(res){
                     console.log(res);
                     if (res.nb === 0) {
-                        $('#msg').html('Contribuable non pré-enregistré à la DGCC');
+                        $('#msg').html('Société non pré-enregistrée à la DGCC');
                         $('#raisonsociale').val('');
                         $('#siegesocial').val('');
                         $('#bp').val('');
@@ -152,7 +173,7 @@
                         $('#email').val('');
                     }
                     else {
-                        $('#msg').html('Contribuable pré-enregistré à la DGCC');
+                        $('#msg').html('Société pré-enregistrée à la DGCC');
                         $('#raisonsociale').val(res.data.raisonsociale);
                         $('#siegesocial').val(res.data.siegesocial);
                         $('#bp').val(res.data.bp);
@@ -170,4 +191,11 @@
 
     });
 
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-chained/1.0.1/jquery.chained.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#sousactiviteid").chained("#activiteid");
+    });
 </script>

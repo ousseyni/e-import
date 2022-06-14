@@ -42,6 +42,12 @@
                         </div>
                     @endif
 
+                    @if(session()->get('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
+
                     <form method="post" action="{{ route('demande-comptes.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row mb-2">
@@ -92,7 +98,7 @@
 
                     <p class="signup-link text-right">Vous avez un compte? <a href="/connexion">Connexion</a></p>
 
-                    <p class="terms-conditions">© 2022 Tous droits reservé. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
+                    <p class="terms-conditions">© 2022 Tous droits reservés. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
 
                 </div>
             </div>
@@ -104,14 +110,11 @@
     </div>
 </div>
 
-
-<script src="{{asset('assets/js/libs/jquery-3.1.1.min.js')}}"></script>
-<script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/authentication/form-1.js')}}"></script></body>
 
 {{-- Forms Input Mask --}}
-<script src="{{asset('assets/js/scrollspyNav.js')}}"></script>
 <script src="{{asset('plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
 <script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
 
@@ -121,3 +124,41 @@
 
 
 {{-- @endsection --}}
+<script>
+    $(document).ready(function () {
+
+
+        $('body').on('blur', '#nif', function () {
+
+            var nif_val = $('#nif').val();
+            console.log(nif_val);
+
+            $.ajax({
+                type:"POST",
+                url: "{{ url('contribuables/user') }}",
+                data: { nif: nif_val },
+                dataType: 'json',
+                success: function(res){
+                    console.log(res);
+                    console.log('test');
+                    if (res.nb === 0) {
+                        $('#msg').html('Société non pré-enregistrée à la DGCC');
+                        $('#raisonsociale').val('');
+                        $('#tel').val('');
+                        $('#email').val('');
+                    }
+                    else {
+                        $('#msg').html('Société pré-enregistrée à la DGCC');
+                        $('#raisonsociale').val(res.data.raisonsociale);
+                        $('#tel').val(res.data.tel);
+                        $('#email').val(res.data.email);
+                    }
+
+                }
+            });
+        });
+
+    });
+
+</script>
+

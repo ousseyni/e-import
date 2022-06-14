@@ -5,12 +5,12 @@
 
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="/dashboard">
+                    <a href="#">
                         <img src="{{asset('storage/img/logo-dgcc.png')}}" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="/" class="nav-link"> e-Services </a>
+                    <a href="#" class="nav-link"> e-Services </a>
                 </li>
             </ul>
 

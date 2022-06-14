@@ -50,10 +50,9 @@
                     <form method="post" action="{{ url('demande-comptes/activate', $user->email_verification_token) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-
                         <div class="form-row mb-2">
                             <div class="col-12 input-group-sm">
-                                <label for="localisation">NIF : </label>
+                                <label for="localisation">Votre identifiant : </label>
                                 <input readonly="" type="text" value="{{$user->login}}" class="form-control" />
                             </div>
                         </div>
@@ -96,14 +95,14 @@
                         <div class="form-row mb-2">
                             <div class="col-12 input-group-sm">
                                 <label for="localisation">Localisation : </label>
-                                <input placeholder="Quartier de l'entrepôt" required="" type="text" id="localisation" name="localisation" class="form-control" />
+                                <input placeholder="Donner la position exacte de l'entrepôt" required="" type="text" id="localisation" name="localisation" class="form-control" />
                             </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary mb-3">Valider</button>
                     </form>
 
-                    <p class="terms-conditions">© 2022 Tous droits reservé. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
+                    <p class="terms-conditions">© 2022 Tous droits reservés. <a href="#">e-Services</a>  <a href="javascript:void(0);">DGCC</a>.</p>
 
                 </div>
             </div>
