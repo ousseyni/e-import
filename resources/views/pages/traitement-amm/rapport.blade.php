@@ -167,7 +167,7 @@
                                                                         @if(in_array($produit->id, $tab_pamm))
                                                                             <option value="{{$produit->id}}"><strong>{{str_replace("\\","", $produit->libelle)}}</strong></option>
                                                                         @else
-                                                                            <option value="{{$produit->id}}">{{str_replace("\\","", $produit->libelle)}}</option>
+                                                                            <option value="{{$produit->id}}">{{str_replace("\\","", $categorie->libelle)}} > {{str_replace("\\","", $produit->libelle)}}</option>
                                                                         @endif
                                                                     @endforeach
                                                                 </optgroup>

@@ -185,13 +185,13 @@ function getFraisEnr() {
     const mode_t = $("#modetransport :selected").val();
     let nb = 1;
     if (mode_t === 'Aérien') {
-        //nb=$('.repeater_item_produits').length;
+        nb = 1;
     }
     if (mode_t === 'Maritime') {
-        nb = $('.repeater_item_conteneurs').length;
+        nb = $('.repeater_item_conteneurs').length - 1;
     }
     if (mode_t === 'Terrestre') {
-        nb = $('.repeater_item_vehicules').length;
+        nb = $('.repeater_item_vehicules').length - 1;
     }
 
     $.ajax({

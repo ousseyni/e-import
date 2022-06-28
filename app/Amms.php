@@ -98,6 +98,16 @@ class Amms extends Model
         return $haveRapport;
     }
 
+    public function getEtatRapport()
+    {
+        $conclusion = 1;
+        if (InspectionAmm::where('idamm', '=', $this->id)->exists()) {
+            $inspection = InspectionAmm::where('idamm', '=', $this->id)->first();
+            $conclusion = $inspection->conclusion;
+        }
+        return $conclusion;
+    }
+
     public function getNumDemande(): string
     {
         $id = $this->id;

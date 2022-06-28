@@ -147,12 +147,20 @@
                                                     @elseif($amm->etat == '10')
                                                         <span>Chaine de traitement du dossier terminée</span><br><br>
                                                         <div class="row">
-                                                            <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlamm', $amm->slug) }}">
+                                                            <a class="col-4" target="_blank" href="{{ route('traitement-amm.dwlamm', $amm->slug) }}">
                                                                 Voir l'AMM
                                                             </a>
-                                                            <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlanx', $amm->slug) }}">
+                                                            <a class="col-4" target="_blank" href="{{ route('traitement-amm.dwlanx', $amm->slug) }}">
                                                                 Voir les annexes
                                                             </a>
+                                                            <span class="col-4">
+                                                                @if($amm->getEtatRapport() == 0)
+                                                                    <strong class="alert-danger">Inspection non conforme</strong>
+                                                                    <a target="_blank" href="{{ route('traitement-amc.dwlrpt', $amm->slug) }}">
+                                                                        (Voir rapport d'inspection)
+                                                                    </a>
+                                                                @endif
+                                                            </span>
                                                         </div>
                                                     @elseif($amm->etat == '4' && $amm->totalglobal != 0)
                                                         <select class="form-control" name="traiter_demande" id="traiter_demande">

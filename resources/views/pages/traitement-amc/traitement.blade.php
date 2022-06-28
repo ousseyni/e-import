@@ -148,12 +148,20 @@
                                                         <br>
                                                         <span>Chaine de traitement du dossier terminée</span><br><br>
                                                         <div class="row">
-                                                            <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlamc', $amc->slug) }}">
+                                                            <a class="col-4" target="_blank" href="{{ route('traitement-amc.dwlamc', $amc->slug) }}">
                                                                 Voir l'AMC
                                                             </a>
-                                                            <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlanx', $amc->slug) }}">
+                                                            <a class="col-4" target="_blank" href="{{ route('traitement-amc.dwlanx', $amc->slug) }}">
                                                                 Voir les annexes
                                                             </a>
+                                                            <span class="col-4">
+                                                                @if($amc->getEtatRapport() == 0)
+                                                                    <strong class="alert-danger">Inspection non conforme</strong>
+                                                                    <a target="_blank" href="{{ route('traitement-amc.dwlrpt', $amc->slug) }}">
+                                                                        (Voir rapport d'inspection)
+                                                                    </a>
+                                                                @endif
+                                                            </span>
                                                         </div>
                                                     @elseif($amc->etat == '4' && $amc->totalglobal != 0)
                                                         <select class="form-control" name="traiter_demande" id="traiter_demande">

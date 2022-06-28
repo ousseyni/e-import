@@ -46,7 +46,10 @@
                                     <td>
                                         <a href="{{ route('traitement-amm.trace', $amm->slug) }}">
                                             {{ $amm->getEtat->libelle_dgcc }}
-                                        </a>
+                                        </a><br>
+                                        @if($amm->getEtatRapport() == 0)
+                                            <strong class="alert-danger">Inspection non conforme</strong>
+                                        @endif
                                     </td>
                                     <td>
                                         @if($amm->haveOrdreRecette())

@@ -98,6 +98,16 @@ class Amcs extends Model
         return $haveRapport;
     }
 
+    public function getEtatRapport()
+    {
+        $conclusion = 1;
+        if (InspectionAmc::where('idamc', '=', $this->id)->exists()) {
+            $inspection = InspectionAmc::where('idamc', '=', $this->id)->first();
+            $conclusion = $inspection->conclusion;
+        }
+        return $conclusion;
+    }
+
     public function getNumDemande(): string
     {
         $id = $this->id;
