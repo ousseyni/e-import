@@ -315,6 +315,54 @@
                     </div>
                 </div>
 
+                <div class="col-12 layout-spacing">
+                    <div class="widget-three">
+                        <div class="widget-">
+                            <h5>Statistiques sur les produits importés</h5>
+                        </div>
+                        <div class="widget-content row">
+
+                            <div class="col-6">
+                                <table class="table">
+                                    <caption>Produits des AMC</caption>
+                                    <tr>
+                                        <th>Produits</th>
+                                        <th>Nbre AMC concernés</th>
+                                        <th>Poids total importé (Kg)</th>
+                                    </tr>
+                                    @foreach($stat_produit_amc as $stat_produit)
+                                    <tr>
+                                        <td>{{ $stat_produit[0] }}</td>
+                                        <td>{{ $stat_produit[1] }}</td>
+                                        <td>{{ $stat_produit[2] }}</td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+
+
+                            <div class="col-6">
+                                <table class="table">
+                                    <caption>Produits des AMM</caption>
+                                    <tr>
+                                        <th>Produits</th>
+                                        <th>Nbre AMM concernés</th>
+                                        <th>Poids total importé (Kg)</th>
+                                    </tr>
+                                    @foreach($stat_produit_amm as $stat_produit)
+                                        <tr>
+                                            <td>{{ $stat_produit[0] }}</td>
+                                            <td>{{ $stat_produit[1] }}</td>
+                                            <td>{{ $stat_produit[2] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             <div id="container"></div>
             @endif
 

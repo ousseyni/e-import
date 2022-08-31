@@ -455,7 +455,41 @@ class TraitementAMMController extends Controller
             $new_etat = $request->traiter_demande;
             $old_etat = $request->old_etat;
 
-            //Eregistrement des prescriptions ou avis effectuées
+            //dd($old_etat);
+            //Enregistrement des prescriptions ou avis effectuées
+
+            if ($old_etat == 1) {
+                $prescriptions = $new_etat;
+                if (count($prescriptions) == 1 && $prescriptions[0] == 1) {
+                    $comments = "Rien à signaler";
+                }
+                else {
+                    $comments = "Visite de la DGCC pour inspection Contacts : 061 000 196 / 061 000 202";
+                }
+
+                foreach ($prescriptions as $prescription) {
+                    PrescriptionAmm::create([
+                        'dateprpt' => date('Y-m-d'),
+                        'comments' => $comments,
+                        'iduser' => Auth::id(),
+                        'idamm' => $amm->id,
+                        'idprescription' => $prescription,
+                    ]);
+                }
+                $new_etats = 3;
+                $etat = EtatDemande::where('id', '=', $new_etats)->firstOrFail();
+                $comments = $etat->libelle_dgcc;
+
+                SuiviAmms::create([
+                    'idamm' => $amm->id,
+                    'etat' => $new_etats,
+                    'iduser' => Auth::id(),
+                    'comments' => $comments,
+                ]);
+
+                $amm->etat = $new_etats;
+            }
+
             if ($new_etat == 3) {
                 $prescriptions = $request->prescriptions;
                 if (count($prescriptions) == 1 && $prescriptions[0] == 1) {
@@ -510,21 +544,24 @@ class TraitementAMMController extends Controller
                 $amm->save();
             }*/
 
-            $etat = EtatDemande::where('id', '=', $new_etat)->firstOrFail();
-            $comments = $etat->libelle_dgcc;
+            if ($old_etat != 1) {
+                $etat = EtatDemande::where('id', '=', $new_etat)->firstOrFail();
+                $comments = $etat->libelle_dgcc;
 
-            if ($new_etat == 998 || $new_etat == 999) {
-                $comments = $request->comments_traitement;
+                if ($new_etat == 998 || $new_etat == 999) {
+                    $comments = $request->comments_traitement;
+                }
+
+                SuiviAmms::create([
+                    'idamm' => $amm->id,
+                    'etat' => $new_etat,
+                    'iduser' => Auth::id(),
+                    'comments' => $comments,
+                ]);
+
+                $amm->etat = $new_etat;
             }
 
-            SuiviAmms::create([
-                'idamm' => $amm->id,
-                'etat' => $new_etat,
-                'iduser' => Auth::id(),
-                'comments' => $comments,
-            ]);
-
-            $amm->etat = $new_etat;
         }
         $amm->save();
 
@@ -535,6 +572,8 @@ class TraitementAMMController extends Controller
         elseif ($amm->etat == 10) {
             $link = 'traite';
         }
+
+
 
         return redirect('/traitement-amm/'.$link)->with('success', "Traitement de la demande d'AMM enregistré avec succès");
     }
@@ -748,7 +787,7 @@ class TraitementAMMController extends Controller
 
         $amm = Amms::where('slug', '=', $slug)->firstOrFail();
         $suivi = SuiviAmms::where('idamm', '=', $amm->id)
-            ->where('etat', '=', 10)->firstOrFail();
+                          ->where('etat', '=', 8)->firstOrFail();
         $prescriptions = PrescriptionAmm::where('idamm', '=', $amm->id)->get();
 
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amm.png')));

@@ -92,11 +92,11 @@
                                             <td>Document - Autorisation de Mise sur le Marché</td>
                                             <td class="row">
                                                 @if($amm->etat == 10)
-                                                    <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlamm', $amm->slug) }}">
-                                                        Télécharger l'AMM
+                                                    <a class="col-6">
+                                                       <b>AMM à retirer à la DGCC</b>
                                                     </a>
-                                                    <a class="col-6" target="_blank" href="{{ route('traitement-amm.dwlanx', $amm->slug) }}">
-                                                        Télécharger les annexes
+                                                    <a class="col-6">
+                                                        <b>Annexes de l'AMM à retirer à la DGCC</b>
                                                     </a>
                                                 @else
                                                     N/D

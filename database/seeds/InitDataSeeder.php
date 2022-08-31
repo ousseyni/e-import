@@ -267,7 +267,7 @@ class InitDataSeeder extends Seeder
         EtatDemande::create([
             'id'     => 10,
             'libelle_dgcc'     => 'Signature terminée - documents disponibles',
-            'libelle_user'     => 'Dossier signé - documents téléchargeables',
+            'libelle_user'     => 'Dossier signé - documents à retirer à la DGCC',
             'etat_actuel'     => 10,
             'etat_suivant'     => '',
         ]);

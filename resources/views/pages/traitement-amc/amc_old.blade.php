@@ -122,6 +122,9 @@
 <div class="cont6">{{ $amc->getContribuable->bp }}</div>
 <div class="cont7">{{ $amc->getContribuable->tel }}</div>
 
+<img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
+<img class="sign2" src="data:image/jpg;base64,{{ $dir }}">
+<img class="sign3" src="data:image/jpg;base64,{{ $dg }}">
 
 <div class="date_sign">{{ date_format(new DateTime($suivi->created_at), 'd/m/Y') }}</div>
 

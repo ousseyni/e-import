@@ -92,11 +92,11 @@
                                         <td>Document - Autorisation de Mise en Consommation</td>
                                         <td class="row">
                                             @if($amc->etat == 10)
-                                                <a class="col-6">
-                                                    <b>AMC à retirer à la DGCC</b>
+                                                <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlamc', $amc->slug) }}">
+                                                    Télécharger l'AMC
                                                 </a>
-                                                <a class="col-6">
-                                                    <b>Annexes de l'AMC à retirer à la DGCC</b>
+                                                <a class="col-6" target="_blank" href="{{ route('traitement-amc.dwlanx', $amc->slug) }}">
+                                                    Télécharger les annexes
                                                 </a>
                                             @else
                                                 N/D

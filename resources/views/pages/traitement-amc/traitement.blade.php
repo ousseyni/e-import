@@ -207,6 +207,22 @@
                                             </div>
                                         @endif
                                         --}}
+
+                                        @if($amc->etat == 8)
+                                            <div class="col-9">
+                                                <br>
+                                                <div class="row">
+                                                    <a class="col-4" target="_blank" href="{{ route('traitement-amc.dwlamc', $amc->slug) }}">
+                                                        Télécharger l'AMC
+                                                    </a>
+                                                    <a class="col-4" target="_blank" href="{{ route('traitement-amc.dwlanx', $amc->slug) }}">
+                                                        Télécharger les annexes
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        @endif
+
                                         @if($amc->etat == 7)
                                             <div class="col-9">
                                                 <br>

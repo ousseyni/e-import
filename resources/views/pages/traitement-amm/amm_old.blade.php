@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AMC N° {{ $amc->getNumDemande() }} </title>
+    <title>AMM N° {{ $amm->getNumDemande() }} </title>
 
     <style>
 
@@ -25,9 +25,10 @@
             font-family: "Courier New", Courier, monospace;
             color: red;
             top: 230px;
-            right: 235px;
+            right: 225px;
             font-size: 16px;
         }
+
         .qrcode {
             position: absolute;
             bottom: 100px;
@@ -73,12 +74,12 @@
         .cont7 {
             position: absolute;
             top: 428px;
-            right: 280px;
+            right: 300px;
         }
 
         .date_sign {
             position: absolute;
-            top: 668px;
+            top: 710px;
             right: 100px;
             font-size: 16px;
         }
@@ -100,7 +101,7 @@
 
         .sign3 {
             position: absolute;
-            bottom: 150px;
+            bottom: 185px;
             left: 520px;
             width: 175px;
         }
@@ -112,20 +113,21 @@
 <img src="data:image/jpg;base64,{{ $image }}" alt="amm" style="width: 99.9%;">
 <img class="qrcode" src="data:image/jpg;base64,{{ $qrcode }}">
 
-<div class="num_amm">{{ $amc->getNumDemande() }}</div>
+<div class="num_amm">{{$amm->getNumDemande()}}</div>
 
-<div class="cont1">{{ $amc->getContribuable->raisonsociale }}</div>
-<div class="cont2">{{ (is_null($amc->getContribuable->typecontribuableid) ? '' : $amc->getContribuable->getTypeContribuables->libelle) }}</div>
-<div class="cont3">{{ $amc->getContribuable->siegesocial }}</div>
-<div class="cont4">{{ $amc->getContribuable->nif }}</div>
-<div class="cont5">{{ $amc->getContribuable->rccm }}</div>
-<div class="cont6">{{ $amc->getContribuable->bp }}</div>
-<div class="cont7">{{ $amc->getContribuable->tel }}</div>
+<div class="cont1">{{ $amm->getContribuable->raisonsociale }}</div>
+<div class="cont2">{{ (is_null($amm->getContribuable->typecontribuableid) ? '' : $amm->getContribuable->getTypeContribuables->libelle) }}</div>
+<div class="cont3">{{ $amm->getContribuable->siegesocial }}</div>
+<div class="cont4">{{ $amm->getContribuable->nif }}</div>
+<div class="cont5">{{ $amm->getContribuable->rccm }}</div>
+<div class="cont6">{{ $amm->getContribuable->bp }}</div>
+<div class="cont7">{{ $amm->getContribuable->tel }}</div>
 
+<img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
+<img class="sign2" src="data:image/jpg;base64,{{ $dir }}">
+<img class="sign3" src="data:image/jpg;base64,{{ $dg }}">
 
 <div class="date_sign">{{ date_format(new DateTime($suivi->created_at), 'd/m/Y') }}</div>
-
-
 
 </body>
 

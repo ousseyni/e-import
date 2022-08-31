@@ -17,10 +17,12 @@ use App\ModeTransport;
 use App\OrdreRecette;
 use App\Pays;
 use App\PrescriptionAmc;
+use App\PrescriptionAmm;
 use App\Prescriptions;
 use App\ProduitAmcs;
 use App\Produits;
 use App\SuiviAmcs;
+use App\SuiviAmms;
 use App\VehiculeAmc;
 use App\VolAmc;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -487,6 +489,39 @@ class TraitementAMCController extends Controller
             $old_etat = $request->old_etat;
 
             //Eregistrement des prescriptions ou avis effectuées
+
+            if ($old_etat == 1) {
+                $prescriptions = $new_etat;
+                if (count($prescriptions) == 1 && $prescriptions[0] == 1) {
+                    $comments = "Rien à signaler";
+                }
+                else {
+                    $comments = "Visite de la DGCC pour inspection Contacts : 061 000 196 / 061 000 202";
+                }
+
+                foreach ($prescriptions as $prescription) {
+                    PrescriptionAmc::create([
+                        'dateprpt' => date('Y-m-d'),
+                        'comments' => $comments,
+                        'iduser' => Auth::id(),
+                        'idamc' => $amc->id,
+                        'idprescription' => $prescription,
+                    ]);
+                }
+                $new_etats = 3;
+                $etat = EtatDemande::where('id', '=', $new_etats)->firstOrFail();
+                $comments = $etat->libelle_dgcc;
+
+                SuiviAmcs::create([
+                    'idamc' => $amc->id,
+                    'etat' => $new_etats,
+                    'iduser' => Auth::id(),
+                    'comments' => $comments,
+                ]);
+
+                $amc->etat = $new_etats;
+            }
+
             if ($new_etat == 3) {
                 $prescriptions = $request->prescriptions;
                 if (count($prescriptions) == 1 && $prescriptions[0] == 1) {
@@ -541,21 +576,25 @@ class TraitementAMCController extends Controller
                 $amc->save();
             }*/
 
-            $etat = EtatDemande::where('id', '=', $new_etat)->firstOrFail();
-            $comments = $etat->libelle_dgcc;
+            if ($old_etat != 1) {
 
-            if ($new_etat == 998 || $new_etat == 999) {
-                $comments = $request->comments_traitement;
+                $etat = EtatDemande::where('id', '=', $new_etat)->firstOrFail();
+                $comments = $etat->libelle_dgcc;
+
+                if ($new_etat == 998 || $new_etat == 999) {
+                    $comments = $request->comments_traitement;
+                }
+
+                SuiviAmcs::create([
+                    'idamc' => $amc->id,
+                    'etat' => $new_etat,
+                    'iduser' => Auth::id(),
+                    'comments' => $comments,
+                ]);
+
+                $amc->etat = $new_etat;
             }
 
-            SuiviAmcs::create([
-                'idamc' => $amc->id,
-                'etat' => $new_etat,
-                'iduser' => Auth::id(),
-                'comments' => $comments,
-            ]);
-
-            $amc->etat = $new_etat;
         }
         $amc->save();
 
@@ -739,7 +778,7 @@ class TraitementAMCController extends Controller
 
         $amc = Amcs::where('slug', '=', $slug)->firstOrFail();
         $suivi = SuiviAmcs::where('idamc', '=', $amc->id)
-            ->where('etat', '=', 10)->firstOrFail();
+            ->where('etat', '=', 8)->firstOrFail();
         $prescriptions = PrescriptionAmc::where('idamc', '=', $amc->id)->get();
 
         $image = base64_encode(file_get_contents(public_path('/storage/pdf/back_amc.png')));

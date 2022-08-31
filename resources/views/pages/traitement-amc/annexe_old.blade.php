@@ -163,7 +163,7 @@
 
 <div class="agent">
     Traité le : {{ date_format(new DateTime($prescriptions[0]->dateprpt), 'd/m/Y')  }} <br>
-
+    <img src="data:image/jpg;base64,{{ $agent }}" width="120">
 </div>
 
 <div class="table">
@@ -294,9 +294,12 @@
     </table>
 </div>
 
+<img class="sign1" src="data:image/jpg;base64,{{ $chef }}">
+<img class="sign2" src="data:image/jpg;base64,{{ $dir }}">
 
-<div class="sign3" style="width: 100px; height: 100px">
+<div class="sign3">
     Visa DGCC <br>
+    <img src="data:image/jpg;base64,{{ $dg }}" style="width: 100px; height: 100px">
 </div>
 
 <footer>

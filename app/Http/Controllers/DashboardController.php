@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Amcs;
 use App\Amms;
 use App\Contribuables;
-use App\InspectionAmc;
+use App\ProduitAmcs;
+use App\ProduitAmms;
+use App\Produits;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +23,14 @@ class DashboardController extends Controller
      */
     public function admin()
     {
-        $withRange = true;
-        $tab_societe = array($all_societe, $imp, $exp, $local);
-        return view('pages.dashboard.admin', compact('tab_societe', 'withRange'));
+        //$withRange = true;
+        //$tab_societe = array($all_societe, $imp, $exp, $local);
+        //return view('pages.dashboard.admin', compact('tab_societe', 'withRange'));
+
+        $debut = date('Y').'-01-01';
+        $fin = date('Y-m-d');
+
+        return redirect('/dashboard/admin/'.$debut.'/'.$fin);
     }
 
     /**
@@ -167,8 +174,69 @@ class DashboardController extends Controller
 
         $stat_cont_2 = array($total_cont_2, $amms_cont_ins);
 
+
+
+
+
+        $produits_amcs = DB::table('produit_amcs')
+            ->distinct('idproduit')
+            ->whereBetween('created_at', [$date_debut, $date_fin])
+            ->get();
+        $tab_produits_amc = array();
+        foreach ($produits_amcs as $produit) {
+            if (!in_array($produit->idproduit, $tab_produits_amc)) {
+                $tab_produits_amc[] = $produit->idproduit;
+            }
+        }
+        //dd($tab_produits_amc);
+        $stat_produit_amc = array();
+        foreach ($tab_produits_amc as $idproduit) {
+
+            $produit = Produits::find($idproduit)->libelle;
+
+            $nbre_produits_amc = ProduitAmcs::where('idproduit','=', $idproduit)
+                ->whereBetween('created_at', [$date_debut, $date_fin])
+                ->count();
+
+            $poids_produit_amc = DB::table('produit_amcs')
+                ->where('idproduit','=', $idproduit)
+                ->whereBetween('created_at', [$date_debut, $date_fin])
+                ->sum('poids');
+
+            $stat_produit_amc[] = array($produit, $nbre_produits_amc, $poids_produit_amc);
+        }
+
+        $produits_amms = DB::table('produit_amms')
+            ->distinct('idproduit')
+            ->whereBetween('created_at', [$date_debut, $date_fin])
+            ->get();
+        $tab_produits_amm = array();
+        foreach ($produits_amms as $produit) {
+            if (!in_array($produit->idproduit, $tab_produits_amm)) {
+                $tab_produits_amm[] = $produit->idproduit;
+            }
+        }
+
+        $stat_produit_amm = array();
+        foreach ($tab_produits_amm as $idproduit) {
+
+            $produit = Produits::find($idproduit)->libelle;
+
+            $nbre_produits_amm = ProduitAmms::where('idproduit','=', $idproduit)
+                ->whereBetween('created_at', [$date_debut, $date_fin])
+                ->count();
+
+            $poids_produit_amm = DB::table('produit_amms')
+                ->where('idproduit','=', $idproduit)
+                ->whereBetween('created_at', [$date_debut, $date_fin])
+                ->sum('poids');
+
+            $stat_produit_amm[] = array($produit, $nbre_produits_amm, $poids_produit_amm);
+        }
+
         return view('pages.dashboard.admin',
-            compact('tab_societe', 'withRange', 'stat_amc', 'stat_cont', 'stat_amm', 'stat_cont_2'));
+            compact('tab_societe', 'withRange', 'stat_amc', 'stat_cont', 'stat_amm',
+                'stat_cont_2', 'stat_produit_amc', 'stat_produit_amm'));
     }
 
     /**
@@ -194,8 +262,6 @@ class DashboardController extends Controller
             $tab_amc_id[] = $amc->id;
         }
         $amcs = count($tab_amc_id);
-
-        //$amcs = Amcs::whereBetween('created_at', [$date_debut, $date_fin])->count();
 
         $amcs_depot = DB::table('prescription_amcs')
             ->distinct('idamc')
@@ -261,7 +327,6 @@ class DashboardController extends Controller
             ->count();
 
         $total_cont = $amcs_cont_veh + $amcs_cont_mar;
-
         $stat_cont = array($total_cont, $amcs_cont_ins);
 
 
@@ -278,7 +343,6 @@ class DashboardController extends Controller
             $tab_amm_id[] = $amm->id;
         }
         $amms = count($tab_amc_id);
-        //$amms = Amms::whereBetween('created_at', [$date_debut, $date_fin])->count();
 
         $amms_depot = DB::table('prescription_amms')
             ->distinct('idamm')
@@ -299,27 +363,27 @@ class DashboardController extends Controller
         $amms_depot_eff = count($tab_depot_id2);
 
         $amms_rejet = Amms::whereIn('etat', [998, 999])
-            ->whereIn('idamm', $tab_amm_id)
+            ->where('idcontribuable', '=', $usager->id)
             ->whereBetween('created_at', [$date_debut, $date_fin])
             ->count();
 
         $amms_sig = Amms::where('etat','=', 10)
-            ->whereIn('idamm', $tab_amm_id)
+            ->where('idcontribuable', '=', $usager->id)
             ->whereBetween('created_at', [$date_debut, $date_fin])
             ->count();
 
         $amms_caf = DB::table('amms')
-            ->whereIn('idamm', $tab_amm_id)
+            ->where('idcontribuable', '=', $usager->id)
             ->whereBetween('created_at', [$date_debut, $date_fin])
             ->sum('valeurcaf_cfa');
 
         $amms_montant = DB::table('amms')
-            ->whereIn('idamm', $tab_amm_id)
+            ->where('idcontribuable', '=', $usager->id)
             ->whereBetween('created_at', [$date_debut, $date_fin])
             ->sum('totalglobal');
 
         $amms_poid = DB::table('amms')
-            ->whereIn('idamm', $tab_amm_id)
+            ->where('idcontribuable', '=', $usager->id)
             ->whereBetween('created_at', [$date_debut, $date_fin])
             ->sum('totalpoids');
 
