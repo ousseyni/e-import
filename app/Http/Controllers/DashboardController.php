@@ -26,6 +26,7 @@ class DashboardController extends Controller
         //$withRange = true;
         //$tab_societe = array($all_societe, $imp, $exp, $local);
         //return view('pages.dashboard.admin', compact('tab_societe', 'withRange'));
+		ini_set('memory_limit', '256M');
 
         $debut = date('Y').'-01-01';
         $fin = date('Y-m-d');
@@ -40,6 +41,7 @@ class DashboardController extends Controller
      */
     public function user()
     {
+		ini_set('memory_limit', '256M');
         $debut = date('Y').'-01-01';
         $fin = date('Y-m-d');
 
@@ -54,7 +56,7 @@ class DashboardController extends Controller
      */
     public function adminrange($date_debut, $date_fin)
     {
-
+		ini_set('memory_limit', '256M');
         $all_societe = Contribuables::all()->count();
         $imp = Contribuables::where('typecontribuableid', '=', 1)->count();
         $exp = Contribuables::where('typecontribuableid', '=', 2)->count();
@@ -247,6 +249,7 @@ class DashboardController extends Controller
      */
     public function userrange($date_debut, $date_fin)
     {
+		ini_set('memory_limit', '256M');
         $user = User::find(Auth::id());
         $usager = Contribuables::where('nif', '=', $user->login)->firstOrFail();
 
